@@ -7,7 +7,7 @@ public class Controller
 		liste = new List<Person>();
 		test();
 	}
-	system.out.println('test');
+	system.out.println('test2');
 	
 	
 	void sortInNeu(Person neu)
