@@ -7,7 +7,7 @@ public class Controller
 		liste = new List<Person>();
 		test();
 	}
-	
+	system.out.println('test');
 	
 	
 	void sortInNeu(Person neu)
@@ -68,7 +68,7 @@ public class Controller
 	
 	
 	
-	int sortIn(Person neu) // Gibt Index für JList zurück
+	int sortIn(Person neu) // Gibt Index fï¿½r JList zurï¿½ck
 	{
 		liste.toFirst();
 		char a0 = neu.getNachname().charAt(0);
