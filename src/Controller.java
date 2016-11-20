@@ -7,7 +7,7 @@ public class Controller
 		liste = new List<Person>();
 		test();
 	}
-	system.out.println('test2');
+	system.out.println('jetzt aber!');
 	
 	
 	void sortInNeu(Person neu)
