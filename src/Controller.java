@@ -9,7 +9,7 @@ public class Controller
 	}
 	
 	
-	//test1234
+	//test
 	void sortInNeu(Person neu)
 	{
 		liste.toFirst();
