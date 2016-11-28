@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,6 +17,10 @@ public class IOController
 	
 	IOController() throws FileNotFoundException
 	{
+		
+		File dir = new File("saves");
+		dir.mkdir();
+		
 		try 
 		{
 			fw = new FileWriter(System.getProperty("user.dir")+"\\saves\\save.jcts");
