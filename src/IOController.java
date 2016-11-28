@@ -21,6 +21,8 @@ public class IOController
 		File dir = new File("saves");
 		dir.mkdir();
 		
+		//Test
+		
 		try 
 		{
 			fw = new FileWriter(System.getProperty("user.dir")+"\\saves\\save.jcts");
