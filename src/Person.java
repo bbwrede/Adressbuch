@@ -6,13 +6,13 @@
   * @author 
   */
   
-import java.util.Date;
+
 
 public class Person {
   
   public enum Farbe
   {
-    SCHWARZ, WEISS, BRAUN, GRUEN, BLAU, GRAU, ROT, GELB, LILA, ORANGE, PEACH, ABRICOT, MAGENTA, STERNENSTAUB, UNBEKANNT
+    SCHWARZ, WEISS, BRAUN, GRUEN, BLAU, GRAU, ROT, GELB, LILA, ORANGE, UNBEKANNT
   }
   
   public enum Geschlecht
@@ -26,21 +26,21 @@ public class Person {
   }
   
   // Anfang Attribute
-  private String vorname = "";
-  private String nachname = "";
-  private String land = "";
-  private String postleitzahl = "";
-  private String ort = "";
-  private String strasse = "";
-  private String hausnummer = "";
-  private String adresszusatz = "";
-  private String email = "";
+  private String vorname = "-";
+  private String nachname = "-";
+  private String land = "-";
+  private String postleitzahl = "-";
+  private String ort = "-";
+  private String strasse = "-";
+  private String hausnummer = "-";
+  private String adresszusatz = "-";
+  private String email = "-";
   private int groesse = 0;
   private int gewicht = 0;
   private Farbe augenfarbe = Farbe.UNBEKANNT;
-  private String telefon = "";
-  private String telefonMobil = "";
-  private String nationalitaet = "";
+  private String telefon = "-";
+  private String telefonMobil = "-";
+  private String nationalitaet = "-";
   private Religion religion = Religion.UNBEKANNT;
   private Farbe haarfarbe = Farbe.UNBEKANNT;
   private Farbe hautfarbe = Farbe.UNBEKANNT;
