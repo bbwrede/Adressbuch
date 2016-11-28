@@ -29,11 +29,6 @@ public class ModelController
 	{
 		liste.toFirst();
 		
-		if (liste.hasAccess() == false)
-		{
-			liste.append(neu);
-		}
-		
 		OuterLoop:
 		while (liste.hasAccess())
 		{
@@ -76,6 +71,12 @@ public class ModelController
 			}
 			liste.next();
 		}
+		
+		if (liste.hasAccess() == false)
+		{
+			liste.append(neu);
+		}
+		
 	}
 	
 	
