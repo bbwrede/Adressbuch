@@ -8,7 +8,6 @@ public class ModelController
 	{
 		liste = new List<Person>();
 		test();
-		gui = new GUI();
 		
 	}
 	
