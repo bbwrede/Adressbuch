@@ -79,10 +79,17 @@ public class ModelController
 	}
 	
 	
+	Person getObjectAt(int i)
+	{
+		liste.toFirst();
+		for (int c = 0; c<i; c++)
+		{
+			liste.next();
+		}
+		return liste.getContent();	
+	}
 	
-	
-	
-	
+
 	void test() throws FileNotFoundException
 	{
 		IOController ioc = new IOController();
@@ -103,6 +110,15 @@ public class ModelController
 		p6.setNachname("Lahsse");		
 		p7.setNachname("Lahsue");
 		p8.setNachname("Lohsee");
+		
+		p1.setVorname("Peter");
+		p2.setVorname("Hans");
+		p3.setVorname("Giesela");
+		p4.setVorname("Gerholt");
+		p5.setVorname("Adolf");
+		p6.setVorname("Reiner");		
+		p7.setVorname("Friedhelm");
+		p8.setVorname("Ruth");
 		
 		sortIn(p1);
 		sortIn(p2);
