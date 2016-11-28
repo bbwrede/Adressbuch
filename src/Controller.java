@@ -7,7 +7,6 @@ public class Controller
 		liste = new List<Person>();
 		test();
 	}
-	system.out.println('jetzt aber!');
 	
 	
 	//test
