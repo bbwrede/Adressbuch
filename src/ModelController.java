@@ -4,7 +4,7 @@ public class ModelController
 {
 	private List<Person> liste;
 	
-	ModelController()
+	ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
 		test();
