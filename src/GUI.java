@@ -139,7 +139,7 @@ public class GUI
 		separator_1.setBounds(10, 270, 774, 2);
 		loginPanel.add(separator_1);
 		
-		JLabel lblJbook = new JLabel("JContacts");
+		JLabel lblJbook = new JLabel("JBook");
 		lblJbook.setHorizontalAlignment(SwingConstants.CENTER);
 		lblJbook.setFont(new Font("Tahoma", Font.BOLD, 30));
 		lblJbook.setBounds(237, 56, 320, 80);
