@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -22,6 +23,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
@@ -29,12 +31,11 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.MatteBorder;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -303,6 +304,11 @@ public class GUI
 		return usernameField.getText();
 	}
 	
+	void showLoginInfo()
+	{
+		JOptionPane.showMessageDialog(frmAdressbuch, "Standard Benutzername:     admin \nStandard Passwort:                1111");
+	}
+	
 	void openMain()
 	{
 		loginPanel.setVisible(false);
@@ -342,6 +348,11 @@ public class GUI
 				passwordField.setBackground(null);
 			}
 		},  3000);
+	}
+	
+	JFrame getFrame()
+	{
+		return frmAdressbuch;
 	}
 	
 	public JList getList()

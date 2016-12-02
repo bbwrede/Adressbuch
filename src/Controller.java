@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 @SuppressWarnings("rawtypes")
 public class Controller extends MouseAdapter implements ActionListener 
@@ -66,8 +67,12 @@ public class Controller extends MouseAdapter implements ActionListener
 		}
 		if (cmd.equals("Neu..."))
 		{
-			im = new InputMask();
+			im = new InputMask(gui.getFrame());
 			im.setVisible(true);
+		}
+		if (cmd.equals("Hilfe"))
+		{
+			gui.showLoginInfo();
 		}
 		
 	}

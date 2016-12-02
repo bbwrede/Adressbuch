@@ -53,7 +53,7 @@ public class InputMask extends JFrame
 	 * Launch the application.
 	 */
 
-	public InputMask()
+	public InputMask(JFrame pFrame)
 	{
 		setAlwaysOnTop(true);
 		setTitle("Neuer Kontakt");
@@ -98,7 +98,7 @@ public class InputMask extends JFrame
 		}
 		
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 250, 560);
 		contentPane = new JPanel();
 		contentPane.setToolTipText("Geschlecht");
@@ -282,7 +282,7 @@ public class InputMask extends JFrame
 			jahr.addItem(Integer.toString(i));
 		}
 		
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(pFrame);
 		
 	}
 }

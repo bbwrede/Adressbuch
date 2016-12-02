@@ -25,13 +25,13 @@ public class IOController
 		
 		try 
 		{
-			fw = new FileWriter(System.getProperty("user.dir")+"\\saves\\save.jcts");
+			fw = new FileWriter(System.getProperty("user.dir")+"\\saves\\save.jbook");
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
 		}
 		bw = new BufferedWriter(fw);
-		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jcts");
+		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jbook");
 		reader = new Scanner(fr);
 	}
 	
@@ -142,10 +142,10 @@ public class IOController
 		neu.setGroesse(groesse);
 		neu.setGewicht(gewicht);
 		neu.setAugenfarbe(augenfarbe);
-		neu.setTelefon(telefonMobil);
+		neu.setTelefon(telefon);
 		neu.setTelefonMobil(telefonMobil);
 		neu.setNationalitaet(nationalitaet);
-		neu.setFirma(email);
+		neu.setFirma(firma);
 		neu.setReligion(religion);
 		neu.setHaarfarbe(haarfarbe);
 		neu.setHautfarbe(hautfarbe);

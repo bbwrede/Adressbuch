@@ -41,7 +41,7 @@ public class Countries
 			"Ecuador",
 			"Elfenbeinküste",
 			"El Salvador",
-			"England/[[ UK/[[ Großbritannien",
+			"England/UK/Großbritannien",
 			"Eritrea",
 			"Estland",
 			"Fidschi",
