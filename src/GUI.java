@@ -32,6 +32,7 @@ import javax.swing.border.MatteBorder;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+@SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
 {
 
@@ -45,7 +46,6 @@ public class GUI
 	private JList list;
 	private DefaultListModel listmodel= new DefaultListModel();
 	
-
 	public GUI() 
 	{
 		try {
@@ -209,7 +209,7 @@ public class GUI
 		mainPanel.setVisible(false);
 		loginPanel.setVisible(true);
 	}
-	private static void addPopup(Component component, final JPopupMenu popup) 
+	private void addPopup(Component component, final JPopupMenu popup) 
 	{
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -233,6 +233,11 @@ public class GUI
 		loginBtn.addActionListener(al);
 		hilfeBtn.addActionListener(al);
 		
+	}
+	
+	void setMouseListeners(MouseAdapter ma)
+	{
+		list.addMouseListener(ma);
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -261,4 +266,11 @@ public class GUI
 	{
 		listmodel.addElement(anzeige);
 	}
+	
+	public JList getList()
+	{
+		return list;
+	}
+
+
 }

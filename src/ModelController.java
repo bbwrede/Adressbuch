@@ -93,7 +93,7 @@ public class ModelController
 
 	void test() throws FileNotFoundException
 	{
-		IOController ioc = new IOController();
+		IOController ioc =  new IOController();
 		
 		Person p1 = new Person();
 		Person p2 = new Person();
