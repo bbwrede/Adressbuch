@@ -32,13 +32,13 @@ public class IOController
 		}
 		bw = new BufferedWriter(fw);
 		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jcts");
+		reader = new Scanner(fr);
 	}
 	
 	
 	void saveToFile(Person pPerson) throws IOException
 	{
 		
-		bw.newLine();
 		bw.write(pPerson.getNachname());
 		bw.newLine();
 		bw.write(pPerson.getVorname());
@@ -78,6 +78,7 @@ public class IOController
 		bw.write(pPerson.getGeschlecht().toString());
 		bw.newLine();
 		bw.write(";");
+		bw.newLine();
 		bw.flush();
 		
 	}
@@ -90,29 +91,27 @@ public class IOController
 	Person ReadPerson()
 	{
 		Person neu = new Person();
-		
-		reader = new Scanner(fr);
-		
-		String nachname = reader.nextLine();
-		String vorname = reader.nextLine();
-		String land = reader.nextLine();
-		String postleitzahl = reader.nextLine();
-		String ort = reader.nextLine();
-		String strasse = reader.nextLine();
-		String hausnummer = reader.nextLine();
-		String adresszusatz = reader.nextLine();
-		String email = reader.nextLine();
-		int groesse = Integer.parseInt(reader.nextLine());
-		int gewicht = Integer.parseInt(reader.nextLine());
-		Person.Farbe augenfarbe = Person.Farbe.valueOf(reader.nextLine());
-		String telefon = reader.nextLine();
-		String telefonMobil = reader.nextLine();
-		String nationalitaet = reader.nextLine();
-		Person.Religion religion = Person.Religion.valueOf(reader.nextLine());
-		Person.Farbe haarfarbe = Person.Farbe.valueOf(reader.nextLine());
-		Person.Farbe hautfarbe = Person.Farbe.valueOf(reader.nextLine());
-		Person.Geschlecht geschlecht = Person.Geschlecht.valueOf(reader.nextLine());
-		reader.nextLine();
+		//reader.nextLine();
+		String nachname = reader.next();
+		String vorname = reader.next();
+		String land = reader.next();
+		String postleitzahl = reader.next();
+		String ort = reader.next();
+		String strasse = reader.next();
+		String hausnummer = reader.next();
+		String adresszusatz = reader.next();
+		String email = reader.next();
+		int groesse = Integer.parseInt(reader.next());
+		int gewicht = Integer.parseInt(reader.next());
+		Person.Farbe augenfarbe = Person.Farbe.valueOf(reader.next());
+		String telefon = reader.next();
+		String telefonMobil = reader.next();
+		String nationalitaet = reader.next();
+		Person.Religion religion = Person.Religion.valueOf(reader.next());
+		Person.Farbe haarfarbe = Person.Farbe.valueOf(reader.next());
+		Person.Farbe hautfarbe = Person.Farbe.valueOf(reader.next());
+		Person.Geschlecht geschlecht = Person.Geschlecht.valueOf(reader.next());
+		reader.next();
 		
 		neu.setNachname(nachname);
 		neu.setVorname(vorname);
@@ -123,10 +122,24 @@ public class IOController
 		neu.setHausnummer(hausnummer);
 		neu.setAdresszusatz(adresszusatz);
 		neu.setLand(land);
+		neu.setOrt(ort);
+		neu.setStrasse(strasse);
+		neu.setHausnummer(hausnummer);
+		neu.setAdresszusatz(adresszusatz);
+		neu.setEmail(email);
+		neu.setGroesse(groesse);
+		neu.setGewicht(gewicht);
+		neu.setAugenfarbe(augenfarbe);
+		neu.setTelefon(telefonMobil);
+		neu.setTelefonMobil(telefonMobil);
+		neu.setNationalitaet(nationalitaet);
+		neu.setReligion(religion);
+		neu.setHaarfarbe(haarfarbe);
+		neu.setHautfarbe(hautfarbe);
+		neu.setGeschlecht(geschlecht);
 		
 		return neu;
 		
-
 	}
 		
 }

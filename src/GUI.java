@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -31,6 +33,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.MatteBorder;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -45,6 +48,8 @@ public class GUI
 	private JPanel loginPanel;
 	private JList list;
 	private DefaultListModel listmodel= new DefaultListModel();
+	private JButton logoutBtn;
+	private JLabel loginMessage;
 	
 	public GUI() 
 	{
@@ -74,44 +79,10 @@ public class GUI
 		frmAdressbuch.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		mainPanel = new JPanel();
-		mainPanel.setName("");
-		mainPanel.setToolTipText("");
-		mainPanel.setBackground(UIManager.getColor("InternalFrame.minimizeIconBackground"));
-		frmAdressbuch.getContentPane().add(mainPanel, "name_926217422352088");
-		
-		list = new JList(listmodel);
-		list.setBounds(10, 41, 375, 488);
-		list.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		list.setMinimumSize(new Dimension(200, 0));
-		
-		JLabel lblAdressliste = new JLabel("Adressliste");
-		lblAdressliste.setBounds(10, 16, 99, 14);
-		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(69, 24, 705, 13);
-		
-		JButton btnNeu = new JButton("Neu...");
-		btnNeu.setBounds(440, 39, 105, 23);
-		
-		JButton btnBearbeiten = new JButton("Bearbeiten...");
-		btnBearbeiten.setBounds(440, 73, 106, 23);
-		mainPanel.setLayout(null);
-		mainPanel.add(lblAdressliste);
-		mainPanel.add(separator);
-		mainPanel.add(list);
-		mainPanel.add(btnNeu);
-		mainPanel.add(btnBearbeiten);
-		
-		JButton btnSortieren = new JButton("Sortieren");
-		btnSortieren.setBounds(440, 197, 105, 23);
-		mainPanel.add(btnSortieren);
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(440, 166, 105, 20);
-		mainPanel.add(comboBox);
-		mainPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{list}));
+		mainPanel.setVisible(false);
 		
 		loginPanel = new JPanel();
+		loginPanel.setVisible(true);
 		frmAdressbuch.getContentPane().add(loginPanel, "name_943493824808102");
 		loginPanel.setLayout(null);
 		
@@ -173,6 +144,58 @@ public class GUI
 		hilfeBtn.setBounds(396, 452, 90, 23);
 		loginPanel.add(hilfeBtn);
 		
+		loginMessage = new JLabel("Bentzername oder Passwort falsch");
+		loginMessage.setVisible(false);
+		loginMessage.setForeground(Color.RED);
+		loginMessage.setFont(new Font("SansSerif", Font.ITALIC, 11));
+		loginMessage.setHorizontalAlignment(SwingConstants.CENTER);
+		loginMessage.setBounds(237, 476, 327, 16);
+		loginPanel.add(loginMessage);
+		mainPanel.setName("");
+		mainPanel.setToolTipText("");
+		mainPanel.setBackground(UIManager.getColor("InternalFrame.minimizeIconBackground"));
+		frmAdressbuch.getContentPane().add(mainPanel, "name_926217422352088");
+		
+		list = new JList(listmodel);
+		list.setBounds(10, 41, 375, 488);
+		list.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		list.setMinimumSize(new Dimension(200, 0));
+		
+		JLabel lblAdressliste = new JLabel("Adressliste");
+		lblAdressliste.setBounds(10, 16, 99, 14);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(69, 24, 705, 13);
+		
+		JButton btnNeu = new JButton("Neu...");
+		btnNeu.setBounds(440, 39, 105, 23);
+		
+		JButton btnBearbeiten = new JButton("Bearbeiten...");
+		btnBearbeiten.setBounds(440, 73, 106, 23);
+		mainPanel.setLayout(null);
+		mainPanel.add(lblAdressliste);
+		mainPanel.add(separator);
+		mainPanel.add(list);
+		mainPanel.add(btnNeu);
+		mainPanel.add(btnBearbeiten);
+		
+		JButton btnSortieren = new JButton("Sortieren");
+		btnSortieren.setBounds(440, 197, 105, 23);
+		mainPanel.add(btnSortieren);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(440, 166, 105, 20);
+		mainPanel.add(comboBox);
+		
+		logoutBtn = new JButton("Logout");
+		logoutBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		logoutBtn.setBounds(672, 38, 105, 23);
+		mainPanel.add(logoutBtn);
+		mainPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{list}));
+		
 		JMenuBar menuBar = new JMenuBar();
 		frmAdressbuch.setJMenuBar(menuBar);
 		
@@ -204,10 +227,6 @@ public class GUI
 		
 		JMenuItem mntmber = new JMenuItem("\u00DCber");
 		mnHilfe.add(mntmber);
-		
-
-		mainPanel.setVisible(false);
-		loginPanel.setVisible(true);
 	}
 	private void addPopup(Component component, final JPopupMenu popup) 
 	{
@@ -232,6 +251,7 @@ public class GUI
 	{
 		loginBtn.addActionListener(al);
 		hilfeBtn.addActionListener(al);
+		logoutBtn.addActionListener(al);
 		
 	}
 	
@@ -257,6 +277,12 @@ public class GUI
 		mainPanel.setVisible(true);
 	}
 	
+	void openLogin()
+	{
+		mainPanel.setVisible(false);
+		loginPanel.setVisible(true);	
+	}
+	
 	void removeListElements()
 	{
 		listmodel.removeAllElements();
@@ -267,10 +293,25 @@ public class GUI
 		listmodel.addElement(anzeige);
 	}
 	
+	void showLoginWarning()
+	{
+		loginMessage.setVisible(true);
+		usernameField.setBackground(Color.RED);
+		passwordField.setBackground(Color.RED);
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() 
+		{ 
+			public void run() 
+			{ 
+				loginMessage.setVisible(false);
+				usernameField.setBackground(null);
+				passwordField.setBackground(null);
+			}
+		},  3000);
+	}
+	
 	public JList getList()
 	{
 		return list;
 	}
-
-
 }

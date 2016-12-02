@@ -29,7 +29,11 @@ public class Controller extends MouseAdapter implements ActionListener
 		{
 			gui.openMain();
 			updateList();
-		}	
+		}
+		else
+		{
+			gui.showLoginWarning();
+		}
 	}
 	
 	void updateList()
@@ -55,13 +59,18 @@ public class Controller extends MouseAdapter implements ActionListener
 		{
 			UserAuthentification(gui.getPassword(), gui.getUsername());	
 		}
+		if (cmd.equals("Logout"))
+		{
+			gui.openLogin();
+		}
 		
 	}
 	
+
 	public void mouseClicked(MouseEvent e)
 	{
 		JList liste = gui.getList(); 
-		liste = (JList)e.getSource();
+		JList temp = (JList)e.getSource();
 		
 		if (e.getClickCount() == 2) 
 		{

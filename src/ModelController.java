@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ModelController
 {
@@ -131,7 +132,7 @@ public class ModelController
 		sortIn(p8);
 		ausgabe();
 		
-		/*try
+		try
 		{
 			ioc.saveToFile(p1);
 			ioc.saveToFile(p2);
@@ -142,9 +143,10 @@ public class ModelController
 		catch (IOException e)
 		{
 			e.printStackTrace();
-		}*/
+		}
 		
-		//System.out.println(ioc.ReadPerson().getNachname() + ioc.ReadPerson().getVorname());
+		Person temp = ioc.ReadPerson();
+		System.out.println(temp.getNachname() +" "+ temp.getVorname());
 		
 	}
 	void ausgabe()
