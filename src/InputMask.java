@@ -10,6 +10,10 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.Font;
+import java.text.SimpleDateFormat;
+import java.time.Year;
+import java.util.Date;
+
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
@@ -37,6 +41,10 @@ public class InputMask extends JFrame
 	private JSeparator separator_2;
 	private JLabel lblPersnlicheDaten;
 	private JComboBox geschlecht;
+	private JComboBox monat;
+	private JComboBox tag;
+	private JComboBox jahr;
+	private JLabel lblGeburtsdaten;
 
 	/**
 	 * Launch the application.
@@ -64,6 +72,7 @@ public class InputMask extends JFrame
 	 */
 	public InputMask()
 	{
+		setResizable(false);
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 		        if ("Nimbus".equals(info.getName())) {
@@ -148,13 +157,14 @@ public class InputMask extends JFrame
 		contentPane.add(textField_7);
 		
 		textField_8 = new HintTextField("E-Mail");
-		textField_8.setToolTipText("Hier kann der Nachname eingegeben werden!");
+		textField_8.setToolTipText("E-Mail");
 		textField_8.setName("");
 		textField_8.setColumns(10);
-		textField_8.setBounds(10, 295, 164, 26);
+		textField_8.setBounds(10, 292, 164, 26);
 		contentPane.add(textField_8);
 		
 		lblAdressdaten = new JLabel("Adressdaten:");
+		lblAdressdaten.setFont(new Font("SansSerif", Font.BOLD, 12));
 		lblAdressdaten.setBounds(14, 105, 214, 16);
 		contentPane.add(lblAdressdaten);
 		
@@ -171,10 +181,12 @@ public class InputMask extends JFrame
 		contentPane.add(separator_2);
 		
 		lblPersnlicheDaten = new JLabel("Pers\u00F6nliche Daten:");
+		lblPersnlicheDaten.setFont(new Font("SansSerif", Font.BOLD, 12));
 		lblPersnlicheDaten.setBounds(15, 246, 204, 16);
 		contentPane.add(lblPersnlicheDaten);
 		
 		geschlecht = new JComboBox();
+		geschlecht.setToolTipText("Geschelcht");
 		geschlecht.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		geschlecht.setBounds(10, 267, 164, 26);
 		contentPane.add(geschlecht);
@@ -184,6 +196,49 @@ public class InputMask extends JFrame
 		geschlecht.addItem("Weiblich");
 		geschlecht.addItem("Sonstiges");
 		geschlecht.addItem("Unbekannt");
+		
+		monat = new JComboBox();
+		monat.setToolTipText("Geburtsmonat");
+		monat.setBounds(71, 346, 103, 26);
+		contentPane.add(monat);
+		
+		monat.addItem("Monat");
+		
+		for (int i = 0; i < 12; i++)
+		{
+			monat.addItem(Person.Monat.values()[i].toString());
+		}
+		
+		tag = new JComboBox();
+		tag.setToolTipText("Geburtstag");
+		tag.setBounds(10, 346, 61, 26);
+		contentPane.add(tag);
+		
+		tag.addItem("Tag");
+		
+		for (int i = 1; i < 32; i++)
+		{
+			tag.addItem(Integer.toString(i));
+		}
+		
+		jahr = new JComboBox();
+		jahr.setToolTipText("Geburtsjahr");
+		jahr.setBounds(10, 373, 164, 26);
+		contentPane.add(jahr);
+		
+		jahr.addItem("Jahr");
+		
+		lblGeburtsdaten = new JLabel("Geburtsdaten:");
+		lblGeburtsdaten.setBounds(15, 328, 204, 16);
+		contentPane.add(lblGeburtsdaten);
+		
+		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())); 
+
+		for (int i = year; i > year-120 +1; i--)
+		{
+			jahr.addItem(Integer.toString(i));
+		}
+		
 		
 	}
 }
