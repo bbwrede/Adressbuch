@@ -25,6 +25,11 @@ public class Person {
     MUSLIMISCH, KATHOLISCH, EVANGELISCH, JUEDISCH, ATHEISTISCH, UNBEKANNT
   }
   
+  public enum Monat
+  {
+    JANUAR, FEBRUAR, MAERZ, APRIL, MAI, JUNI, JULI, AUGUST, SEPTEMBER, OKTOBER, NOVEMBER, DEZEMBER, UNBEKANNT
+  }
+  
   // Anfang Attribute
   private String vorname = "-";
   private String nachname = "-";
@@ -41,10 +46,14 @@ public class Person {
   private String telefon = "-";
   private String telefonMobil = "-";
   private String nationalitaet = "-";
+  private String firma = "-";
   private Religion religion = Religion.UNBEKANNT;
   private Farbe haarfarbe = Farbe.UNBEKANNT;
   private Farbe hautfarbe = Farbe.UNBEKANNT;
   private Geschlecht geschlecht = Geschlecht.UNBEKANNT;
+  private int geburtsjahr = 0;
+  private Monat geburtsmonat = Monat.UNBEKANNT;
+  private int geburtstag = 0;
   // Ende Attribute
   
   // Anfang Methoden
@@ -74,6 +83,10 @@ public class Person {
     return land;
   }
 
+  public String getFirma() 
+  {
+	    return firma;
+  }
   
   public void setLand(String land) {
     this.land = land;
@@ -196,6 +209,11 @@ public class Person {
   public void setNationalitaet(String nationalitaet) {
     this.nationalitaet = nationalitaet;
   }
+  
+  public void setFirma(String firma) {
+	    this.firma = firma;
+	  }
+
 
   
   public Religion getReligion() {
@@ -233,6 +251,42 @@ public class Person {
   public void setGeschlecht(Geschlecht geschlecht) {
     this.geschlecht = geschlecht;
   }
+
+
+public int getGeburtsjahr()
+{
+	return geburtsjahr;
+}
+
+
+public void setGeburtsjahr(int geburtsjahr)
+{
+	this.geburtsjahr = geburtsjahr;
+}
+
+
+public Monat getGeburtsmonat()
+{
+	return geburtsmonat;
+}
+
+
+public void setGeburtsmonat(Monat geburtsmonat)
+{
+	this.geburtsmonat = geburtsmonat;
+}
+
+
+public int getGeburtstag()
+{
+	return geburtstag;
+}
+
+
+public void setGeburtstag(int geburtstag)
+{
+	this.geburtstag = geburtstag;
+}
 
   // Ende Methoden
 } // end of Person

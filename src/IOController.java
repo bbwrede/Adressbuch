@@ -69,6 +69,8 @@ public class IOController
 		bw.newLine();
 		bw.write(pPerson.getNationalitaet());
 		bw.newLine();
+		bw.write(pPerson.getFirma());
+		bw.newLine();
 		bw.write(pPerson.getReligion().toString());
 		bw.newLine();
 		bw.write(pPerson.getHaarfarbe().toString());
@@ -77,6 +79,11 @@ public class IOController
 		bw.newLine();
 		bw.write(pPerson.getGeschlecht().toString());
 		bw.newLine();
+		bw.write(Integer.toString(pPerson.getGeburtsjahr()));
+		bw.newLine();
+		bw.write(pPerson.getGeburtsmonat().toString());
+		bw.newLine();
+		bw.write(Integer.toString(pPerson.getGeburtstag()));
 		bw.write(";");
 		bw.newLine();
 		bw.flush();
@@ -88,10 +95,10 @@ public class IOController
 		bw.close();
 	}
 	
+	
 	Person ReadPerson()
 	{
 		Person neu = new Person();
-		//reader.nextLine();
 		String nachname = reader.next();
 		String vorname = reader.next();
 		String land = reader.next();
@@ -107,10 +114,14 @@ public class IOController
 		String telefon = reader.next();
 		String telefonMobil = reader.next();
 		String nationalitaet = reader.next();
+		String firma = reader.next();
 		Person.Religion religion = Person.Religion.valueOf(reader.next());
 		Person.Farbe haarfarbe = Person.Farbe.valueOf(reader.next());
 		Person.Farbe hautfarbe = Person.Farbe.valueOf(reader.next());
 		Person.Geschlecht geschlecht = Person.Geschlecht.valueOf(reader.next());
+		int geburtsjahr = Integer.parseInt(reader.next());
+		Person.Monat geburtsmonat = Person.Monat.valueOf(reader.next());
+		int geburtstag = Integer.parseInt(reader.next());
 		reader.next();
 		
 		neu.setNachname(nachname);
@@ -133,10 +144,14 @@ public class IOController
 		neu.setTelefon(telefonMobil);
 		neu.setTelefonMobil(telefonMobil);
 		neu.setNationalitaet(nationalitaet);
+		neu.setFirma(email);
 		neu.setReligion(religion);
 		neu.setHaarfarbe(haarfarbe);
 		neu.setHautfarbe(hautfarbe);
 		neu.setGeschlecht(geschlecht);
+		neu.setGeburtsjahr(geburtsjahr);
+		neu.setGeburtsmonat(geburtsmonat);
+		neu.setGeburtstag(geburtstag);
 		
 		return neu;
 		
