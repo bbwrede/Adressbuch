@@ -84,6 +84,7 @@ public class IOController
 		bw.write(pPerson.getGeburtsmonat().toString());
 		bw.newLine();
 		bw.write(Integer.toString(pPerson.getGeburtstag()));
+		bw.newLine();
 		bw.write(";");
 		bw.newLine();
 		bw.flush();

@@ -13,6 +13,7 @@ public class Controller extends MouseAdapter implements ActionListener
 	private ModelController mc;
 	private String password = "1111";
 	private String username = "admin";
+	private InputMask im;
 
 	
 	Controller() throws FileNotFoundException 
@@ -62,6 +63,11 @@ public class Controller extends MouseAdapter implements ActionListener
 		if (cmd.equals("Logout"))
 		{
 			gui.openLogin();
+		}
+		if (cmd.equals("Neu..."))
+		{
+			im = new InputMask();
+			im.setVisible(true);
 		}
 		
 	}

@@ -51,6 +51,7 @@ public class GUI
 	private JButton logoutBtn;
 	private JLabel loginMessage;
 	private JMenuBar menuBar;
+	private JButton btnNeu;
 	
 	public GUI() 
 	{
@@ -168,7 +169,7 @@ public class GUI
 		JSeparator separator = new JSeparator();
 		separator.setBounds(69, 24, 705, 13);
 		
-		JButton btnNeu = new JButton("Neu...");
+		btnNeu = new JButton("Neu...");
 		btnNeu.setBounds(440, 39, 105, 23);
 		
 		JButton btnBearbeiten = new JButton("Bearbeiten...");
@@ -254,6 +255,7 @@ public class GUI
 		loginBtn.addActionListener(al);
 		hilfeBtn.addActionListener(al);
 		logoutBtn.addActionListener(al);
+		btnNeu.addActionListener(al);
 		
 	}
 	

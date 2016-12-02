@@ -20,6 +20,7 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 import javax.swing.JComboBox;
 import java.awt.Cursor;
+import javax.swing.JButton;
 
 public class InputMask extends JFrame
 {
@@ -45,6 +46,11 @@ public class InputMask extends JFrame
 	private JComboBox tag;
 	private JComboBox jahr;
 	private JLabel lblGeburtsdaten;
+	private HintTextField hintTextField;
+	private JButton btnSpeichern;
+	private JButton btnNewButton;
+	private JSeparator separator_3;
+	private JButton btnX;
 
 	/**
 	 * Launch the application.
@@ -199,7 +205,7 @@ public class InputMask extends JFrame
 		
 		monat = new JComboBox();
 		monat.setToolTipText("Geburtsmonat");
-		monat.setBounds(71, 346, 103, 26);
+		monat.setBounds(71, 376, 103, 26);
 		contentPane.add(monat);
 		
 		monat.addItem("Monat");
@@ -211,7 +217,7 @@ public class InputMask extends JFrame
 		
 		tag = new JComboBox();
 		tag.setToolTipText("Geburtstag");
-		tag.setBounds(10, 346, 61, 26);
+		tag.setBounds(10, 376, 61, 26);
 		contentPane.add(tag);
 		
 		tag.addItem("Tag");
@@ -223,14 +229,38 @@ public class InputMask extends JFrame
 		
 		jahr = new JComboBox();
 		jahr.setToolTipText("Geburtsjahr");
-		jahr.setBounds(10, 373, 164, 26);
+		jahr.setBounds(10, 403, 164, 26);
 		contentPane.add(jahr);
 		
 		jahr.addItem("Jahr");
 		
 		lblGeburtsdaten = new JLabel("Geburtsdaten:");
-		lblGeburtsdaten.setBounds(15, 328, 204, 16);
+		lblGeburtsdaten.setBounds(13, 356, 218, 16);
 		contentPane.add(lblGeburtsdaten);
+		
+		hintTextField = new HintTextField("Telefonnummer");
+		hintTextField.setToolTipText("Telefonnummer");
+		hintTextField.setName("");
+		hintTextField.setColumns(10);
+		hintTextField.setBounds(10, 318, 164, 26);
+		contentPane.add(hintTextField);
+		
+		btnSpeichern = new JButton("Speichern");
+		btnSpeichern.setBounds(10, 497, 115, 28);
+		contentPane.add(btnSpeichern);
+		
+		btnNewButton = new JButton("Erweitert...");
+		btnNewButton.setBounds(10, 441, 164, 28);
+		contentPane.add(btnNewButton);
+		
+		separator_3 = new JSeparator();
+		separator_3.setBounds(10, 483, 218, 2);
+		contentPane.add(separator_3);
+		
+		btnX = new JButton("X");
+		btnX.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnX.setBounds(130, 497, 44, 28);
+		contentPane.add(btnX);
 		
 		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())); 
 
