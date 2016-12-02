@@ -50,6 +50,7 @@ public class GUI
 	private DefaultListModel listmodel= new DefaultListModel();
 	private JButton logoutBtn;
 	private JLabel loginMessage;
+	private JMenuBar menuBar;
 	
 	public GUI() 
 	{
@@ -196,7 +197,8 @@ public class GUI
 		mainPanel.add(logoutBtn);
 		mainPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{list}));
 		
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
+		menuBar.setVisible(false);
 		frmAdressbuch.setJMenuBar(menuBar);
 		
 		JMenu mnDatei = new JMenu("Datei");
@@ -275,11 +277,13 @@ public class GUI
 	{
 		loginPanel.setVisible(false);
 		mainPanel.setVisible(true);
+		menuBar.setVisible(true);
 	}
 	
 	void openLogin()
 	{
 		mainPanel.setVisible(false);
+		menuBar.setVisible(false);
 		loginPanel.setVisible(true);	
 	}
 	
