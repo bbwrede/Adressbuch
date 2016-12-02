@@ -1,26 +1,23 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.EmptyBorder;
 
-import java.awt.Font;
-import java.text.SimpleDateFormat;
-import java.time.Year;
-import java.util.Date;
-
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
-import javax.swing.JComboBox;
-import java.awt.Cursor;
-import javax.swing.JButton;
 
 public class InputMask extends JFrame
 {
@@ -29,7 +26,6 @@ public class InputMask extends JFrame
 	private JLabel lblNewLabel;
 	private JTextField textField;
 	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
@@ -51,33 +47,17 @@ public class InputMask extends JFrame
 	private JButton btnNewButton;
 	private JSeparator separator_3;
 	private JButton btnX;
+	private JComboBox countries;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args)
-	{
-		EventQueue.invokeLater(new Runnable()
-		{
-			public void run()
-			{
-				try
-				{
-					InputMask frame = new InputMask();
-					frame.setVisible(true);
-				} catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
 	public InputMask()
 	{
+		setAlwaysOnTop(true);
+		setTitle("Neuer Kontakt");
+		
 		setResizable(false);
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -86,10 +66,38 @@ public class InputMask extends JFrame
 		            break;
 		        }
 		    }
-		} catch (Exception e) {
-		    // If Nimbus is not available, you can set the GUI to another look and feel.
+		} catch (Exception e) 
+		{
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
+			{
+		        if ("Windows".equals(info.getName())) 
+		        {
+		            try
+					{
+						UIManager.setLookAndFeel(info.getClassName());
+					} catch (ClassNotFoundException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					} catch (InstantiationException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					} catch (UnsupportedLookAndFeelException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					}
+		            break;
+		        }
+			}
 		}
 		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 250, 560);
 		contentPane = new JPanel();
@@ -119,13 +127,6 @@ public class InputMask extends JFrame
 		textField_1.setColumns(10);
 		textField_1.setBounds(10, 67, 164, 26);
 		contentPane.add(textField_1);
-		
-		textField_2 = new HintTextField("Land");
-		textField_2.setToolTipText("Land bzw. Staat");
-		textField_2.setName("");
-		textField_2.setColumns(10);
-		textField_2.setBounds(10, 200, 164, 26);
-		contentPane.add(textField_2);
 		
 		textField_3 = new HintTextField("PLZ / ZIP");
 		textField_3.setToolTipText("Postleitzahl bzw. ZIP-Code");
@@ -196,7 +197,6 @@ public class InputMask extends JFrame
 		geschlecht.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		geschlecht.setBounds(10, 267, 164, 26);
 		contentPane.add(geschlecht);
-		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{separator, lblNewLabel, textField, textField_1, textField_2, textField_3, textField_4, textField_5, textField_6, textField_7, textField_8, lblAdressdaten, separator_1}));
 		geschlecht.addItem(">> Geschlecht <<");
 		geschlecht.addItem("Männlich");
 		geschlecht.addItem("Weiblich");
@@ -262,6 +262,19 @@ public class InputMask extends JFrame
 		btnX.setBounds(130, 497, 44, 28);
 		contentPane.add(btnX);
 		
+		countries = new JComboBox();
+		countries.setToolTipText("L\u00E4nder");
+		countries.setBounds(10, 200, 164, 26);
+		contentPane.add(countries);
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{separator, lblNewLabel, textField, textField_1, textField_3, textField_4, textField_5, textField_6, textField_7, textField_8, lblAdressdaten, separator_1}));
+		countries.addItem(">> Land <<");
+		Countries cn = new Countries();
+		String [] temp = cn.getLaender();
+		for (int c = 0; c < temp.length; c++)
+		{
+			countries.addItem(temp[c]);
+		}
+		
 		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())); 
 
 		for (int i = year; i > year-120 +1; i--)
@@ -269,6 +282,7 @@ public class InputMask extends JFrame
 			jahr.addItem(Integer.toString(i));
 		}
 		
+		setLocationRelativeTo(null);
 		
 	}
 }

@@ -29,6 +29,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.MatteBorder;
 
@@ -62,8 +63,35 @@ public class GUI
 		            break;
 		        }
 		    }
-		} catch (Exception e) {
-		    // If Nimbus is not available, you can set the GUI to another look and feel.
+		} catch (Exception e) 
+		{
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
+			{
+		        if ("Windows".equals(info.getName())) 
+		        {
+		            try
+					{
+						UIManager.setLookAndFeel(info.getClassName());
+					} catch (ClassNotFoundException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					} catch (InstantiationException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					} catch (IllegalAccessException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					} catch (UnsupportedLookAndFeelException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
+					}
+		            break;
+		        }
+			}
 		}
 		
 		initialize();
