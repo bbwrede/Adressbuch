@@ -1,5 +1,5 @@
-
-public class login {
+public class Login 
+{
 	private String username = "";
 	private String password ="";
 	
@@ -20,7 +20,8 @@ public class login {
 	{
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(String password) 
+	{
 		this.password = password;
 	}
 	

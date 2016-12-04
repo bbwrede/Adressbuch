@@ -181,9 +181,9 @@ public class IOController
 		return neu;
 		
 	}
-		static login readlogindata() throws IOException 
+		static Login readlogindata() throws IOException 
 		{
-			login neu = new login();
+			Login neu = new Login();
 			String username = loginreader.next();
 			String password = loginreader.next();
 			loginreader.next();
@@ -192,7 +192,7 @@ public class IOController
 			return neu;
 		}
 		
-		  void writelogindata(login pLogin ) throws IOException 
+		  void writelogindata(Login pLogin ) throws IOException 
 		{
 		  
 			loginbw.write(pLogin.getUsername());

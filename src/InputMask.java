@@ -97,7 +97,7 @@ public class InputMask extends JFrame
 			}
 		}
 		
-
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 250, 560);
 		contentPane = new JPanel();
