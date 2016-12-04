@@ -10,18 +10,25 @@ import java.util.Scanner;
 
 public class IOController 
 {
+	// Reader und Writer für .jbook
 	private FileWriter fw;
 	private BufferedWriter bw;
 	private Scanner reader;
 	private FileReader fr;
+	//Reader und Writer für .login
+	private FileWriter loginfw;
+	private BufferedWriter loginbw;
+	private static Scanner loginreader;
+	private FileReader loginfr;
+	
 	
 	IOController() throws FileNotFoundException
 	{
-		
+		//saves
 		File dir = new File("saves");
 		dir.mkdir();
 		
-		//Test
+		
 		
 		try 
 		{
@@ -33,6 +40,23 @@ public class IOController
 		bw = new BufferedWriter(fw);
 		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jbook");
 		reader = new Scanner(fr);
+		
+		//login Data
+		File logindir = new File("Login-Data");
+		logindir.mkdir();
+		
+		
+		
+		try 
+		{
+			loginfw = new FileWriter(System.getProperty("user.dir")+"\\saves\\data.login");
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		loginbw = new BufferedWriter(loginfw);
+		loginfr = new FileReader(System.getProperty("user.dir")+"\\saves\\data.login");
+		loginreader = new Scanner(loginfr);
 	}
 	
 	
@@ -157,5 +181,25 @@ public class IOController
 		return neu;
 		
 	}
+		static login readlogindata() throws IOException 
+		{
+			login neu = new login();
+			String username = loginreader.next();
+			String password = loginreader.next();
+			loginreader.next();
+			System.out.println("Username: " +username);
+			System.out.println("password: " +password);
+			return neu;
+		}
 		
+		  void writelogindata(login pLogin ) throws IOException 
+		{
+		  
+			loginbw.write(pLogin.getUsername());
+			loginbw.newLine();
+			loginbw.write(pLogin.getPassword());
+			loginbw.close();
+		}
+		
+		                    
 }

@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -12,7 +13,7 @@ public class Controller extends MouseAdapter implements ActionListener
 {
 	private GUI gui;
 	private ModelController mc;
-	private String password = "1111";
+	private String  password = "1111";
 	private String username = "admin";
 	private InputMask im;
 
@@ -25,8 +26,10 @@ public class Controller extends MouseAdapter implements ActionListener
 		gui.setMouseListeners(this);
 	}
 	
-	void UserAuthentification(String pPassword, String pUsername)
+	void UserAuthentification(String pPassword, String pUsername) 
 	{
+	
+		
 		if (pPassword.equals(password) && pUsername.equals(username))
 		{
 			gui.openMain();
@@ -36,7 +39,8 @@ public class Controller extends MouseAdapter implements ActionListener
 		{
 			gui.showLoginWarning();
 		}
-	}
+		}
+	
 	
 	void updateList()
 	{
@@ -48,10 +52,15 @@ public class Controller extends MouseAdapter implements ActionListener
 		}
 	}
 	
-	public static void main(String[] args) throws FileNotFoundException
+	public static void main(String[] args) throws IOException
 	{
 		new Controller();
+	
 	}
+
+
+		
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e)

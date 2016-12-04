@@ -4,11 +4,13 @@ import java.io.IOException;
 public class ModelController
 {
 	private List<Person> liste;
+	private List<login> logindata;
 	
 	ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
 		test();
+		logindata = new List<login>();
 		
 	}
 	
