@@ -1,6 +1,7 @@
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -22,16 +23,17 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 public class InputMask extends JFrame
 {
 
+	private static final long serialVersionUID = 8760893234879572236L;
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
+	private JTextField nachname;
+	private JTextField vorname;
+	private JTextField plz;
+	private JTextField ort;
+	private JTextField strasse;
+	private JTextField nr;
+	private JTextField zusatz;
+	private JTextField email;
 	private JLabel lblAdressdaten;
 	private JSeparator separator_1;
 	private JSeparator separator;
@@ -42,12 +44,12 @@ public class InputMask extends JFrame
 	private JComboBox tag;
 	private JComboBox jahr;
 	private JLabel lblGeburtsdaten;
-	private HintTextField hintTextField;
+	private HintTextField telefonnummer;
 	private JButton btnSpeichern;
-	private JButton btnNewButton;
+	private JButton btnErweitert;
 	private JSeparator separator_3;
 	private JButton btnX;
-	private JComboBox countries;
+	private JComboBox land;
 
 	/**
 	 * Launch the application.
@@ -113,62 +115,62 @@ public class InputMask extends JFrame
 		lblNewLabel.setBounds(10, 6, 103, 23);
 		contentPane.add(lblNewLabel);
 		
-		textField = new HintTextField("Nachname");
-		textField.setName("");
-		textField.setToolTipText("Nachname");
-		textField.setBounds(10, 41, 164, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nachname = new HintTextField("Nachname");
+		nachname.setName("");
+		nachname.setToolTipText("Nachname");
+		nachname.setBounds(10, 41, 164, 26);
+		contentPane.add(nachname);
+		nachname.setColumns(10);
 		
-		textField_1 = new HintTextField("Vorname");
-		textField_1.setHorizontalAlignment(SwingConstants.LEFT);
-		textField_1.setToolTipText("Vorname");
-		textField_1.setName("");
-		textField_1.setColumns(10);
-		textField_1.setBounds(10, 67, 164, 26);
-		contentPane.add(textField_1);
+		vorname = new HintTextField("Vorname");
+		vorname.setHorizontalAlignment(SwingConstants.LEFT);
+		vorname.setToolTipText("Vorname");
+		vorname.setName("");
+		vorname.setColumns(10);
+		vorname.setBounds(10, 67, 164, 26);
+		contentPane.add(vorname);
 		
-		textField_3 = new HintTextField("PLZ / ZIP");
-		textField_3.setToolTipText("Postleitzahl bzw. ZIP-Code");
-		textField_3.setName("");
-		textField_3.setColumns(10);
-		textField_3.setBounds(10, 123, 61, 26);
-		contentPane.add(textField_3);
+		plz = new HintTextField("PLZ / ZIP");
+		plz.setToolTipText("Postleitzahl bzw. ZIP-Code");
+		plz.setName("");
+		plz.setColumns(10);
+		plz.setBounds(10, 123, 61, 26);
+		contentPane.add(plz);
 		
-		textField_4 = new HintTextField("Ort");
-		textField_4.setToolTipText("Ort bzw. Stadt");
-		textField_4.setName("");
-		textField_4.setColumns(10);
-		textField_4.setBounds(71, 123, 103, 26);
-		contentPane.add(textField_4);
+		ort = new HintTextField("Ort");
+		ort.setToolTipText("Ort bzw. Stadt");
+		ort.setName("");
+		ort.setColumns(10);
+		ort.setBounds(71, 123, 103, 26);
+		contentPane.add(ort);
 		
-		textField_5 = new HintTextField("Strasse");
-		textField_5.setToolTipText("Strasse");
-		textField_5.setName("");
-		textField_5.setColumns(10);
-		textField_5.setBounds(10, 149, 131, 26);
-		contentPane.add(textField_5);
+		strasse = new HintTextField("Strasse");
+		strasse.setToolTipText("Strasse");
+		strasse.setName("");
+		strasse.setColumns(10);
+		strasse.setBounds(10, 149, 131, 26);
+		contentPane.add(strasse);
 		
-		textField_6 = new HintTextField("Nr.");
-		textField_6.setToolTipText("Hausnummer");
-		textField_6.setName("");
-		textField_6.setColumns(10);
-		textField_6.setBounds(142, 149, 32, 26);
-		contentPane.add(textField_6);
+		nr = new HintTextField("Nr.");
+		nr.setToolTipText("Hausnummer");
+		nr.setName("");
+		nr.setColumns(10);
+		nr.setBounds(142, 149, 32, 26);
+		contentPane.add(nr);
 		
-		textField_7 = new HintTextField("Adresszusatz");
-		textField_7.setToolTipText("Adresszusatz");
-		textField_7.setName("");
-		textField_7.setColumns(10);
-		textField_7.setBounds(10, 174, 164, 26);
-		contentPane.add(textField_7);
+		zusatz = new HintTextField("Adresszusatz");
+		zusatz.setToolTipText("Adresszusatz");
+		zusatz.setName("");
+		zusatz.setColumns(10);
+		zusatz.setBounds(10, 174, 164, 26);
+		contentPane.add(zusatz);
 		
-		textField_8 = new HintTextField("E-Mail");
-		textField_8.setToolTipText("E-Mail");
-		textField_8.setName("");
-		textField_8.setColumns(10);
-		textField_8.setBounds(10, 292, 164, 26);
-		contentPane.add(textField_8);
+		email = new HintTextField("E-Mail");
+		email.setToolTipText("E-Mail");
+		email.setName("");
+		email.setColumns(10);
+		email.setBounds(10, 292, 164, 26);
+		contentPane.add(email);
 		
 		lblAdressdaten = new JLabel("Adressdaten:");
 		lblAdressdaten.setFont(new Font("SansSerif", Font.BOLD, 12));
@@ -238,20 +240,20 @@ public class InputMask extends JFrame
 		lblGeburtsdaten.setBounds(13, 356, 218, 16);
 		contentPane.add(lblGeburtsdaten);
 		
-		hintTextField = new HintTextField("Telefonnummer");
-		hintTextField.setToolTipText("Telefonnummer");
-		hintTextField.setName("");
-		hintTextField.setColumns(10);
-		hintTextField.setBounds(10, 318, 164, 26);
-		contentPane.add(hintTextField);
+		telefonnummer = new HintTextField("Telefonnummer");
+		telefonnummer.setToolTipText("Telefonnummer");
+		telefonnummer.setName("");
+		telefonnummer.setColumns(10);
+		telefonnummer.setBounds(10, 318, 164, 26);
+		contentPane.add(telefonnummer);
 		
 		btnSpeichern = new JButton("Speichern");
 		btnSpeichern.setBounds(10, 497, 115, 28);
 		contentPane.add(btnSpeichern);
 		
-		btnNewButton = new JButton("Erweitert...");
-		btnNewButton.setBounds(10, 441, 164, 28);
-		contentPane.add(btnNewButton);
+		btnErweitert = new JButton("Erweitert...");
+		btnErweitert.setBounds(10, 441, 164, 28);
+		contentPane.add(btnErweitert);
 		
 		separator_3 = new JSeparator();
 		separator_3.setBounds(10, 483, 218, 2);
@@ -262,17 +264,17 @@ public class InputMask extends JFrame
 		btnX.setBounds(130, 497, 44, 28);
 		contentPane.add(btnX);
 		
-		countries = new JComboBox();
-		countries.setToolTipText("L\u00E4nder");
-		countries.setBounds(10, 200, 164, 26);
-		contentPane.add(countries);
-		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{separator, lblNewLabel, textField, textField_1, textField_3, textField_4, textField_5, textField_6, textField_7, textField_8, lblAdressdaten, separator_1}));
-		countries.addItem(">> Land <<");
+		land = new JComboBox();
+		land.setToolTipText("L\u00E4nder");
+		land.setBounds(10, 200, 164, 26);
+		contentPane.add(land);
+		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{separator, lblNewLabel, nachname, vorname, plz, ort, strasse, nr, zusatz, email, lblAdressdaten, separator_1}));
+		land.addItem(">> Land <<");
 		Countries cn = new Countries();
 		String [] temp = cn.getLaender();
 		for (int c = 0; c < temp.length; c++)
 		{
-			countries.addItem(temp[c]);
+			land.addItem(temp[c]);
 		}
 		
 		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(new Date())); 
@@ -284,5 +286,61 @@ public class InputMask extends JFrame
 		
 		setLocationRelativeTo(pFrame);
 		
+	}
+	
+	
+	
+	void setActionListeners(ActionListener al)
+	{
+		btnErweitert.addActionListener(al);
+		btnSpeichern.addActionListener(al);
+		btnX.addActionListener(al);
+	}
+	
+	Person getNewPerson()
+	{
+		Person neu = new Person();
+		
+		neu.setNachname(nachname.getText());
+		neu.setVorname(vorname.getText());
+		
+		//Persönliche Daten
+		
+		neu.setPostleitzahl(plz.getText());
+		neu.setOrt(ort.getText());
+		neu.setStrasse(strasse.getText());
+		neu.setHausnummer(nr.getText());
+		neu.setAdresszusatz(zusatz.getText());
+		
+		if (!land.getSelectedItem().toString().equals(">> Land <<"))
+		{
+			neu.setLand(land.getSelectedItem().toString());
+		}
+		
+		if (!geschlecht.getSelectedItem().toString().equals(">> Geschlecht <<")) //Wenn was ausgewählt
+		{
+			neu.setGeschlecht(Person.Geschlecht.valueOf(geschlecht.getSelectedItem().toString()));
+		}
+		
+		neu.setEmail(email.getText());
+		neu.setTelefon(telefonnummer.getText());
+		//Geburtsdaten
+		
+		if (!tag.getSelectedItem().toString().equals("Tag")) //Wenn was ausgewählt
+		{
+			neu.setGeburtstag(Integer.parseInt(tag.getSelectedItem().toString()));
+		}
+		
+		if (!monat.getSelectedItem().toString().equals("Monat")) //Wenn was ausgewählt
+		{
+			neu.setGeburtsmonat(Person.Monat.valueOf(monat.getSelectedItem().toString()));
+		}
+		
+		if (!jahr.getSelectedItem().toString().equals("Jahr")) //Wenn was ausgewählt
+		{
+			neu.setGeburtsjahr(Integer.parseInt(jahr.getSelectedItem().toString()));
+		}
+		
+		return neu;
 	}
 }

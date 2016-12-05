@@ -4,7 +4,22 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Scanner;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 
 
 
@@ -20,10 +35,13 @@ public class IOController
 	private BufferedWriter loginbw;
 	private static Scanner loginreader;
 	private FileReader loginfr;
+	private String username;
 	
 	
-	IOController() throws FileNotFoundException
+	IOController(String pUsername) throws FileNotFoundException
 	{
+		username = pUsername;
+		
 		//saves
 		File dir = new File("saves");
 		dir.mkdir();
@@ -59,55 +77,96 @@ public class IOController
 		loginreader = new Scanner(loginfr);
 	}
 	
-	
-	void saveToFile(Person pPerson) throws IOException
+	SecretKeySpec initEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
+		byte[] key = username.getBytes("UTF-8");
+		MessageDigest sha = MessageDigest.getInstance("SHA-256");
+		key = sha.digest(key);
+		key = Arrays.copyOf(key, 16);
+		SecretKeySpec secretkey = new SecretKeySpec(key, "AES");
+		return secretkey;
+	}
+	
+	
+	
+	String encryptString(String pText) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+	{
+		Cipher cipher = Cipher.getInstance("AES");
+		cipher.init(Cipher.ENCRYPT_MODE, initEncrypt());
+		byte[] encrypted = cipher.doFinal(pText.getBytes());
 		
-		bw.write(pPerson.getNachname());
+		BASE64Encoder myEncoder = new BASE64Encoder();
+		String verschluesselt = myEncoder.encode(encrypted);
+		
+		return verschluesselt;
+	}
+	
+	String decryptString(String pText) throws IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
+	{
+		BASE64Decoder myDecoder2 = new BASE64Decoder();
+		byte[] crypted2 = myDecoder2.decodeBuffer(pText);
+		
+		Cipher cipher2 = Cipher.getInstance("AES");
+		cipher2.init(Cipher.DECRYPT_MODE, initEncrypt());
+		byte[] cipherData2 = cipher2.doFinal(crypted2);
+		String text = new String(cipherData2);
+		
+		return text;
+
+	}
+	
+	
+	
+	void saveToFile(Person pPerson) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+	{
+
+	
+		//bw.write(pPerson.getNachname());
+		bw.write(encryptString(pPerson.getNachname()));
 		bw.newLine();
-		bw.write(pPerson.getVorname());
+		bw.write(encryptString(pPerson.getVorname()));
 		bw.newLine();
-		bw.write(pPerson.getLand());
+		bw.write(encryptString(pPerson.getLand()));
 		bw.newLine();
-		bw.write(pPerson.getPostleitzahl());
+		bw.write(encryptString(pPerson.getPostleitzahl()));
 		bw.newLine();
-		bw.write(pPerson.getOrt());
+		bw.write(encryptString(pPerson.getOrt()));
 		bw.newLine();
-		bw.write(pPerson.getStrasse());
+		bw.write(encryptString(pPerson.getStrasse()));
 		bw.newLine();
-		bw.write(pPerson.getHausnummer());
+		bw.write(encryptString(pPerson.getHausnummer()));
 		bw.newLine();
-		bw.write(pPerson.getAdresszusatz());
+		bw.write(encryptString(pPerson.getAdresszusatz()));
 		bw.newLine();
-		bw.write(pPerson.getEmail());
+		bw.write(encryptString(pPerson.getEmail()));
 		bw.newLine();
-		bw.write(Integer.toString(pPerson.getGroesse()));
+		bw.write(encryptString(Integer.toString(pPerson.getGroesse())));
 		bw.newLine();
-		bw.write(Integer.toString(pPerson.getGewicht()));
+		bw.write(encryptString(Integer.toString(pPerson.getGewicht())));
 		bw.newLine();
-		bw.write(pPerson.getAugenfarbe().toString());
+		bw.write(encryptString(pPerson.getAugenfarbe().toString()));
 		bw.newLine();
-		bw.write(pPerson.getTelefon());
+		bw.write(encryptString(pPerson.getTelefon()));
 		bw.newLine();
-		bw.write(pPerson.getTelefonMobil());
+		bw.write(encryptString(pPerson.getTelefonMobil()));
 		bw.newLine();
-		bw.write(pPerson.getNationalitaet());
+		bw.write(encryptString(pPerson.getNationalitaet()));
 		bw.newLine();
-		bw.write(pPerson.getFirma());
+		bw.write(encryptString(pPerson.getFirma()));
 		bw.newLine();
-		bw.write(pPerson.getReligion().toString());
+		bw.write(encryptString(pPerson.getReligion().toString()));
 		bw.newLine();
-		bw.write(pPerson.getHaarfarbe().toString());
+		bw.write(encryptString(pPerson.getHaarfarbe().toString()));
 		bw.newLine();
-		bw.write(pPerson.getHautfarbe().toString());
+		bw.write(encryptString(pPerson.getHautfarbe().toString()));
 		bw.newLine();
-		bw.write(pPerson.getGeschlecht().toString());
+		bw.write(encryptString(pPerson.getGeschlecht().toString()));
 		bw.newLine();
-		bw.write(Integer.toString(pPerson.getGeburtsjahr()));
+		bw.write(encryptString(Integer.toString(pPerson.getGeburtsjahr())));
 		bw.newLine();
-		bw.write(pPerson.getGeburtsmonat().toString());
+		bw.write(encryptString(pPerson.getGeburtsmonat().toString()));
 		bw.newLine();
-		bw.write(Integer.toString(pPerson.getGeburtstag()));
+		bw.write(encryptString(Integer.toString(pPerson.getGeburtstag())));
 		bw.newLine();
 		bw.write(";");
 		bw.newLine();
@@ -121,32 +180,32 @@ public class IOController
 	}
 	
 	
-	Person ReadPerson()
+	Person ReadPerson() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		Person neu = new Person();
-		String nachname = reader.next();
-		String vorname = reader.next();
-		String land = reader.next();
-		String postleitzahl = reader.next();
-		String ort = reader.next();
-		String strasse = reader.next();
-		String hausnummer = reader.next();
-		String adresszusatz = reader.next();
-		String email = reader.next();
-		int groesse = Integer.parseInt(reader.next());
-		int gewicht = Integer.parseInt(reader.next());
-		Person.Farbe augenfarbe = Person.Farbe.valueOf(reader.next());
-		String telefon = reader.next();
-		String telefonMobil = reader.next();
-		String nationalitaet = reader.next();
-		String firma = reader.next();
-		Person.Religion religion = Person.Religion.valueOf(reader.next());
-		Person.Farbe haarfarbe = Person.Farbe.valueOf(reader.next());
-		Person.Farbe hautfarbe = Person.Farbe.valueOf(reader.next());
-		Person.Geschlecht geschlecht = Person.Geschlecht.valueOf(reader.next());
-		int geburtsjahr = Integer.parseInt(reader.next());
-		Person.Monat geburtsmonat = Person.Monat.valueOf(reader.next());
-		int geburtstag = Integer.parseInt(reader.next());
+		String nachname = decryptString(reader.next());
+		String vorname = decryptString(reader.next());
+		String land = decryptString(reader.next());
+		String postleitzahl = decryptString(reader.next());
+		String ort = decryptString(reader.next());
+		String strasse = decryptString(reader.next());
+		String hausnummer = decryptString(reader.next());
+		String adresszusatz = decryptString(reader.next());
+		String email = decryptString(reader.next());
+		int groesse = Integer.parseInt(decryptString(reader.next()));
+		int gewicht = Integer.parseInt(decryptString(reader.next()));
+		Person.Farbe augenfarbe = Person.Farbe.valueOf(decryptString(reader.next()));
+		String telefon = decryptString(reader.next());
+		String telefonMobil = decryptString(reader.next());
+		String nationalitaet = decryptString(reader.next());
+		String firma = decryptString(reader.next());
+		Person.Religion religion = Person.Religion.valueOf(decryptString(reader.next()));
+		Person.Farbe haarfarbe = Person.Farbe.valueOf(decryptString(reader.next()));
+		Person.Farbe hautfarbe = Person.Farbe.valueOf(decryptString(reader.next()));
+		Person.Geschlecht geschlecht = Person.Geschlecht.valueOf(decryptString(reader.next()));
+		int geburtsjahr = Integer.parseInt(decryptString(reader.next()));
+		Person.Monat geburtsmonat = Person.Monat.valueOf(decryptString(reader.next()));
+		int geburtstag = Integer.parseInt(decryptString(reader.next()));
 		reader.next();
 		
 		neu.setNachname(nachname);

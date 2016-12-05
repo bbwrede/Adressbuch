@@ -1,5 +1,11 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 public class ModelController
 {
@@ -9,7 +15,6 @@ public class ModelController
 	ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
-		test();
 		logindata = new List<Login>();
 		
 	}
@@ -93,64 +98,17 @@ public class ModelController
 		return liste.getContent();	
 	}
 	
-
-	void test() throws FileNotFoundException
+	void removeObjectAt(int i)
 	{
-		IOController ioc =  new IOController();
-		
-		Person p1 = new Person();
-		Person p2 = new Person();
-		Person p3 = new Person();
-		Person p4 = new Person();
-		Person p5 = new Person();
-		Person p6 = new Person();
-		Person p7 = new Person();
-		Person p8 = new Person();
-		p1.setNachname("Meier");
-		p2.setNachname("Lohse");
-		p3.setNachname("Behler");
-		p4.setNachname("Esders");
-		p5.setNachname("Knigge");
-		p6.setNachname("Lahsse");		
-		p7.setNachname("Lahsue");
-		p8.setNachname("Lohsee");
-		
-		p1.setVorname("Peter");
-		p2.setVorname("Hans");
-		p3.setVorname("Giesela");
-		p4.setVorname("Gerholt");
-		p5.setVorname("Adolf");
-		p6.setVorname("Reiner");		
-		p7.setVorname("Friedhelm");
-		p8.setVorname("Ruth");
-		
-		sortIn(p1);
-		sortIn(p2);
-		sortIn(p3);
-		sortIn(p4);
-		sortIn(p5);
-		sortIn(p6);
-		sortIn(p7);
-		sortIn(p8);
-		ausgabe();
-		
-		try
+		liste.toFirst();
+		for (int c =0; c<i; c++)
 		{
-			ioc.saveToFile(p1);
-			ioc.saveToFile(p2);
-			ioc.saveToFile(p3);
-			ioc.closeWriteStream();
-			
+			liste.next();
 		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		
-		Person temp = ioc.ReadPerson();
-		System.out.println(temp.getNachname() +" "+ temp.getVorname());
-		
+		liste.remove();
 	}
+	
+
 	void ausgabe()
 	{
 		liste.toFirst();

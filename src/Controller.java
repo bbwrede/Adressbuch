@@ -74,9 +74,10 @@ public class Controller extends MouseAdapter implements ActionListener
 		{
 			gui.openLogin();
 		}
-		if (cmd.equals("Neu..."))
+		if (cmd.equals("Neu...") || cmd.equals("Neu"))
 		{
 			im = new InputMask(gui.getFrame());
+			im.setActionListeners(this);
 			im.setVisible(true);
 		}
 		if (cmd.equals("Hilfe"))
@@ -84,6 +85,23 @@ public class Controller extends MouseAdapter implements ActionListener
 			gui.showLoginInfo();
 		}
 		
+		if (cmd.equals("X"))
+		{
+			im.dispose();
+		}
+		
+		if (cmd.equals("Erweitert..."))
+		{
+			System.out.println("Erweitert...");
+		}
+		
+		if (cmd.equals("Speichern"))
+		{
+			mc.sortIn(im.getNewPerson());
+			im.dispose();
+			updateList();
+		}
+
 	}
 	
 

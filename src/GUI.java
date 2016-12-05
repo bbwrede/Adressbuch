@@ -54,6 +54,7 @@ public class GUI
 	private JLabel loginMessage;
 	private JMenuBar menuBar;
 	private JButton btnNeu;
+	private JMenuItem mntmNeu;
 	
 	public GUI() 
 	{
@@ -235,7 +236,7 @@ public class GUI
 		mnDatei.setLocale(Locale.GERMAN);
 		menuBar.add(mnDatei);
 		
-		JMenuItem mntmNeu = new JMenuItem("Neu");
+		mntmNeu = new JMenuItem("Neu");
 		mntmNeu.setHorizontalTextPosition(SwingConstants.CENTER);
 		mntmNeu.setHorizontalAlignment(SwingConstants.LEFT);
 		mnDatei.add(mntmNeu);
@@ -285,6 +286,7 @@ public class GUI
 		hilfeBtn.addActionListener(al);
 		logoutBtn.addActionListener(al);
 		btnNeu.addActionListener(al);
+		mntmNeu.addActionListener(al);
 		
 	}
 	
