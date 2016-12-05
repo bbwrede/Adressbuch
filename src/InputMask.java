@@ -317,9 +317,15 @@ public class InputMask extends JFrame
 			neu.setLand(land.getSelectedItem().toString());
 		}
 		
-		if (!geschlecht.getSelectedItem().toString().equals(">> Geschlecht <<")) //Wenn was ausgewählt
+		if (!geschlecht.getSelectedItem().toString().equals(">> Geschlecht <<"))
 		{
-			neu.setGeschlecht(Person.Geschlecht.valueOf(geschlecht.getSelectedItem().toString()));
+			switch (geschlecht.getSelectedItem().toString())
+			{
+				case "Männlich": neu.setGeschlecht(Person.Geschlecht.MAENNLICH);
+				case "Weiblich": neu.setGeschlecht(Person.Geschlecht.WEIBLICH);
+				case "Sonstiges": neu.setGeschlecht(Person.Geschlecht.SONSTIGES);
+				case "Unbekannt": neu.setGeschlecht(Person.Geschlecht.UNBEKANNT);
+			}
 		}
 		
 		neu.setEmail(email.getText());
