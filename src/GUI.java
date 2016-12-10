@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
@@ -55,6 +56,8 @@ public class GUI
 	private JMenuBar menuBar;
 	private JButton btnNeu;
 	private JMenuItem mntmNeu;
+	private JMenuItem mntmSpeichern;
+	private JMenuItem mntmLaden;
 	
 	public GUI() 
 	{
@@ -241,9 +244,12 @@ public class GUI
 		mntmNeu.setHorizontalAlignment(SwingConstants.LEFT);
 		mnDatei.add(mntmNeu);
 		
-		JMenuItem mntmSpeichern = new JMenuItem("Speichern");
+		mntmSpeichern = new JMenuItem("Speichern");
 		mntmSpeichern.setHorizontalAlignment(SwingConstants.LEFT);
 		mnDatei.add(mntmSpeichern);
+		
+		mntmLaden = new JMenuItem("Laden");
+		mnDatei.add(mntmLaden);
 		
 		JMenu mnBearbeiten = new JMenu("Bearbeiten");
 		menuBar.add(mnBearbeiten);
@@ -288,6 +294,19 @@ public class GUI
 		btnNeu.addActionListener(al);
 		mntmNeu.addActionListener(al);
 		
+	}
+	
+	void setMenuListeners(ActionListener al)
+	{
+		mntmNeu.addActionListener(al);
+		mntmSpeichern.addActionListener(al);
+		mntmLaden.addActionListener(al);
+	}
+	
+	void setKeyListeners(KeyListener kl)
+	{
+		usernameField.addKeyListener(kl);
+		passwordField.addKeyListener(kl);
 	}
 	
 	void setMouseListeners(MouseAdapter ma)

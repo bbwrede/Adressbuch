@@ -32,61 +32,26 @@ public class ModelController
 	    return i;
 	}
 	
-	
 	void sortIn(Person neu)
 	{
 		liste.toFirst();
 		
-		OuterLoop:
 		while (liste.hasAccess())
 		{
-			int i = 0;
-			char x = neu.getNachname().charAt(i);
-			char y = liste.getContent().getNachname().charAt(i);
-			
-			if (Character.toLowerCase(y) > Character.toLowerCase(x))	
+			if (liste.getContent().getNachname().compareTo(neu.getNachname()) > 0)
 			{
 				liste.insert(neu);
-				break OuterLoop;
-			}
-			
-			while (Character.toLowerCase(x) == Character.toLowerCase(y))
-			{
-				i++;
-				if (neu.getNachname().length() > i+1)
-				x = neu.getNachname().charAt(i);
-				else
-				{
-					liste.next();
-					liste.insert(neu);
-					break OuterLoop;
-				}
-					
-				if (liste.getContent().getNachname().length() > i+1)
-				y = liste.getContent().getNachname().charAt(i);
-				else
-				{
-					liste.next();
-					liste.insert(neu);
-					break OuterLoop;
-				}
-				
-				if (Character.toLowerCase(y) > Character.toLowerCase(x))	
-				{
-					liste.insert(neu);
-					break OuterLoop;
-				}
+				break;
 			}
 			liste.next();
 		}
 		
-		if (liste.hasAccess() == false)
+		if (!liste.hasAccess())
 		{
 			liste.append(neu);
 		}
 		
 	}
-	
 	
 	Person getObjectAt(int i)
 	{
@@ -108,7 +73,20 @@ public class ModelController
 		liste.remove();
 	}
 	
-
+	List<Person> getList()
+	{
+		return liste;
+	}
+	
+	void removeListElements()
+	{
+		liste.toFirst();
+		while (liste.hasAccess())
+		{
+			liste.remove();
+		}
+	}
+	
 	void ausgabe()
 	{
 		liste.toFirst();
@@ -117,5 +95,10 @@ public class ModelController
 			System.out.println(liste.getContent().getNachname());
 			liste.next();
 		}
+	}
+	
+	void setList(List<Person> pList)
+	{
+		liste = pList;
 	}
 }

@@ -17,6 +17,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.sun.javafx.geom.PickRay;
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -41,7 +43,11 @@ public class IOController
 	IOController(String pUsername) throws FileNotFoundException
 	{
 		username = pUsername;
-		
+	}
+	
+	
+	void initWriter() throws FileNotFoundException
+	{
 		//saves
 		File dir = new File("saves");
 		dir.mkdir();
@@ -55,9 +61,9 @@ public class IOController
 		{
 			e.printStackTrace();
 		}
+		
 		bw = new BufferedWriter(fw);
-		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jbook");
-		reader = new Scanner(fr);
+		
 		
 		//login Data
 		File logindir = new File("Login-Data");
@@ -72,12 +78,19 @@ public class IOController
 		{
 			e.printStackTrace();
 		}
+		
 		loginbw = new BufferedWriter(loginfw);
 		loginfr = new FileReader(System.getProperty("user.dir")+"\\saves\\data.login");
 		loginreader = new Scanner(loginfr);
 	}
 	
-	SecretKeySpec initEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
+	void initReader() throws FileNotFoundException
+	{
+		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jbook");
+		reader = new Scanner(fr);
+	}
+	
+	private SecretKeySpec initEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
 		byte[] key = username.getBytes("UTF-8");
 		MessageDigest sha = MessageDigest.getInstance("SHA-256");
@@ -89,7 +102,7 @@ public class IOController
 	
 	
 	
-	String encryptString(String pText) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+	private String encryptString(String pText) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
 		Cipher cipher = Cipher.getInstance("AES");
 		cipher.init(Cipher.ENCRYPT_MODE, initEncrypt());
@@ -101,7 +114,7 @@ public class IOController
 		return verschluesselt;
 	}
 	
-	String decryptString(String pText) throws IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
+	private String decryptString(String pText) throws IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
 	{
 		BASE64Decoder myDecoder2 = new BASE64Decoder();
 		byte[] crypted2 = myDecoder2.decodeBuffer(pText);
@@ -115,7 +128,23 @@ public class IOController
 
 	}
 	
-	
+	int getLines() throws FileNotFoundException
+	{
+		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jbook");
+		Scanner tempreader = new Scanner(tempfr);
+		
+		int lines = 0;
+		while (tempreader.hasNextLine())
+		{
+			tempreader.nextLine();
+			lines++;
+			
+		}
+		System.out.println(lines);
+		tempreader.close();
+		return lines;
+		
+	}
 	
 	void saveToFile(Person pPerson) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
@@ -180,7 +209,7 @@ public class IOController
 	}
 	
 	
-	Person ReadPerson() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	Person readPerson() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		Person neu = new Person();
 		String nachname = decryptString(reader.next());
@@ -240,25 +269,31 @@ public class IOController
 		return neu;
 		
 	}
-		static Login readlogindata() throws IOException 
-		{
-			Login neu = new Login();
-			String username = loginreader.next();
-			String password = loginreader.next();
-			loginreader.next();
-			System.out.println("Username: " +username);
-			System.out.println("password: " +password);
-			return neu;
-		}
+	
+	void closeReader()
+	{
+		reader.close();
+	}
+	
+	static Login readlogindata() throws IOException 
+	{
+		Login neu = new Login();
+		String username = loginreader.next();
+		String password = loginreader.next();
+		loginreader.next();
+		System.out.println("Username: " +username);
+		System.out.println("password: " +password);
+		return neu;
+	}
 		
-		  void writelogindata(Login pLogin ) throws IOException 
-		{
+		 void writelogindata(Login pLogin ) throws IOException 
+	{
 		  
-			loginbw.write(pLogin.getUsername());
-			loginbw.newLine();
-			loginbw.write(pLogin.getPassword());
-			loginbw.close();
-		}
+		loginbw.write(pLogin.getUsername());
+		loginbw.newLine();
+		loginbw.write(pLogin.getPassword());
+		loginbw.close();
+	}
 		
 		                    
 }
