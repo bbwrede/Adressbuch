@@ -17,8 +17,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.sun.javafx.geom.PickRay;
-
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -223,14 +221,14 @@ public class IOController
 		String email = decryptString(reader.next());
 		int groesse = Integer.parseInt(decryptString(reader.next()));
 		int gewicht = Integer.parseInt(decryptString(reader.next()));
-		Person.Farbe augenfarbe = Person.Farbe.valueOf(decryptString(reader.next()));
+		Person.Augenfarbe augenfarbe = Person.Augenfarbe.valueOf(decryptString(reader.next()));
 		String telefon = decryptString(reader.next());
 		String telefonMobil = decryptString(reader.next());
 		String nationalitaet = decryptString(reader.next());
 		String firma = decryptString(reader.next());
 		Person.Religion religion = Person.Religion.valueOf(decryptString(reader.next()));
-		Person.Farbe haarfarbe = Person.Farbe.valueOf(decryptString(reader.next()));
-		Person.Farbe hautfarbe = Person.Farbe.valueOf(decryptString(reader.next()));
+		Person.Haarfarbe haarfarbe = Person.Haarfarbe.valueOf(decryptString(reader.next()));
+		Person.Hautfarbe hautfarbe = Person.Hautfarbe.valueOf(decryptString(reader.next()));
 		Person.Geschlecht geschlecht = Person.Geschlecht.valueOf(decryptString(reader.next()));
 		int geburtsjahr = Integer.parseInt(decryptString(reader.next()));
 		Person.Monat geburtsmonat = Person.Monat.valueOf(decryptString(reader.next()));

@@ -13,10 +13,9 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 
 @SuppressWarnings("rawtypes")
-public class Controller extends MouseAdapter implements ActionListener
+public class Controller extends MouseAdapter
 {	
 	private GUI gui;
 	private ModelController mc;
@@ -24,6 +23,7 @@ public class Controller extends MouseAdapter implements ActionListener
 	private String username = "admin";
 	private InputMask im;
 	private ActionListener menuAl;
+	private ActionListener al;
 	private KeyListener loginKl;
 	private IOController ioc = new IOController(username);
 
@@ -34,7 +34,7 @@ public class Controller extends MouseAdapter implements ActionListener
 		mc = new ModelController();
 		initLoginKeyListener();
 		initMenuActionListener();
-		gui.setActionListeners(this);
+		initActionListener();
 		gui.setMouseListeners(this);
 	}
 	
@@ -73,48 +73,59 @@ public class Controller extends MouseAdapter implements ActionListener
 
 		
 	
-
-	@Override
-	public void actionPerformed(ActionEvent e)
+	void initActionListener()
 	{
-		String cmd = e.getActionCommand();
-		if (cmd.equals("Login"))
+		al = new ActionListener()
 		{
-			UserAuthentification(gui.getPassword(), gui.getUsername());	
-		}
-		if (cmd.equals("Logout"))
-		{
-			gui.openLogin();
-		}
-		if (cmd.equals("Neu..."))
-		{
-			im = new InputMask(gui.getFrame());
-			im.setActionListeners(this);
-			im.setVisible(true);
-		}
-		if (cmd.equals("Hilfe"))
-		{
-			gui.showLoginInfo();
-		}
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				String cmd = e.getActionCommand();
+				if (cmd.equals("Login"))
+				{
+					UserAuthentification(gui.getPassword(), gui.getUsername());	
+				}
+				if (cmd.equals("Logout"))
+				{
+					gui.openLogin();
+				}
+				if (cmd.equals("Neu..."))
+				{
+					im = new InputMask(gui.getFrame());
+					im.setActionListeners(al);
+					im.setVisible(true);
+				}
+				if (cmd.equals("Hilfe"))
+				{
+					gui.showLoginInfo();
+				}
+				
+				if (cmd.equals("X"))
+				{
+					im.dispose();
+				}
+				
+				if (cmd.equals("Erweitert..."))
+				{
+					im.openAdvanced();
+				}
+				
+				if (cmd.equals("Zurück..."))
+				{
+					im.openMain();
+				}
+				
+				if (cmd.equals("Speichern"))
+				{
+					mc.sortIn(im.getNewPerson());
+					im.dispose();
+					updateList();
+				}
+				
 		
-		if (cmd.equals("X"))
-		{
-			im.dispose();
-		}
-		
-		if (cmd.equals("Erweitert..."))
-		{
-			System.out.println("Erweitert...");
-		}
-		
-		if (cmd.equals("Speichern"))
-		{
-			mc.sortIn(im.getNewPerson());
-			im.dispose();
-			updateList();
-		}
-		
-
+			}
+		};
+		gui.setActionListeners(al);
 	}
 	
 	void initMenuActionListener()
@@ -145,7 +156,7 @@ public class Controller extends MouseAdapter implements ActionListener
 				if (cmd.equals("Neu"))
 				{
 					im = new InputMask(gui.getFrame());
-					im.setActionListeners(this);
+					im.setActionListeners(al);
 					im.setVisible(true);
 				}
 				
@@ -239,7 +250,6 @@ public class Controller extends MouseAdapter implements ActionListener
 		int number = ioc.getLines();
 		number = number/24;
 		
-		System.out.println(number);
 	
 		for (int i = 0; i < number; i++)
 		{
@@ -247,8 +257,6 @@ public class Controller extends MouseAdapter implements ActionListener
 		}
 		
 		updateList();
-		
-		//ioc.closeReader();
 		
 		
 	}

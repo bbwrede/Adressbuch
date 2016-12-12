@@ -1,33 +1,34 @@
-/**
-  *
-  * Beschreibung
-  *
-  * @version 1.0 vom 12.09.2016
-  * @author 
-  */
+public class Person 
+{
   
-
-
-public class Person {
-  
-  public enum Farbe
+  public enum Haarfarbe
   {
-    SCHWARZ, WEISS, BRAUN, GRUEN, BLAU, GRAU, ROT, GELB, LILA, ORANGE, UNBEKANNT
+    Schwarz, Weiß, Braun, Blond, Grün, Blau, Grau, Rot, Gelb, Lila, Orange, unbekannt
+  }
+  
+  public enum Hautfarbe
+  {
+    Schwarz, Weiß, unbekannt
+  }
+  
+  public enum Augenfarbe
+  {
+    Braun, Grün, Blau, Grau, unbekannt
   }
   
   public enum Geschlecht
   {
-    MAENNLICH, WEIBLICH, SONSTIGES, UNBEKANNT
+    Männlich, Weiblich, Sonstiges, unbekannt
   }
   
   public enum Religion
   {
-    MUSLIMISCH, KATHOLISCH, EVANGELISCH, JUEDISCH, ATHEISTISCH, UNBEKANNT
+    Muslimisch, Katholisch, Evangelisch, Jüdisch, Atheistisch, unbekannt
   }
   
   public enum Monat
   {
-    JANUAR, FEBRUAR, MÄRZ, APRIL, MAI, JUNI, JULI, AUGUST, SEPTEMBER, OKTOBER, NOVEMBER, DEZEMBER, UNBEKANNT
+    Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember, unbekannt
   }
   
   // Anfang Attribute
@@ -42,37 +43,41 @@ public class Person {
   private String email = "-";
   private int groesse = 0;
   private int gewicht = 0;
-  private Farbe augenfarbe = Farbe.UNBEKANNT;
+  private Augenfarbe augenfarbe = Augenfarbe.unbekannt;
   private String telefon = "-";
   private String telefonMobil = "-";
   private String nationalitaet = "-";
   private String firma = "-";
-  private Religion religion = Religion.UNBEKANNT;
-  private Farbe haarfarbe = Farbe.UNBEKANNT;
-  private Farbe hautfarbe = Farbe.UNBEKANNT;
-  private Geschlecht geschlecht = Geschlecht.UNBEKANNT;
+  private Religion religion = Religion.unbekannt;
+  private Haarfarbe haarfarbe = Haarfarbe.unbekannt;
+  private Hautfarbe hautfarbe = Hautfarbe.unbekannt;
+  private Geschlecht geschlecht = Geschlecht.unbekannt;
   private int geburtsjahr = 0;
-  private Monat geburtsmonat = Monat.UNBEKANNT;
+  private Monat geburtsmonat = Monat.unbekannt;
   private int geburtstag = 0;
   // Ende Attribute
   
   // Anfang Methoden
-  public String getVorname() {
+  public String getVorname() 
+  {
     return vorname;
   }
 
   
-  public void setVorname(String vorname) {
+  public void setVorname(String vorname) 
+  {
     this.vorname = vorname;
   }
 
   
-  public String getNachname() {
+  public String getNachname() 
+  {
     return nachname;
   }
 
   
-  public void setNachname(String nachname) {
+  public void setNachname(String nachname) 
+  {
     this.nachname = nachname;
   }
 
@@ -171,12 +176,12 @@ public class Person {
   }
 
   
-  public Farbe getAugenfarbe() {
+  public Augenfarbe getAugenfarbe() {
     return augenfarbe;
   }
 
   
-  public void setAugenfarbe(Farbe augenfarbe) {
+  public void setAugenfarbe(Augenfarbe augenfarbe) {
     this.augenfarbe = augenfarbe;
   }
 
@@ -226,21 +231,21 @@ public class Person {
   }
 
   
-  public Farbe getHaarfarbe() {
+  public Haarfarbe getHaarfarbe() {
     return haarfarbe;
   }
 
   
-  public void setHaarfarbe(Farbe haarfarbe) {
+  public void setHaarfarbe(Haarfarbe haarfarbe) {
     this.haarfarbe = haarfarbe;
   }
 
   
-  public Farbe getHautfarbe() {
+  public Hautfarbe getHautfarbe() {
     return hautfarbe;
   }
 
-  public void setHautfarbe(Farbe hautfarbe) {
+  public void setHautfarbe(Hautfarbe hautfarbe) {
     this.hautfarbe = hautfarbe;
   }
 
