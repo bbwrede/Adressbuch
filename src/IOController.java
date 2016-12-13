@@ -36,11 +36,13 @@ public class IOController
 	private static Scanner loginreader;
 	private FileReader loginfr;
 	private String username;
+	private String password;
 	
-	
-	IOController(String pUsername) throws FileNotFoundException
+	IOController(String pUsername, String pPassword) throws FileNotFoundException
 	{
 		username = pUsername;
+		password = pPassword;
+		
 	}
 	
 	
@@ -90,7 +92,8 @@ public class IOController
 	
 	private SecretKeySpec initEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
-		byte[] key = username.getBytes("UTF-8");
+		String keytext = username + password;
+		byte[] key = keytext.getBytes("UTF-8");
 		MessageDigest sha = MessageDigest.getInstance("SHA-256");
 		key = sha.digest(key);
 		key = Arrays.copyOf(key, 16);
@@ -273,7 +276,7 @@ public class IOController
 		reader.close();
 	}
 	
-	static Login readlogindata() throws IOException 
+	Login readlogindata() throws IOException 
 	{
 		Login neu = new Login();
 		String username = loginreader.next();
@@ -284,7 +287,7 @@ public class IOController
 		return neu;
 	}
 		
-		 void writelogindata(Login pLogin ) throws IOException 
+	void writelogindata(Login pLogin ) throws IOException 
 	{
 		  
 		loginbw.write(pLogin.getUsername());

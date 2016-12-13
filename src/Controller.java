@@ -25,7 +25,7 @@ public class Controller extends MouseAdapter
 	private ActionListener menuAl;
 	private ActionListener al;
 	private KeyListener loginKl;
-	private IOController ioc = new IOController(username);
+	private IOController ioc = new IOController(username, password);
 
 	
 	Controller() throws FileNotFoundException 

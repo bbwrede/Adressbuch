@@ -37,6 +37,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.MatteBorder;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import javax.swing.JTabbedPane;
+import javax.swing.JInternalFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.JDesktopPane;
+import javax.swing.JToolBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -58,6 +65,7 @@ public class GUI
 	private JMenuItem mntmNeu;
 	private JMenuItem mntmSpeichern;
 	private JMenuItem mntmLaden;
+	private JTextField textField;
 	
 	public GUI() 
 	{
@@ -187,26 +195,30 @@ public class GUI
 		loginMessage.setBounds(237, 476, 327, 16);
 		loginPanel.add(loginMessage);
 		mainPanel.setName("");
-		mainPanel.setToolTipText("");
+		mainPanel.setToolTipText(null);
 		mainPanel.setBackground(UIManager.getColor("InternalFrame.minimizeIconBackground"));
 		frmAdressbuch.getContentPane().add(mainPanel, "name_926217422352088");
 		
 		list = new JList(listmodel);
-		list.setBounds(10, 41, 375, 488);
+		list.setFont(new Font("SansSerif", Font.BOLD, 18));
+		list.setBounds(10, 41, 324, 488);
 		list.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		list.setMinimumSize(new Dimension(200, 0));
 		
 		JLabel lblAdressliste = new JLabel("Adressliste");
+		lblAdressliste.setFont(new Font("SansSerif", Font.BOLD, 16));
 		lblAdressliste.setBounds(10, 16, 99, 14);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(69, 24, 705, 13);
+		separator.setBounds(106, 24, 668, 13);
 		
 		btnNeu = new JButton("Neu...");
-		btnNeu.setBounds(440, 39, 105, 23);
+		btnNeu.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnNeu.setBounds(337, 64, 120, 40);
 		
 		JButton btnBearbeiten = new JButton("Bearbeiten...");
-		btnBearbeiten.setBounds(440, 73, 106, 23);
+		btnBearbeiten.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnBearbeiten.setBounds(337, 104, 120, 40);
 		mainPanel.setLayout(null);
 		mainPanel.add(lblAdressliste);
 		mainPanel.add(separator);
@@ -215,11 +227,12 @@ public class GUI
 		mainPanel.add(btnBearbeiten);
 		
 		JButton btnSortieren = new JButton("Sortieren");
-		btnSortieren.setBounds(440, 197, 105, 23);
+		btnSortieren.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnSortieren.setBounds(337, 199, 120, 40);
 		mainPanel.add(btnSortieren);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(440, 166, 105, 20);
+		comboBox.setBounds(337, 156, 120, 32);
 		mainPanel.add(comboBox);
 		
 		logoutBtn = new JButton("Logout");
@@ -229,6 +242,11 @@ public class GUI
 		});
 		logoutBtn.setBounds(672, 38, 105, 23);
 		mainPanel.add(logoutBtn);
+		
+		textField = new HintTextField("Suchen");
+		textField.setBounds(480, 44, 102, 28);
+		mainPanel.add(textField);
+		textField.setColumns(10);
 		mainPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{list}));
 		
 		menuBar = new JMenuBar();
