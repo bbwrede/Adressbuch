@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.swing.JList;
+import javax.swing.JTable;
 
 @SuppressWarnings("rawtypes")
 public class Controller extends MouseAdapter
@@ -36,6 +36,8 @@ public class Controller extends MouseAdapter
 		initMenuActionListener();
 		initActionListener();
 		gui.setMouseListeners(this);
+		updateList();
+		
 	}
 	
 	void UserAuthentification(String pPassword, String pUsername) 
@@ -53,8 +55,18 @@ public class Controller extends MouseAdapter
 		}
 		}
 	
-	
 	void updateList()
+	{
+		gui.removeTableElements();
+		for (int i = 0; i <mc.length(); i++)
+		{
+			gui.setTableData(mc.getObjectAt(i));
+		}
+		
+	}
+	
+	
+	void gupdateList()
 	{
 		gui.removeListElements();
 		
@@ -120,6 +132,7 @@ public class Controller extends MouseAdapter
 					mc.sortIn(im.getNewPerson());
 					im.dispose();
 					updateList();
+					gui.initTable();
 				}
 				
 		
@@ -215,13 +228,13 @@ public class Controller extends MouseAdapter
 	
 	public void mouseClicked(MouseEvent e)
 	{
-		JList liste = gui.getList(); 
-		JList temp = (JList)e.getSource();
+		JTable table = (JTable)e.getSource();
+		int index = 0;
 		
 		if (e.getClickCount() == 2) 
 		{
-            int index = liste.locationToIndex(e.getPoint());
-            System.out.println(mc.getObjectAt(index).getNachname());
+           index = table.getSelectedRow();
+           System.out.println(mc.getObjectAt(index).getNachname());
 		}
 	}
 	
