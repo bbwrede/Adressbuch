@@ -67,27 +67,12 @@ public class Controller extends MouseAdapter
 		
 	}
 	
-	
-	void gupdateList()
-	{
-		gui.removeListElements();
-		
-		for (int i = 0; i <mc.length(); i++)
-		{
-			gui.addElement(mc.getObjectAt(i).getNachname()+", "+ mc.getObjectAt(i).getVorname());
-		}
-	}
-	
 	public static void main(String[] args) throws IOException
 	{
 		new Controller();
-		createVCard("Wrede","Bastian","016494949459959","bbwrede@gmail.com");
-	
 	}
 
 
-		
-	
 	void initActionListener()
 	{
 		al = new ActionListener()
@@ -252,6 +237,8 @@ public class Controller extends MouseAdapter
 			temp.next();
 		}
 		
+		ioc.createVCard(mc.getObjectAt(0));
+		
 		ioc.closeWriteStream();
 	}
 	
@@ -276,62 +263,10 @@ public class Controller extends MouseAdapter
 		
 		
 	}
+
 	
-	
-	//VCard
-	static void createVCard(String pName, String pVorname, String pTel, String pEmail) {
-		BufferedWriter VCardbw = null;
-		FileWriter VCardfw = null;
-
-		try {
-
-			/* Test:
-			 * String name = "Wrede";
-			*  String vorname ="Bastian";
-			*  String tel = "+49-404-555-1212\;
-			*  String email ="bbwrede@gmail.com";
-			*/
-			
-			VCardfw = new FileWriter(System.getProperty("user.dir")+"\\VCard\\"+pName+".vcf");
-			VCardbw = new BufferedWriter(VCardfw);
-			
-			VCardbw.write("BEGIN:VCARD\n");
-			VCardbw.write("VERSION:4.0\n");
-			VCardbw.write("N:"+pName+"\n");
-			VCardbw.write("FN:"+ pVorname+"\n");
-			VCardbw.write("TEL;TYPE=home,voice;VALUE=uri:tel:"+ pTel+"\n");
-			VCardbw.write("EMAIL:"+pEmail+"\n");
-			VCardbw.write("END:VCARD\n");
-			
-
-			System.out.println("Done");
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-
-		} finally {
-
-			try {
-
-				if (VCardbw != null)
-					VCardbw.close();
-
-				if (VCardfw != null)
-					VCardfw.close();
-
-			} catch (IOException ex) {
-
-				ex.printStackTrace();
-
-			}
-
-		}
-
-	}
 		
-		
-	}
+}
 	
 
 
