@@ -54,7 +54,7 @@ public class IOController
 		
 		try 
 		{
-			fw = new FileWriter(System.getProperty("user.dir")+"\\saves\\save.jbook");
+			fw = new FileWriter(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class IOController
 	
 	void initReader() throws FileNotFoundException
 	{
-		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jbook");
+		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
 		reader = new Scanner(fr);
 	}
 	
@@ -129,7 +129,7 @@ public class IOController
 	
 	int getLines() throws FileNotFoundException
 	{
-		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\save.jbook");
+		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
 		Scanner tempreader = new Scanner(tempfr);
 		
 		int lines = 0;
@@ -149,7 +149,6 @@ public class IOController
 	{
 
 	
-		//bw.write(pPerson.getNachname());
 		bw.write(encryptString(pPerson.getNachname()));
 		bw.newLine();
 		bw.write(encryptString(pPerson.getVorname()));

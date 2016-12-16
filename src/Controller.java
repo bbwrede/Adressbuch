@@ -31,6 +31,7 @@ public class Controller extends MouseAdapter
 	private ActionListener al;
 	private KeyListener loginKl;
 	private IOController ioc;
+	private User active;
 
 	
 	Controller() throws FileNotFoundException 
@@ -67,6 +68,7 @@ public class Controller extends MouseAdapter
 	{
 		if (uman.userAuthentification(gui.getPassword(), gui.getUsername()))
 		{
+			active = uman.getObjectAt(uman.indexOf(gui.getUsername()));
 			gui.openMain();
 		}
 		else
@@ -91,6 +93,7 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Logout"))
 				{
 					gui.openLogin();
+					active = null;
 				}
 				
 				if (cmd.equals("Neu..."))
@@ -150,7 +153,33 @@ public class Controller extends MouseAdapter
 					um.setActionListeners(al);
 				}
 				
-		
+				if (cmd.equals("save"))
+				{
+					if (um.isPasswordCorrect() && !uman.isInList(um.getNewUser().getUsername()) && um.isUserName3())
+					{
+						uman.sortIn(um.getNewUser());
+						um.dispose();
+					}
+					if (uman.isInList(um.getNewUser().getUsername()) || !um.isUserName3())
+					{
+						um.usernameIcon(true);
+					}
+					else
+					{
+						um.usernameIcon(false);
+					}
+					
+					if(!um.isPasswordCorrect())
+					{
+						um.passwordIcon(true);
+						um.pwCheckIcon(true);
+					}
+					else
+					{
+						um.passwordIcon(false);
+						um.pwCheckIcon(false);
+					}
+				}
 			}
 		};
 		gui.setActionListeners(al);
@@ -255,7 +284,9 @@ public class Controller extends MouseAdapter
 	
 	void saveList() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
+		ioc.setUserInfo(active.getUsername(), active.getPassword());
 		ioc.initWriter();
+		
 		List<Person> temp = mc.getList();
 		temp.toFirst();
 		while (temp.hasAccess())
@@ -271,7 +302,7 @@ public class Controller extends MouseAdapter
 	
 	void loadList() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
-		
+		ioc.setUserInfo(active.getUsername(), active.getPassword());
 		mc.removeListElements();
 		
 		System.out.println("hier");
@@ -288,11 +319,7 @@ public class Controller extends MouseAdapter
 		
 		updateList();
 		
-		
-	}
-
-	
-		
+	}	
 }
 	
 

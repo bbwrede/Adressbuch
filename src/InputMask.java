@@ -476,8 +476,6 @@ public class InputMask extends JFrame
 							
 		}
 		
-		
-		
 		setLocationRelativeTo(pFrame);
 		
 	}

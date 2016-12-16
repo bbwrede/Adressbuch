@@ -12,10 +12,14 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JSeparator;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -25,9 +29,9 @@ public class UserMask extends JFrame
 
 	private JPanel contentPane;
 	private JLabel lblNewLabel;
-	private JTextField textField;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
+	private JTextField username;
+	private JPasswordField password;
+	private JPasswordField confirmPassword;
 	private JLabel lblUsername;
 	private JLabel lblPasswort;
 	private JLabel lblPasswortBesttigen;
@@ -98,18 +102,24 @@ public class UserMask extends JFrame
 		lblNewLabel.setBounds(82, 9, 138, 14);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(82, 66, 138, 28);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		username = new JTextField();
+		username.setFont(new Font("SansSerif", Font.PLAIN, 13));
+		username.setHorizontalAlignment(SwingConstants.CENTER);
+		username.setBounds(82, 66, 138, 28);
+		contentPane.add(username);
+		username.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(82, 121, 138, 28);
-		contentPane.add(passwordField);
+		password = new JPasswordField();
+		password.setHorizontalAlignment(SwingConstants.CENTER);
+		password.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		password.setBounds(82, 121, 138, 28);
+		contentPane.add(password);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(82, 171, 138, 28);
-		contentPane.add(passwordField_1);
+		confirmPassword = new JPasswordField();
+		confirmPassword.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		confirmPassword.setHorizontalAlignment(SwingConstants.CENTER);
+		confirmPassword.setBounds(82, 171, 138, 28);
+		contentPane.add(confirmPassword);
 		
 		lblUsername = new JLabel("Username:");
 		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
@@ -166,49 +176,68 @@ public class UserMask extends JFrame
 	}
 	
 	
+	User getNewUser()
+	{
+		User neu = new User();
+		
+		neu.setPassword(password.getText());
+		neu.setUsername(username.getText());
+		
+		return neu;
+	}
+	
+	boolean isPasswordCorrect()
+	{
+		if (password.getText().equals(confirmPassword.getText()))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	boolean isUserName3()
+	{
+		if (username.getText().length() < 3)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	void showPasswordWrong()
+	{
+		passwordIcon(true);
+		pwCheckIcon(true);
+	}
+	
+	
 	void setActionListeners(ActionListener al)
 	{
 		x.addActionListener(al);
 		x.setActionCommand("quit");
 		save.addActionListener(al);
+		save.setActionCommand("save");
 	}
 	
 	
-	void passwordIcon(boolean visible, boolean right)
+	void passwordIcon(boolean visible)
 	{
-		if (right)
-		{
-			pw.setIcon(new ImageIcon(UserMask.class.getResource("/resources/success.png")));
-		}
-		else
-		{
-			pw.setIcon(new ImageIcon(UserMask.class.getResource("/resources/error.png")));
-		}
-		
 		pw.setVisible(visible);
 	}
 	
-	void pwCheckIcon(boolean visible, boolean right)
+	void pwCheckIcon(boolean visible)
 	{
-		if (right)
-		{
-			pw2.setIcon(new ImageIcon(UserMask.class.getResource("/resources/success.png")));
-		}
-		else
-		{
-			pw2.setIcon(new ImageIcon(UserMask.class.getResource("/resources/error.png")));
-		}
+		pw2.setVisible(visible);
 	}
 	
-	void usernameIcon(boolean visible, boolean right)
+	void usernameIcon(boolean visible)
 	{
-		if (right)
-		{
-			un.setIcon(new ImageIcon(UserMask.class.getResource("/resources/success.png")));
-		}
-		else
-		{
-			un.setIcon(new ImageIcon(UserMask.class.getResource("/resources/error.png")));
-		}
+		un.setVisible(visible);
 	}
 }
