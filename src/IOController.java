@@ -295,6 +295,63 @@ public class IOController
 		loginbw.write(pLogin.getPassword());
 		loginbw.close();
 	}
+	
+	void createVCard(Person pPerson) {
+		BufferedWriter VCardbw = null;
+		FileWriter VCardfw = null;
+		
+		
+
+		try {
+
+			VCardfw = new FileWriter(System.getProperty("user.dir")+"\\VCard\\"+pPerson.getNachname()+" - "+pPerson.getVorname()+".vcf");
+			VCardbw = new BufferedWriter(VCardfw);
+			
+			VCardbw.write("BEGIN:VCARD\n");
+			VCardbw.write("VERSION:4.0\n");
+			VCardbw.write("N:"+pPerson.getNachname()+"\n");
+			VCardbw.write("FN:"+ pPerson.getVorname()+"\n");
+			VCardbw.write("TEL;TYPE=home:"+ pPerson.getTelefon()+"\n");
+			VCardbw.write("EMAIL:"+pPerson.getEmail()+"\n");
+			
+			String month = Integer.toString(pPerson.getGeburtsmonat().ordinal() +1);
+			
+			if (!(month.length() == 2))
+			{
+				month = "0" + month;
+			}
+			
+			VCardbw.write("BDAY:"+pPerson.getGeburtsjahr()+"-"+month+"-"+pPerson.getGeburtstag()+"\n");
+			VCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
+			VCardbw.write("END:VCARD\n");
+			
+
+			System.out.println("Done");
+
+		} catch (IOException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			try {
+
+				if (VCardbw != null)
+					VCardbw.close();
+
+				if (VCardfw != null)
+					VCardfw.close();
+
+			} catch (IOException ex) {
+
+				ex.printStackTrace();
+
+			}
+
+		}
+
+	}
+		
 		
 		                    
 }

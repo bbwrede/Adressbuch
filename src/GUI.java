@@ -49,6 +49,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.SystemColor;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.ButtonGroup;
+import javax.swing.border.BevelBorder;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -61,7 +67,6 @@ public class GUI
 	private JButton hilfeBtn;
 	private JPanel mainPanel;
 	private JPanel loginPanel;
-	private JList list;
 	private DefaultListModel listmodel= new DefaultListModel();
 	private JButton logoutBtn;
 	private JLabel loginMessage;
@@ -73,9 +78,17 @@ public class GUI
 	private JTextField textField;
 	private JTable table;
 	private DefaultTableModel tablemodel;
-	private String[] columns = {"Nachname","Vorname","Geburtstag"};
-	private String[][] data;
-	private JSeparator separator_2;
+	private DefaultTableModel tablemodel2;
+	private String[] columns = {"Nachname","Vorname","Land","Stadt"};
+	private JPanel panel;
+	private JScrollPane scrollPane;
+	private JPanel panel_1;
+	private JScrollPane scrollPane_1;
+	private JPanel panel_2;
+	private JButton btnDelete;
+	private JButton btnNewButton;
+	private JButton button;
+	private JTable table2;
 	
 	public GUI() 
 	{
@@ -215,29 +228,22 @@ public class GUI
 		mainPanel.setBackground(UIManager.getColor("InternalFrame.minimizeIconBackground"));
 		frmAdressbuch.getContentPane().add(mainPanel, "name_926217422352088");
 		
-		list = new JList(listmodel);
-		list.setVisible(false);
-		list.setBounds(520, 189, 229, 310);
-		list.setFont(new Font("SansSerif", Font.BOLD, 18));
-		list.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-		list.setMinimumSize(new Dimension(200, 0));
-		
 		JLabel lblAdressliste = new JLabel("Adressliste");
 		lblAdressliste.setIcon(new ImageIcon(GUI.class.getResource("/resources/list.png")));
-		lblAdressliste.setBounds(10, 16, 110, 21);
+		lblAdressliste.setBounds(10, 6, 110, 21);
 		lblAdressliste.setFont(new Font("SansSerif", Font.BOLD, 16));
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(122, 24, 652, 13);
+		separator.setBounds(132, 16, 654, 13);
 		
 		btnNeu = new JButton(" Neu...");
-		btnNeu.setBounds(10, 42, 154, 32);
+		btnNeu.setBounds(10, 32, 96, 32);
 		btnNeu.setIcon(new ImageIcon(GUI.class.getResource("/resources/plus.png")));
 		btnNeu.setHorizontalAlignment(SwingConstants.LEFT);
 		btnNeu.setFont(new Font("SansSerif", Font.BOLD, 14));
 		
 		JButton btnBearbeiten = new JButton("Bearbeiten...");
-		btnBearbeiten.setBounds(172, 42, 162, 32);
+		btnBearbeiten.setBounds(110, 32, 142, 32);
 		btnBearbeiten.setHorizontalAlignment(SwingConstants.LEFT);
 		btnBearbeiten.setIcon(new ImageIcon(GUI.class.getResource("/resources/edit.png")));
 		btnBearbeiten.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -249,34 +255,45 @@ public class GUI
 		
 		
 		mainPanel.add(lblAdressliste);
+		
+		button = new JButton("\u21C9");
+		button.setFont(new Font("SansSerif", Font.BOLD, 16));
+		button.setBounds(375, 282, 44, 28);
+		mainPanel.add(button);
+		
+		btnNewButton = new JButton("\u21C7");
+		btnNewButton.setFont(new Font("SansSerif", Font.BOLD, 16));
+		btnNewButton.setBounds(375, 242, 44, 28);
+		mainPanel.add(btnNewButton);
 		mainPanel.add(separator);
-		mainPanel.add(list);
 		mainPanel.add(btnNeu);
 		mainPanel.add(btnBearbeiten);
 		
 		JButton btnSortieren = new JButton("Sortieren");
-		btnSortieren.setBounds(346, 42, 162, 32);
+		btnSortieren.setBounds(255, 32, 126, 32);
 		btnSortieren.setHorizontalAlignment(SwingConstants.LEFT);
 		btnSortieren.setIcon(new ImageIcon(GUI.class.getResource("/resources/sort.png")));
 		btnSortieren.setFont(new Font("SansSerif", Font.BOLD, 14));
 		mainPanel.add(btnSortieren);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(544, 117, 120, 32);
-		mainPanel.add(comboBox);
-		
 		logoutBtn = new JButton("");
 		logoutBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
 		logoutBtn.setIcon(new ImageIcon(GUI.class.getResource("/resources/logout.png")));
-		logoutBtn.setBounds(750, 42, 38, 30);
+		logoutBtn.setBounds(748, 32, 38, 30);
 		mainPanel.add(logoutBtn);
 		
+		btnDelete = new JButton("L\u00F6schen");
+		btnDelete.setIcon(new ImageIcon(GUI.class.getResource("/resources/delete.png")));
+		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
+		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnDelete.setBounds(385, 32, 133, 32);
+		mainPanel.add(btnDelete);
+		
 		textField = new HintTextField("Suchen");
-		textField.setBounds(520, 43, 218, 30);
+		textField.setBounds(520, 33, 227, 30);
 		textField.setFont(new Font("SansSerif", Font.PLAIN, 14));
 		mainPanel.add(textField);
 		textField.setColumns(10);
-		mainPanel.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{list}));
 		
 		menuBar = new JMenuBar();
 		menuBar.setVisible(false);
@@ -318,29 +335,51 @@ public class GUI
 		tablemodel = new DefaultTableModel(0,0);
 		tablemodel.setColumnIdentifiers(columns);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 96, 360, 432);
+		mainPanel.add(scrollPane);
+		
 		
 		table = new JTable();
+		scrollPane.setViewportView(table);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setSurrendersFocusOnKeystroke(true);
-		table.setBounds(10, 106, 315, 422);
-		mainPanel.add(table);
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setModel(tablemodel);
 		table.setDefaultEditor(Object.class, null);
 		table.setVisible(true);
 		
 		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(425, 96, 360, 432);
+		mainPanel.add(scrollPane_1);
 		
-		JTableHeader tableheader = table.getTableHeader();
+		tablemodel2 = new DefaultTableModel(0,0);
+		tablemodel2.setColumnIdentifiers(columns);
 		
-		tableheader.setBounds(10, 87, 315, 20);
-		tableheader.setBorder(new LineBorder(new Color(0, 0, 0)));
-		mainPanel.add(tableheader);
+
 		
-		separator_2 = new JSeparator();
-		separator_2.setOrientation(SwingConstants.VERTICAL);
-		separator_2.setBounds(346, 106, 27, 291);
-		mainPanel.add(separator_2);
+		table2 = new JTable();
+		scrollPane_1.setViewportView(table2);
+		table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table2.setSurrendersFocusOnKeystroke(true);
+		table2.setModel(tablemodel2);
+		table2.setDefaultEditor(Object.class, null);
+		table2.setVisible(true);
+		
+		panel = new JPanel();
+		panel.setBorder(new TitledBorder(null, "Adressliste", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		panel.setBounds(0, 72, 380, 470);
+		mainPanel.add(panel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Warteschlange", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		panel_1.setBounds(415, 72, 380, 470);
+		mainPanel.add(panel_1);
+		
+		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBounds(3, 29, 788, 41);
+		mainPanel.add(panel_2);
 	}
 	private void addPopup(Component component, final JPopupMenu popup) 
 	{
@@ -375,8 +414,7 @@ public class GUI
 	
 	void setTableData(Person pPerson)
 	{
-		String birth = pPerson.getGeburtstag() +" . "+ pPerson.getGeburtsmonat().toString() +" . "+ pPerson.getGeburtsjahr();
-		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), birth});	
+		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), pPerson.getLand(), pPerson.getOrt()});	
 	}
 	
 	void initTable()
@@ -404,7 +442,6 @@ public class GUI
 	
 	void setMouseListeners(MouseAdapter ma)
 	{
-		list.addMouseListener(ma);
 		table.addMouseListener(ma);
 	}
 	
@@ -477,11 +514,6 @@ public class GUI
 	JFrame getFrame()
 	{
 		return frmAdressbuch;
-	}
-	
-	public JList getList()
-	{
-		return list;
 	}
 	
 	public JTable getTable()
