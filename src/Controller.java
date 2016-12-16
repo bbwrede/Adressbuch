@@ -8,6 +8,7 @@ import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -44,6 +45,29 @@ public class Controller extends MouseAdapter
 		initMenuActionListener();
 		initActionListener();
 		gui.setMouseListeners(this);
+		
+		try
+		{
+			saveUser();
+		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
+				| BadPaddingException | IOException e1)
+		{
+			// TODO Automatisch generierter Erfassungsblock
+			e1.printStackTrace();
+		}
+		
+		
+		
+		try
+		{
+			loadUser();
+		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
+				| NoSuchPaddingException | IOException e)
+		{
+			// TODO Automatisch generierter Erfassungsblock
+			e.printStackTrace();
+		}
+		
 		updateList();
 		
 	}
@@ -178,6 +202,16 @@ public class Controller extends MouseAdapter
 					{
 						um.passwordIcon(false);
 						um.pwCheckIcon(false);
+					}
+					
+					try
+					{
+						saveUser();
+					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
+							| IllegalBlockSizeException | BadPaddingException | IOException e1)
+					{
+						// TODO Automatisch generierter Erfassungsblock
+						e1.printStackTrace();
 					}
 				}
 			}
@@ -319,7 +353,39 @@ public class Controller extends MouseAdapter
 		
 		updateList();
 		
-	}	
+	}
+	
+	void saveUser() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	{
+		ioc.initUserWriter();
+		List<User> temp = uman.getList();
+		
+		temp.toFirst();
+		while(temp.hasAccess())
+		{
+			ioc.saveUserToFile(temp.getContent());
+			temp.next();
+		}
+		
+		ioc.closeUserWriteStream();
+	}
+	
+	void loadUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	{
+		
+		ioc.initUserReader();
+		uman.removeListElements();
+		
+		int number = ioc.getUserLines();
+		number = number/3;
+		
+	
+		for (int i = 0; i < number; i++)
+		{
+			uman.sortIn(ioc.readUser());
+		}
+
+	}
 }
 	
 

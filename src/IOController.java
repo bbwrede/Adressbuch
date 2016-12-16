@@ -30,11 +30,12 @@ public class IOController
 	private BufferedWriter bw;
 	private Scanner reader;
 	private FileReader fr;
-	//Reader und Writer für .login
-	private FileWriter loginfw;
-	private BufferedWriter loginbw;
-	private static Scanner loginreader;
-	private FileReader loginfr;
+	
+	private FileWriter ufw;
+	private BufferedWriter ubw;
+	private FileReader ufr;
+	private Scanner ureader;
+	
 	private String username;
 	private String password;
 	
@@ -50,8 +51,6 @@ public class IOController
 		File dir = new File("saves");
 		dir.mkdir();
 		
-		
-		
 		try 
 		{
 			fw = new FileWriter(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
@@ -62,30 +61,34 @@ public class IOController
 		
 		bw = new BufferedWriter(fw);
 		
-		
-		//login Data
-		File logindir = new File("Login-Data");
-		logindir.mkdir();
-		
-		
-		
-		try 
-		{
-			loginfw = new FileWriter(System.getProperty("user.dir")+"\\saves\\data.login");
-		} catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		loginbw = new BufferedWriter(loginfw);
-		loginfr = new FileReader(System.getProperty("user.dir")+"\\saves\\data.login");
-		loginreader = new Scanner(loginfr);
 	}
 	
 	void initReader() throws FileNotFoundException
 	{
 		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
 		reader = new Scanner(fr);
+	}
+	
+	void initUserWriter() throws FileNotFoundException
+	{
+		File dir = new File("saves");
+		dir.mkdir();
+		
+		try 
+		{
+			ufw = new FileWriter(System.getProperty("user.dir")+"\\saves\\user.juser");
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		ubw = new BufferedWriter(ufw);
+	}
+	
+	void initUserReader() throws FileNotFoundException
+	{
+		ufr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
+		ureader = new Scanner(ufr);
 	}
 	
 	private SecretKeySpec initEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
@@ -139,7 +142,23 @@ public class IOController
 			lines++;
 			
 		}
-		System.out.println(lines);
+		tempreader.close();
+		return lines;
+		
+	}
+	
+	int getUserLines() throws FileNotFoundException
+	{
+		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
+		Scanner tempreader = new Scanner(tempfr);
+		
+		int lines = 0;
+		while (tempreader.hasNextLine())
+		{
+			tempreader.nextLine();
+			lines++;
+			
+		}
 		tempreader.close();
 		return lines;
 		
@@ -204,6 +223,11 @@ public class IOController
 	void closeWriteStream() throws IOException
 	{
 		bw.close();
+	}
+	
+	void closeUserWriteStream() throws IOException
+	{
+		ubw.close();
 	}
 	
 	
@@ -273,25 +297,30 @@ public class IOController
 		reader.close();
 	}
 	
-	User readlogindata() throws IOException 
+	void saveUserToFile(User pUser) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	{
+		ubw.write(pUser.getUsername());
+		ubw.newLine();
+		ubw.write(pUser.getPassword());
+		ubw.newLine();
+		ubw.write(";");
+		ubw.newLine();
+	}
+	
+	User readUser()
 	{
 		User neu = new User();
-		String username = loginreader.next();
-		String password = loginreader.next();
-		loginreader.next();
-		System.out.println("Username: " +username);
-		System.out.println("password: " +password);
+		
+		String pw = ureader.next();
+		String name = ureader.next();
+		ureader.next();
+		
+		neu.setUsername(name);
+		neu.setPassword(pw);
+		
 		return neu;
 	}
-		
-	void writelogindata(User pLogin ) throws IOException 
-	{
-		  
-		loginbw.write(pLogin.getUsername());
-		loginbw.newLine();
-		loginbw.write(pLogin.getPassword());
-		loginbw.close();
-	}
+	
 	
 	void createVCard(Person pPerson) {
 		BufferedWriter VCardbw = null;
@@ -348,7 +377,5 @@ public class IOController
 		}
 
 	}
-		
-		
 		                    
 }
