@@ -3,13 +3,11 @@ import java.io.FileNotFoundException;
 public class ModelController
 {
 	private List<Person> liste;
-	private List<Login> logindata;
 	private List<Person> queue;
 	
 	ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
-		logindata = new List<Login>();
 		queue = new List<Person>();
 		
 	}
@@ -26,6 +24,7 @@ public class ModelController
 	    }
 	    return i;
 	}
+	
 	
 	void sortIn(Person neu)
 	{
@@ -48,6 +47,7 @@ public class ModelController
 		
 	}
 	
+	
 	Person getObjectAt(int i)
 	{
 		liste.toFirst();
@@ -68,10 +68,12 @@ public class ModelController
 		liste.remove();
 	}
 	
+	
 	List<Person> getList()
 	{
 		return liste;
 	}
+	
 	
 	void removeListElements()
 	{
@@ -81,6 +83,7 @@ public class ModelController
 			liste.remove();
 		}
 	}
+	
 	
 	void ausgabe()
 	{
@@ -96,4 +99,5 @@ public class ModelController
 	{
 		liste = pList;
 	}
+	
 }

@@ -25,16 +25,20 @@ public class Controller extends MouseAdapter
 	private String  password = "1111";
 	private String username = "admin";
 	private InputMask im;
+	private UserMask um;
+	private UserManager uman;
 	private ActionListener menuAl;
 	private ActionListener al;
 	private KeyListener loginKl;
-	private IOController ioc = new IOController(username, password);
+	private IOController ioc;
 
 	
 	Controller() throws FileNotFoundException 
 	{
 		gui = new GUI();
 		mc = new ModelController();
+		ioc =  new IOController();
+		uman = new UserManager();
 		initLoginKeyListener();
 		initMenuActionListener();
 		initActionListener();
@@ -43,20 +47,6 @@ public class Controller extends MouseAdapter
 		
 	}
 	
-	void UserAuthentification(String pPassword, String pUsername) 
-	{
-	
-		
-		if (pPassword.equals(password) && pUsername.equals(username))
-		{
-			gui.openMain();
-			updateList();
-		}
-		else
-		{
-			gui.showLoginWarning();
-		}
-		}
 	
 	void updateList()
 	{
@@ -84,7 +74,7 @@ public class Controller extends MouseAdapter
 				String cmd = e.getActionCommand();
 				if (cmd.equals("Login"))
 				{
-					UserAuthentification(gui.getPassword(), gui.getUsername());	
+					uman.userAuthentification(gui.getPassword(), gui.getUsername());	
 				}
 				if (cmd.equals("Logout"))
 				{
@@ -104,6 +94,11 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("X"))
 				{
 					im.dispose();
+				}
+				
+				if (cmd.equals("quit"))
+				{
+					um.dispose();
 				}
 				
 				if (cmd.equals("Erweitert..."))
@@ -134,6 +129,11 @@ public class Controller extends MouseAdapter
 							updateList();
 				        }
 					
+				}
+				if (cmd.equals("Registrieren"))
+				{
+					um = new UserMask(gui.getFrame());
+					um.setActionListeners(al);
 				}
 				
 		
@@ -204,7 +204,7 @@ public class Controller extends MouseAdapter
 				
 				if (key == KeyEvent.VK_ENTER)
 				{
-					UserAuthentification(gui.getPassword(), gui.getUsername());	
+					uman.userAuthentification(gui.getPassword(), gui.getUsername());	
 				}
 				
 			}

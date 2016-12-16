@@ -89,6 +89,7 @@ public class GUI
 	private JButton btnNewButton;
 	private JButton button;
 	private JTable table2;
+	private JButton btnRegister;
 	
 	public GUI() 
 	{
@@ -223,6 +224,11 @@ public class GUI
 		loginMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		loginMessage.setBounds(237, 476, 327, 16);
 		loginPanel.add(loginMessage);
+		
+		btnRegister = new JButton("Registrieren");
+		btnRegister.setIcon(new ImageIcon(GUI.class.getResource("/resources/new-user.png")));
+		btnRegister.setBounds(330, 497, 134, 23);
+		loginPanel.add(btnRegister);
 		mainPanel.setName("");
 		mainPanel.setToolTipText(null);
 		mainPanel.setBackground(UIManager.getColor("InternalFrame.minimizeIconBackground"));
@@ -283,10 +289,10 @@ public class GUI
 		mainPanel.add(logoutBtn);
 		
 		btnDelete = new JButton("L\u00F6schen");
-		btnDelete.setIcon(new ImageIcon(GUI.class.getResource("/resources/delete.png")));
 		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
 		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 14));
 		btnDelete.setBounds(385, 32, 133, 32);
+		btnDelete.setIcon(new ImageIcon(GUI.class.getResource("/resources/delete.png")));
 		mainPanel.add(btnDelete);
 		
 		textField = new HintTextField("Suchen");
@@ -408,8 +414,8 @@ public class GUI
 		logoutBtn.setActionCommand("Logout");
 		btnNeu.addActionListener(al);
 		btnNeu.setActionCommand("Neu...");
-		mntmNeu.addActionListener(al);
 		btnDelete.addActionListener(al);
+		btnRegister.addActionListener(al);
 		
 	}
 	

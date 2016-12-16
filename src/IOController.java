@@ -38,13 +38,11 @@ public class IOController
 	private String username;
 	private String password;
 	
-	IOController(String pUsername, String pPassword) throws FileNotFoundException
+	void setUserInfo(String pUsername, String pPassword)
 	{
 		username = pUsername;
 		password = pPassword;
-		
 	}
-	
 	
 	void initWriter() throws FileNotFoundException
 	{
@@ -276,9 +274,9 @@ public class IOController
 		reader.close();
 	}
 	
-	Login readlogindata() throws IOException 
+	User readlogindata() throws IOException 
 	{
-		Login neu = new Login();
+		User neu = new User();
 		String username = loginreader.next();
 		String password = loginreader.next();
 		loginreader.next();
@@ -287,7 +285,7 @@ public class IOController
 		return neu;
 	}
 		
-	void writelogindata(Login pLogin ) throws IOException 
+	void writelogindata(User pLogin ) throws IOException 
 	{
 		  
 		loginbw.write(pLogin.getUsername());
