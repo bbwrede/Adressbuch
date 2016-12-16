@@ -3,6 +3,7 @@
 /Controller$3.class
 /Controller.class
 /Countries.class
+<<<<<<< HEAD
 /GUI$1.class
 /GUI$2.class
 /GUI.class
@@ -23,3 +24,26 @@
 /Person$Religion.class
 /Person.class
 /org/
+=======
+/org/
+/resources/
+/GUI$1.class
+/GUI$2.class
+/GUI.class
+/HintTextField.class
+/IOController.class
+/InputMask$1.class
+/InputMask$2.class
+/InputMask.class
+/List$ListNode.class
+/List.class
+/Login.class
+/ModelController.class
+/Person$Augenfarbe.class
+/Person$Geschlecht.class
+/Person$Haarfarbe.class
+/Person$Hautfarbe.class
+/Person$Monat.class
+/Person$Religion.class
+/Person.class
+>>>>>>> refs/remotes/origin/master
