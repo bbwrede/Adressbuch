@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 @SuppressWarnings("rawtypes")
@@ -121,6 +122,18 @@ public class Controller extends MouseAdapter
 					im.dispose();
 					updateList();
 					gui.initTable();
+				}
+				
+				if (cmd.equals("Löschen"))
+				{
+						int reply = JOptionPane.showConfirmDialog(null, "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+				       
+					 	if (reply == JOptionPane.YES_OPTION) 
+				        {
+					 		mc.removeObjectAt(gui.getSelectedTableRow());
+							updateList();
+				        }
+					
 				}
 				
 		

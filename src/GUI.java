@@ -409,6 +409,7 @@ public class GUI
 		btnNeu.addActionListener(al);
 		btnNeu.setActionCommand("Neu...");
 		mntmNeu.addActionListener(al);
+		btnDelete.addActionListener(al);
 		
 	}
 	
@@ -492,6 +493,11 @@ public class GUI
 	void addElement(String anzeige)
 	{
 		listmodel.addElement(anzeige);
+	}
+	
+	int getSelectedTableRow()
+	{
+		return table.getSelectedRow();
 	}
 	
 	void showLoginWarning()

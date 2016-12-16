@@ -4,11 +4,13 @@ public class ModelController
 {
 	private List<Person> liste;
 	private List<Login> logindata;
+	private List<Person> queue;
 	
 	ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
 		logindata = new List<Login>();
+		queue = new List<Person>();
 		
 	}
 	
