@@ -63,6 +63,17 @@ public class Controller extends MouseAdapter
 		new Controller();
 	}
 
+	void authentification()
+	{
+		if (uman.userAuthentification(gui.getPassword(), gui.getUsername()))
+		{
+			gui.openMain();
+		}
+		else
+		{
+			gui.showLoginWarning();
+		}
+	}
 
 	void initActionListener()
 	{
@@ -74,18 +85,21 @@ public class Controller extends MouseAdapter
 				String cmd = e.getActionCommand();
 				if (cmd.equals("Login"))
 				{
-					uman.userAuthentification(gui.getPassword(), gui.getUsername());	
+					authentification();
 				}
+				
 				if (cmd.equals("Logout"))
 				{
 					gui.openLogin();
 				}
+				
 				if (cmd.equals("Neu..."))
 				{
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
 					im.setVisible(true);
 				}
+				
 				if (cmd.equals("Hilfe"))
 				{
 					gui.showLoginInfo();
@@ -204,7 +218,7 @@ public class Controller extends MouseAdapter
 				
 				if (key == KeyEvent.VK_ENTER)
 				{
-					uman.userAuthentification(gui.getPassword(), gui.getUsername());	
+					authentification();	
 				}
 				
 			}

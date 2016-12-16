@@ -3,28 +3,46 @@ public class UserManager
 	private List<User> user;
 	
 
+	public UserManager()
+	{
+		user = new List<User>();
+		User admin = new User();
+		admin.setUsername("admin");
+		admin.setPassword("1111");
+		user.append(admin);
+	}
+	
 	boolean userAuthentification(String pPassword, String pUsername) 
 	{
 
-		if (pPassword.equals(pPassword) && pUsername.equals(pUsername))
+		if (isInList(pUsername))
 		{
-			return true;
+			user.toFirst();
+			
+			User neu = getObjectAt(indexOf(pUsername));
+			
+			if (pPassword.equals(neu.getPassword()) && pUsername.equals(neu.getUsername()))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
-		else
-		{
-			return false;
-		}
+		
+		return false;
 	}
 	
 	public int length()
 	{
-	    user.toFirst();
-	    int i = 0;
-	    while (user.hasAccess())
-	    {
-	        i++;
+		user.toFirst();
+		int i = 0;
+		while (user.hasAccess())
+		{
+			i++;
 	        user.next();
-	    }
+		}
 	    return i;
 	}
 	
@@ -40,6 +58,23 @@ public class UserManager
 			user.next();
 		}
 		return false;
+	}
+	
+	int indexOf(String pUsername)
+	{
+		user.toFirst();
+		int i = 0;
+		
+		while (user.hasAccess())
+		{
+			if (user.getContent().getUsername().equals(pUsername))
+			{
+				return i;
+			}
+			user.next();
+			i++;
+		}
+		return 0;
 	}
 	
 	void sortIn(User neu)
