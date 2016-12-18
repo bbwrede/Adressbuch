@@ -39,8 +39,8 @@ public class Controller extends MouseAdapter
 	{
 		gui = new GUI();
 		mc = new ModelController();
-		ioc =  new IOController();
 		uman = new UserManager();
+		ioc =  new IOController();
 		initLoginKeyListener();
 		initMenuActionListener();
 		initActionListener();
@@ -48,24 +48,18 @@ public class Controller extends MouseAdapter
 		
 		try
 		{
-			saveUser();
-		} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException
-				| BadPaddingException | IOException e1)
-		{
-			// TODO Automatisch generierter Erfassungsblock
-			e1.printStackTrace();
-		}
-		
-		
-		
-		try
-		{
 			loadUser();
 		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IOException e)
 		{
-			// TODO Automatisch generierter Erfassungsblock
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(gui.getFrame(),
+			    "Es konnten keine Nutzer geladen werden. \n"
+			    + "Ist dies der erste Start des Programms?");
+		}
+		
+		if (!uman.isInList("admin"))
+		{
+			uman.initAdmin();
 		}
 		
 		updateList();
@@ -112,11 +106,26 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Login"))
 				{
 					authentification();
+					try
+					{
+						loadList();
+						System.out.println("Geladen");
+					} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException
+							| NoSuchAlgorithmException | NoSuchPaddingException | IOException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Es konnte kein Speicherstand geladen werden! \n",
+							    "Fehler beim Laden der Datei",
+							    JOptionPane.ERROR_MESSAGE);
+					}
+					
 				}
 				
 				if (cmd.equals("Logout"))
 				{
 					gui.openLogin();
+					mc.removeListElements();
+					updateList();
 					active = null;
 				}
 				
@@ -162,7 +171,7 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Löschen"))
 				{
-						int reply = JOptionPane.showConfirmDialog(null, "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+						int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
 				       
 					 	if (reply == JOptionPane.YES_OPTION) 
 				        {
@@ -182,6 +191,15 @@ public class Controller extends MouseAdapter
 					if (um.isPasswordCorrect() && !uman.isInList(um.getNewUser().getUsername()) && um.isUserName3())
 					{
 						uman.sortIn(um.getNewUser());
+						try
+						{
+							saveUser();
+						} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
+								| IllegalBlockSizeException | BadPaddingException | IOException e1)
+						{
+							// TODO Automatisch generierter Erfassungsblock
+							e1.printStackTrace();
+						}
 						um.dispose();
 					}
 					if (uman.isInList(um.getNewUser().getUsername()) || !um.isUserName3())
@@ -204,15 +222,6 @@ public class Controller extends MouseAdapter
 						um.pwCheckIcon(false);
 					}
 					
-					try
-					{
-						saveUser();
-					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
-							| IllegalBlockSizeException | BadPaddingException | IOException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					}
 				}
 			}
 		};
@@ -260,8 +269,11 @@ public class Controller extends MouseAdapter
 					} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException
 							| NoSuchAlgorithmException | NoSuchPaddingException | IOException e1)
 					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Die Datei konnte nicht geladen werden! \n"
+							    + "Wurde zuvor gespeichert?",
+							    "Fehler beim Laden der Datei",
+							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
@@ -281,7 +293,19 @@ public class Controller extends MouseAdapter
 				
 				if (key == KeyEvent.VK_ENTER)
 				{
-					authentification();	
+					authentification();
+					try
+					{
+						loadList();
+						System.out.println("Geladen");
+					} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException
+							| NoSuchAlgorithmException | NoSuchPaddingException | IOException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Es konnte kein Speicherstand geladen werden! \n",
+							    "Fehler beim Laden der Datei",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				
 			}
@@ -359,6 +383,7 @@ public class Controller extends MouseAdapter
 	{
 		ioc.initUserWriter();
 		List<User> temp = uman.getList();
+		
 		
 		temp.toFirst();
 		while(temp.hasAccess())

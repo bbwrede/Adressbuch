@@ -305,14 +305,15 @@ public class IOController
 		ubw.newLine();
 		ubw.write(";");
 		ubw.newLine();
+		ubw.flush();
 	}
 	
 	User readUser()
 	{
 		User neu = new User();
 		
-		String pw = ureader.next();
 		String name = ureader.next();
+		String pw = ureader.next();
 		ureader.next();
 		
 		neu.setUsername(name);

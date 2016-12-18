@@ -6,10 +6,6 @@ public class UserManager
 	public UserManager()
 	{
 		user = new List<User>();
-		User admin = new User();
-		admin.setUsername("admin");
-		admin.setPassword("1111");
-		user.append(admin);
 	}
 	
 	boolean userAuthentification(String pPassword, String pUsername) 
@@ -44,6 +40,19 @@ public class UserManager
 	        user.next();
 		}
 	    return i;
+	}
+	
+	void initAdmin()
+	{
+		User admin = new User();
+		admin.setUsername("admin");
+		admin.setPassword("1111");
+		sortIn(admin);
+	}
+	
+	void removeUser(String pUsername)
+	{
+		removeObjectAt(indexOf(pUsername));
 	}
 	
 	boolean isInList(String pUsername)
