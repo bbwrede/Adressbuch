@@ -106,6 +106,7 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Login"))
 				{
 					authentification();
+					gui.setMenuUsername(active.getUsername());
 					try
 					{
 						loadList();
@@ -171,13 +172,16 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Löschen"))
 				{
-						int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
-				       
-					 	if (reply == JOptionPane.YES_OPTION) 
-				        {
-					 		mc.removeObjectAt(gui.getSelectedTableRow());
-							updateList();
-				        }
+						if (!mc.isEmpty())
+						{
+							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+					       
+						 	if (reply == JOptionPane.YES_OPTION) 
+					        {
+						 		mc.removeObjectAt(gui.getSelectedTableRow());
+								updateList();
+					        }
+						}
 					
 				}
 				if (cmd.equals("Registrieren"))
@@ -250,6 +254,13 @@ public class Controller extends MouseAdapter
 					{
 						// TODO Automatisch generierter Erfassungsblock
 						e1.printStackTrace();
+					} catch (NullPointerException e2)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Die Datei konnte nicht gespeichert werden! \n"
+							    + "Es sind keine Elemente zum Speichern vorhanden!",
+							    "Fehler beim Speichern der Datei",
+							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				
@@ -267,14 +278,31 @@ public class Controller extends MouseAdapter
 						loadList();
 						System.out.println("Geladen");
 					} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException
-							| NoSuchAlgorithmException | NoSuchPaddingException | IOException e1)
+							| NoSuchAlgorithmException | NoSuchPaddingException e1)
 					{
 						JOptionPane.showMessageDialog(gui.getFrame(),
 							    "Die Datei konnte nicht geladen werden! \n"
 							    + "Wurde zuvor gespeichert?",
 							    "Fehler beim Laden der Datei",
 							    JOptionPane.ERROR_MESSAGE);
+					} catch (FileNotFoundException e2)
+					{
+						e2.printStackTrace();
+					} catch (IOException e3)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Die Datei konnte nicht geladen werden!",
+							    "Fehler beim Laden der Datei",
+							    JOptionPane.ERROR_MESSAGE);
 					}
+				}
+				
+				if (cmd.equals("Logout"))
+				{
+					gui.openLogin();
+					mc.removeListElements();
+					updateList();
+					active = null;
 				}
 
 			}
@@ -294,6 +322,7 @@ public class Controller extends MouseAdapter
 				if (key == KeyEvent.VK_ENTER)
 				{
 					authentification();
+					gui.setMenuUsername(active.getUsername());
 					try
 					{
 						loadList();

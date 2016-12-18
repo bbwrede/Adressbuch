@@ -53,8 +53,13 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.border.BevelBorder;
+import java.awt.Canvas;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -90,6 +95,8 @@ public class GUI
 	private JButton button;
 	private JTable table2;
 	private JButton btnRegister;
+	private JMenu mnEingeloggt;
+	private JMenuItem mntmLogout;
 	
 	public GUI() 
 	{
@@ -310,15 +317,18 @@ public class GUI
 		menuBar.add(mnDatei);
 		
 		mntmNeu = new JMenuItem("Neu");
+		mntmNeu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		mntmNeu.setHorizontalTextPosition(SwingConstants.CENTER);
 		mntmNeu.setHorizontalAlignment(SwingConstants.LEFT);
 		mnDatei.add(mntmNeu);
 		
 		mntmSpeichern = new JMenuItem("Speichern");
+		mntmSpeichern.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmSpeichern.setHorizontalAlignment(SwingConstants.LEFT);
 		mnDatei.add(mntmSpeichern);
 		
 		mntmLaden = new JMenuItem("Laden");
+		mntmLaden.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mnDatei.add(mntmLaden);
 		
 		JMenu mnBearbeiten = new JMenu("Bearbeiten");
@@ -331,11 +341,24 @@ public class GUI
 		menuBar.add(mnHilfe);
 		
 		JMenuItem mntmHilfe = new JMenuItem("Hilfe");
+		mntmHilfe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mntmHilfe.setHorizontalAlignment(SwingConstants.CENTER);
 		mnHilfe.add(mntmHilfe);
 		
 		JMenuItem mntmber = new JMenuItem("\u00DCber");
+		mntmber.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		mnHilfe.add(mntmber);
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		menuBar.add(horizontalGlue);
+		
+		mnEingeloggt = new JMenu("<html> Eingeloggt als <b>admin</b>");
+		mnEingeloggt.setFont(new Font("SansSerif", Font.PLAIN, 12));
+		menuBar.add(mnEingeloggt);
+		
+		mntmLogout = new JMenuItem("Logout");
+		mntmLogout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
+		mnEingeloggt.add(mntmLogout);
 		
 		
 		tablemodel = new DefaultTableModel(0,0);
@@ -386,6 +409,8 @@ public class GUI
 		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setBounds(3, 29, 788, 41);
 		mainPanel.add(panel_2);
+		
+		
 	}
 	private void addPopup(Component component, final JPopupMenu popup) 
 	{
@@ -439,6 +464,12 @@ public class GUI
 		mntmNeu.addActionListener(al);
 		mntmSpeichern.addActionListener(al);
 		mntmLaden.addActionListener(al);
+		mntmLogout.addActionListener(al);
+	}
+	
+	void setMenuUsername(String pUsername)
+	{
+		mnEingeloggt.setText("<html> Eingeloggt als <b>"+ pUsername +"</b>");
 	}
 	
 	void setKeyListeners(KeyListener kl)

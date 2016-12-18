@@ -84,6 +84,17 @@ public class ModelController
 		}
 	}
 	
+	boolean isEmpty()
+	{
+		if (liste.isEmpty())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	
 	void ausgabe()
 	{
