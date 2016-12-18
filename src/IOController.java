@@ -1,9 +1,16 @@
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -16,6 +23,8 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -323,13 +332,53 @@ public class IOController
 	}
 	
 	
-	void createVCard(Person pPerson) {
+	public byte[] imageToByte (String ImageName) throws IOException 
+	{
+		 File imgPath = new File(ImageName);
+		 BufferedImage bufferedImage = ImageIO.read(imgPath);
+
+		 ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		 ImageIO.write(bufferedImage, "png", baos);
+		 byte[] bytes = baos.toByteArray();
+
+		 return (bytes);
+	}
+	
+	
+	String byteToBase64(byte[] pBytes)
+	{
+		BASE64Encoder encoder = new BASE64Encoder();
+		String encoded = encoder.encode(pBytes);
+		return encoded;
+	}
+	
+	byte[] base64toByte(String pText ) throws IOException
+	{
+		BASE64Decoder decoder = new BASE64Decoder();
+		byte[] bytes = decoder.decodeBuffer(pText);
+		return bytes;
+	}
+	
+	void bytesToImage(byte[] pBytes) throws IOException
+	{
+		ByteArrayInputStream bais = new ByteArrayInputStream(pBytes);
+		BufferedImage bi = ImageIO.read(bais);
+		FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"\\test\\abc.png");
+		ImageIO.write(bi, "png", fos);   
+	}
+	
+	
+	
+	
+	void createVCard(Person pPerson) 
+	{
 		BufferedWriter VCardbw = null;
 		FileWriter VCardfw = null;
 		
 		
 
-		try {
+		try 
+		{
 
 			VCardfw = new FileWriter(System.getProperty("user.dir")+"\\VCard\\"+pPerson.getNachname()+" - "+pPerson.getVorname()+".vcf");
 			VCardbw = new BufferedWriter(VCardfw);
@@ -355,13 +404,16 @@ public class IOController
 
 			System.out.println("Done");
 
-		} catch (IOException e) {
+		} catch (IOException e) 
+		{
 
 			e.printStackTrace();
 
-		} finally {
+		} finally 
+		{
 
-			try {
+			try 
+			{
 
 				if (VCardbw != null)
 					VCardbw.close();
@@ -369,7 +421,8 @@ public class IOController
 				if (VCardfw != null)
 					VCardfw.close();
 
-			} catch (IOException ex) {
+			} catch (IOException ex) 
+			{
 
 				ex.printStackTrace();
 

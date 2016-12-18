@@ -64,6 +64,15 @@ public class Controller extends MouseAdapter
 		
 		updateList();
 		
+		try
+		{
+			ioc.bytesToImage(ioc.base64toByte(ioc.byteToBase64(ioc.imageToByte("saves//logo.png"))));
+		} catch (IOException e)
+		{
+			// TODO Automatisch generierter Erfassungsblock
+			e.printStackTrace();
+		}
+		
 	}
 	
 	
