@@ -1,5 +1,8 @@
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -69,6 +72,9 @@ public class InputMask extends JFrame
 	private JSeparator separator_3;
 	private JButton save;
 	private JButton x;
+	private JButton btnBild;
+	private BufferedImage image;
+	private String format;
 
 	/**
 	 * Launch the application.
@@ -153,7 +159,7 @@ public class InputMask extends JFrame
 		
 		btnZurück = new JButton("Zur\u00FCck...");
 		btnZurück.setToolTipText("Zur\u00FCck");
-		btnZurück.setBounds(6, 407, 203, 28);
+		btnZurück.setBounds(6, 415, 203, 28);
 		advanced.add(btnZurück);
 		
 		separator_5 = new JSeparator();
@@ -161,7 +167,7 @@ public class InputMask extends JFrame
 		advanced.add(separator_5);
 		
 		separator_6 = new JSeparator();
-		separator_6.setBounds(6, 398, 203, 2);
+		separator_6.setBounds(6, 410, 203, 2);
 		advanced.add(separator_6);
 		
 		separator_7 = new JSeparator();
@@ -230,18 +236,18 @@ public class InputMask extends JFrame
 		firma.setToolTipText("Firma");
 		firma.setName("");
 		firma.setColumns(10);
-		firma.setBounds(6, 318, 203, 28);
+		firma.setBounds(6, 309, 203, 28);
 		advanced.add(firma);
 		
 		handy = new HintTextField("Handynummer");
 		handy.setToolTipText("Handynummer");
 		handy.setName("");
 		handy.setColumns(10);
-		handy.setBounds(6, 347, 203, 28);
+		handy.setBounds(6, 340, 203, 28);
 		advanced.add(handy);
 		
 		separator_3 = new JSeparator();
-		separator_3.setBounds(6, 309, 203, 2);
+		separator_3.setBounds(6, 302, 203, 2);
 		advanced.add(separator_3);
 		
 		save = new JButton("Speichern");
@@ -374,7 +380,7 @@ public class InputMask extends JFrame
 		main.add(btnSpeichern);
 		
 		btnErweitert = new JButton("Erweitert...");
-		btnErweitert.setBounds(6, 407, 203, 28);
+		btnErweitert.setBounds(6, 415, 203, 28);
 		main.add(btnErweitert);
 		
 		btnX = new JButton("X");
@@ -397,7 +403,7 @@ public class InputMask extends JFrame
 		main.add(separator_1);
 		
 		separator_2 = new JSeparator();
-		separator_2.setBounds(6, 398, 203, 2);
+		separator_2.setBounds(6, 410, 203, 2);
 		main.add(separator_2);
 		
 		separator_4 = new JSeparator();
@@ -469,6 +475,11 @@ public class InputMask extends JFrame
 		}
 		
 		religion.addItem(">> Religion <<");
+		
+		btnBild = new JButton("Bild...");
+		btnBild.setToolTipText("Zur\u00FCck");
+		btnBild.setBounds(6, 375, 203, 28);
+		advanced.add(btnBild);
 		//Combobox Haarfarbe
 		for (int i = 0; i < 6; i++)
 		{
@@ -490,6 +501,7 @@ public class InputMask extends JFrame
 		btnZurück.addActionListener(al);
 		x.addActionListener(al);
 		save.addActionListener(al);
+		btnBild.addActionListener(al);
 	}
 	
 	Person getNewPerson()
@@ -507,6 +519,14 @@ public class InputMask extends JFrame
 		neu.setHausnummer(nr.getText());
 		neu.setAdresszusatz(zusatz.getText());
 		neu.setEmail(email.getText());
+		try
+		{
+			neu.setBild(IOController.imageToBase64(image, format));
+		} catch (IOException e)
+		{
+			// TODO Automatisch generierter Erfassungsblock
+			e.printStackTrace();
+		}
 		neu.setTelefon(telefonnummer.getText());
 		
 		neu.setGroesse(groesse.getValue());
@@ -570,6 +590,14 @@ public class InputMask extends JFrame
 		return neu;
 	}
 	
+	
+	void setImage(BufferedImage pImage, String pFormat)
+	{
+		
+		image = pImage;
+		format = pFormat;
+	}
+	
 	void openAdvanced()
 	{
 		main.setVisible(false);
@@ -580,5 +608,10 @@ public class InputMask extends JFrame
 	{
 		main.setVisible(true);
 		advanced.setVisible(false);
+	}
+	
+	JFrame getFrame()
+	{
+		return this;
 	}
 }

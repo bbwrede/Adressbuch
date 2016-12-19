@@ -4,9 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -15,15 +14,17 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 @SuppressWarnings("rawtypes")
 public class Controller extends MouseAdapter
 {	
 	private GUI gui;
 	private ModelController mc;
-	private String  password = "1111";
+	private String password = "1111";
 	private String username = "admin";
 	private InputMask im;
 	private UserMask um;
@@ -64,14 +65,14 @@ public class Controller extends MouseAdapter
 		
 		updateList();
 		
-		try
+		/*try
 		{
 			ioc.bytesToImage(ioc.base64toByte(ioc.byteToBase64(ioc.imageToByte("saves//logo.png"))));
 		} catch (IOException e)
 		{
 			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 	
@@ -235,6 +236,29 @@ public class Controller extends MouseAdapter
 						um.pwCheckIcon(false);
 					}
 					
+				}
+				
+				if (cmd.equals("Bild..."))
+				{
+					JFileChooser chooser = new JFileChooser();
+				    FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF & PNG Images", "jpg", "gif", "png");
+				    chooser.setFileFilter(filter);
+				    int returnVal = chooser.showOpenDialog(im.getFrame());
+				    if(returnVal == JFileChooser.APPROVE_OPTION) 
+				    {
+				    	try
+						{
+							File selc = chooser.getSelectedFile();
+							
+							String ext = selc.getName().substring(selc.getName().lastIndexOf("."));
+							System.out.println(ext);
+				    		im.setImage(ioc.readImage(chooser.getSelectedFile()), ext);
+						} catch (IOException e1)
+						{
+							// TODO Automatisch generierter Erfassungsblock
+							e1.printStackTrace();
+						}
+				    }
 				}
 			}
 		};
@@ -405,8 +429,9 @@ public class Controller extends MouseAdapter
 		ioc.initReader();
 		
 		int number = ioc.getLines();
-		number = number/24;
-		
+		number = number/26;
+	
+		System.out.println(number);
 	
 		for (int i = 0; i < number; i++)
 		{

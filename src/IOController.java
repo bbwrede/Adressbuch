@@ -1,6 +1,4 @@
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.awt.image.WritableRaster;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -24,7 +21,6 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -195,6 +191,10 @@ public class IOController
 		bw.newLine();
 		bw.write(encryptString(pPerson.getEmail()));
 		bw.newLine();
+		bw.write(encryptString(pPerson.getBild()));
+		bw.newLine();
+		bw.write(encryptString(pPerson.getBildFormat()));
+		bw.newLine();
 		bw.write(encryptString(Integer.toString(pPerson.getGroesse())));
 		bw.newLine();
 		bw.write(encryptString(Integer.toString(pPerson.getGewicht())));
@@ -252,6 +252,8 @@ public class IOController
 		String hausnummer = decryptString(reader.next());
 		String adresszusatz = decryptString(reader.next());
 		String email = decryptString(reader.next());
+		String bild = decryptString(reader.next());
+		String bildFormat = decryptString(reader.next());;
 		int groesse = Integer.parseInt(decryptString(reader.next()));
 		int gewicht = Integer.parseInt(decryptString(reader.next()));
 		Person.Augenfarbe augenfarbe = Person.Augenfarbe.valueOf(decryptString(reader.next()));
@@ -282,6 +284,8 @@ public class IOController
 		neu.setHausnummer(hausnummer);
 		neu.setAdresszusatz(adresszusatz);
 		neu.setEmail(email);
+		neu.setBild(bild);
+		neu.setBildFormat(bildFormat);
 		neu.setGroesse(groesse);
 		neu.setGewicht(gewicht);
 		neu.setAugenfarbe(augenfarbe);
@@ -332,43 +336,62 @@ public class IOController
 	}
 	
 	
-	public byte[] imageToByte (String ImageName) throws IOException 
+	private static byte[] imageToByte (BufferedImage image, String pFormat) throws IOException 
 	{
-		 File imgPath = new File(ImageName);
-		 BufferedImage bufferedImage = ImageIO.read(imgPath);
+		 BufferedImage bufferedImage = image;
 
 		 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		 ImageIO.write(bufferedImage, "png", baos);
+		 ImageIO.write(bufferedImage, pFormat, baos);
 		 byte[] bytes = baos.toByteArray();
 
 		 return (bytes);
 	}
 	
 	
-	String byteToBase64(byte[] pBytes)
+	private static String byteToBase64(byte[] pBytes)
 	{
 		BASE64Encoder encoder = new BASE64Encoder();
 		String encoded = encoder.encode(pBytes);
 		return encoded;
 	}
 	
-	byte[] base64toByte(String pText ) throws IOException
+	private static byte[] base64toByte(String pText) throws IOException
 	{
 		BASE64Decoder decoder = new BASE64Decoder();
 		byte[] bytes = decoder.decodeBuffer(pText);
 		return bytes;
 	}
 	
-	void bytesToImage(byte[] pBytes) throws IOException
+	private static BufferedImage bytesToImage(byte[] pBytes, String pFormat) throws IOException
 	{
 		ByteArrayInputStream bais = new ByteArrayInputStream(pBytes);
 		BufferedImage bi = ImageIO.read(bais);
-		FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"\\test\\abc.png");
-		ImageIO.write(bi, "png", fos);   
+		//FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"\\test\\"+pPerson.getNachname()+" - "+pPerson.getVorname()+ "." +pFormat);
+		//ImageIO.write(bi, pFormat, fos);
+		
+		return bi;
 	}
 	
 	
 	
+	
+	static String imageToBase64(BufferedImage image, String pFormat) throws IOException
+	{
+		return byteToBase64(imageToByte(image,pFormat));	
+	}
+	
+	
+	
+	static BufferedImage base64ToImage(String pBase, String pFormat) throws IOException
+	{
+		return bytesToImage(base64toByte(pBase),pFormat);
+	}
+	
+	BufferedImage readImage(File pFile) throws IOException
+	{
+		BufferedImage image = ImageIO.read(pFile);
+		return image;
+	}
 	
 	void createVCard(Person pPerson) 
 	{

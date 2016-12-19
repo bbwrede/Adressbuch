@@ -41,6 +41,8 @@ public class Person
   private String hausnummer = "-";
   private String adresszusatz = "-";
   private String email = "-";
+  private String bild = "-";
+  private String bildFormat;
   private int groesse = 0;
   private int gewicht = 0;
   private Augenfarbe augenfarbe = Augenfarbe.unbekannt;
@@ -291,6 +293,30 @@ public int getGeburtstag()
 public void setGeburtstag(int geburtstag)
 {
 	this.geburtstag = geburtstag;
+}
+
+
+public String getBild()
+{
+	return bild;
+}
+
+
+public void setBild(String bild)
+{
+	this.bild = bild;
+}
+
+
+public String getBildFormat()
+{
+	return bildFormat;
+}
+
+
+public void setBildFormat(String bildFormat)
+{
+	this.bildFormat = bildFormat;
 }
 
   // Ende Methoden
