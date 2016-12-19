@@ -1,3 +1,5 @@
+import java.util.UUID;
+
 public class Person 
 {
   
@@ -32,6 +34,7 @@ public class Person
   }
   
   // Anfang Attribute
+  private UUID uuid = UUID.randomUUID();
   private String vorname = "-";
   private String nachname = "-";
   private String land = "-";
@@ -41,8 +44,8 @@ public class Person
   private String hausnummer = "-";
   private String adresszusatz = "-";
   private String email = "-";
-  private String bild = "-";
-  private String bildFormat;
+  private String bild = "";
+  private String bildFormat = "-";
   private int groesse = 0;
   private int gewicht = 0;
   private Augenfarbe augenfarbe = Augenfarbe.unbekannt;
@@ -317,6 +320,18 @@ public String getBildFormat()
 public void setBildFormat(String bildFormat)
 {
 	this.bildFormat = bildFormat;
+}
+
+
+public UUID getUuid()
+{
+	return uuid;
+}
+
+
+public void setUuid(UUID uuid)
+{
+	this.uuid = uuid;
 }
 
   // Ende Methoden

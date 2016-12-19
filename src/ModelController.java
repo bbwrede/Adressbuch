@@ -1,9 +1,10 @@
 import java.io.FileNotFoundException;
+import java.util.UUID;
 
 public class ModelController
 {
-	private List<Person> liste;
-	private List<Person> queue;
+	private static List<Person> liste;
+	private static List<Person> queue;
 	
 	ModelController() throws FileNotFoundException
 	{
@@ -48,7 +49,7 @@ public class ModelController
 	}
 	
 	
-	Person getObjectAt(int i)
+	static Person getObjectAt(int i)
 	{
 		liste.toFirst();
 		for (int c = 0; c<i; c++)
@@ -109,6 +110,23 @@ public class ModelController
 	void setList(List<Person> pList)
 	{
 		liste = pList;
+	}
+	
+	static int indexOf(UUID pUUID)
+	{
+		liste.toFirst();
+		int i = 0;
+		
+		while (liste.hasAccess())
+		{
+			if (liste.getContent().getUuid().equals(pUUID))
+			{
+				return i;
+			}
+			liste.next();
+			i++;
+		}
+		return 0;
 	}
 	
 }

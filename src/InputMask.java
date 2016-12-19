@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
@@ -502,6 +503,7 @@ public class InputMask extends JFrame
 		x.addActionListener(al);
 		save.addActionListener(al);
 		btnBild.addActionListener(al);
+		btnBild.setActionCommand("Bild...");
 	}
 	
 	Person getNewPerson()
@@ -519,13 +521,24 @@ public class InputMask extends JFrame
 		neu.setHausnummer(nr.getText());
 		neu.setAdresszusatz(zusatz.getText());
 		neu.setEmail(email.getText());
-		try
+		
+		if (format != null)
 		{
-			neu.setBild(IOController.imageToBase64(image, format));
-		} catch (IOException e)
-		{
-			// TODO Automatisch generierter Erfassungsblock
-			e.printStackTrace();
+			try
+			{
+				neu.setBild(IOController.imageToBase64(image, format));
+			} catch (IOException e)
+			{
+				// TODO Automatisch generierter Erfassungsblock
+				e.printStackTrace();
+			} catch (IllegalArgumentException e1)
+	    	{
+				JOptionPane.showMessageDialog(this,
+					    "Die Datei konnte nicht geladen werden! \n"
+					    + "Das Dateiformat wird nicht unterstützt!",
+					    "Fehler beim Speichern der Datei",
+					    JOptionPane.ERROR_MESSAGE);
+	    	}
 		}
 		neu.setTelefon(telefonnummer.getText());
 		
@@ -608,6 +621,11 @@ public class InputMask extends JFrame
 	{
 		main.setVisible(true);
 		advanced.setVisible(false);
+	}
+	
+	void setImageButton(String pText)
+	{
+		btnBild.setText(pText);
 	}
 	
 	JFrame getFrame()

@@ -14,6 +14,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.UUID;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -40,6 +41,12 @@ public class IOController
 	private BufferedWriter ubw;
 	private FileReader ufr;
 	private Scanner ureader;
+	
+	private FileWriter ifw;
+	private BufferedWriter ibw;
+	private FileReader ifr;
+	private Scanner ireader;
+	
 	
 	private String username;
 	private String password;
@@ -96,6 +103,29 @@ public class IOController
 		ureader = new Scanner(ufr);
 	}
 	
+	void initImageWriter() throws FileNotFoundException
+	{
+		File dir = new File("saves");
+		dir.mkdir();
+		
+		try 
+		{
+			ifw = new FileWriter(System.getProperty("user.dir")+"\\saves\\"+username+".jimage");
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		ibw = new BufferedWriter(ifw);
+	}
+	
+	void initImageReader() throws FileNotFoundException
+	{
+		ifr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jimage");
+		ireader = new Scanner(ifr);
+	}
+	
+	
 	private SecretKeySpec initEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
 		String keytext = username + password;
@@ -141,12 +171,13 @@ public class IOController
 		Scanner tempreader = new Scanner(tempfr);
 		
 		int lines = 0;
+	
 		while (tempreader.hasNextLine())
 		{
 			tempreader.nextLine();
 			lines++;
-			
-		}
+		}	
+		
 		tempreader.close();
 		return lines;
 		
@@ -172,7 +203,8 @@ public class IOController
 	void saveToFile(Person pPerson) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
 
-	
+		bw.write(pPerson.getUuid().toString());
+		bw.newLine();
 		bw.write(encryptString(pPerson.getNachname()));
 		bw.newLine();
 		bw.write(encryptString(pPerson.getVorname()));
@@ -190,8 +222,6 @@ public class IOController
 		bw.write(encryptString(pPerson.getAdresszusatz()));
 		bw.newLine();
 		bw.write(encryptString(pPerson.getEmail()));
-		bw.newLine();
-		bw.write(encryptString(pPerson.getBild()));
 		bw.newLine();
 		bw.write(encryptString(pPerson.getBildFormat()));
 		bw.newLine();
@@ -243,6 +273,7 @@ public class IOController
 	Person readPerson() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		Person neu = new Person();
+		UUID uuid = UUID.fromString(reader.next());
 		String nachname = decryptString(reader.next());
 		String vorname = decryptString(reader.next());
 		String land = decryptString(reader.next());
@@ -252,7 +283,6 @@ public class IOController
 		String hausnummer = decryptString(reader.next());
 		String adresszusatz = decryptString(reader.next());
 		String email = decryptString(reader.next());
-		String bild = decryptString(reader.next());
 		String bildFormat = decryptString(reader.next());;
 		int groesse = Integer.parseInt(decryptString(reader.next()));
 		int gewicht = Integer.parseInt(decryptString(reader.next()));
@@ -270,6 +300,7 @@ public class IOController
 		int geburtstag = Integer.parseInt(decryptString(reader.next()));
 		reader.next();
 		
+		neu.setUuid(uuid);
 		neu.setNachname(nachname);
 		neu.setVorname(vorname);
 		neu.setLand(land);
@@ -284,7 +315,6 @@ public class IOController
 		neu.setHausnummer(hausnummer);
 		neu.setAdresszusatz(adresszusatz);
 		neu.setEmail(email);
-		neu.setBild(bild);
 		neu.setBildFormat(bildFormat);
 		neu.setGroesse(groesse);
 		neu.setGewicht(gewicht);
@@ -335,6 +365,61 @@ public class IOController
 		return neu;
 	}
 	
+	void saveImageToFile(Person pPerson) throws IOException
+	{
+		ibw.write(pPerson.getUuid().toString());
+		ibw.newLine();
+		ibw.write(pPerson.getBild());
+		ibw.newLine();
+		ibw.write("!ImageEnd");
+		ibw.newLine();
+		ibw.write(";");
+		ibw.newLine();
+		ibw.flush();
+	}
+	
+	void readImage()
+	{
+		
+		String uuid = ireader.next();
+		String image = "";
+		
+		while (ireader.hasNextLine() & (!(ireader.nextLine().contains(";"))))
+		{
+			image += ireader.nextLine();
+		}
+
+		ireader.nextLine();
+		
+		ModelController.getObjectAt(ModelController.indexOf(UUID.fromString(uuid))).setBild(image);
+	}
+	
+	int imageLines() throws FileNotFoundException
+	{
+		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jimage");
+		Scanner tempreader = new Scanner(tempfr);
+		
+		int lines = 0;
+		
+		while (tempreader.hasNextLine())
+		{
+			if (tempreader.hasNextLine()) tempreader.nextLine();
+			lines++;
+			
+			while (tempreader.hasNextLine() && tempreader.nextLine().contains("!ImageEnd"))
+			{
+				tempreader.nextLine();
+			}
+			
+			if (tempreader.hasNextLine())tempreader.nextLine();
+			if (tempreader.hasNextLine())lines++;
+			if (tempreader.hasNextLine())tempreader.nextLine();
+			if (tempreader.hasNextLine())lines++;
+		}
+
+		tempreader.close();
+		return lines;
+	}
 	
 	private static byte[] imageToByte (BufferedImage image, String pFormat) throws IOException 
 	{
@@ -366,8 +451,6 @@ public class IOController
 	{
 		ByteArrayInputStream bais = new ByteArrayInputStream(pBytes);
 		BufferedImage bi = ImageIO.read(bais);
-		//FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"\\test\\"+pPerson.getNachname()+" - "+pPerson.getVorname()+ "." +pFormat);
-		//ImageIO.write(bi, pFormat, fos);
 		
 		return bi;
 	}
