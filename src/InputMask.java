@@ -21,6 +21,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JMenuBar;
 
 public class InputMask extends JFrame
 {
@@ -45,9 +46,7 @@ public class InputMask extends JFrame
 	private JComboBox tag;
 	private JLabel label_3;
 	private HintTextField telefonnummer;
-	private JButton btnSpeichern;
 	private JButton btnErweitert;
-	private JButton btnX;
 	private JComboBox geschlecht;
 	private JSeparator separator;
 	private JSeparator separator_1;
@@ -76,6 +75,10 @@ public class InputMask extends JFrame
 	private JButton btnBild;
 	private BufferedImage image;
 	private String format;
+	private JButton btnImport;
+	private JButton btnSpeichern;
+	private JButton btnX;
+	private JButton button_2;
 
 	/**
 	 * Launch the application.
@@ -138,129 +141,6 @@ public class InputMask extends JFrame
 		
 		advanced = new JPanel();
 		advanced.setVisible(false);
-		advanced.setBounds(0, 0, 232, 501);
-		contentPane.add(advanced);
-		advanced.setLayout(null);
-		
-		lblErweitert = new JLabel("Erweitert:");
-		lblErweitert.setHorizontalAlignment(SwingConstants.LEFT);
-		lblErweitert.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblErweitert.setBounds(6, 9, 203, 20);
-		advanced.add(lblErweitert);
-		
-		lblPersnlicheDaten = new JLabel("Pers\u00F6nliche Daten:");
-		lblPersnlicheDaten.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblPersnlicheDaten.setBounds(6, 37, 203, 16);
-		advanced.add(lblPersnlicheDaten);
-		
-		haarfarbe = new JComboBox();
-		haarfarbe.setToolTipText("Haarfarbe");
-		haarfarbe.setBounds(6, 55, 203, 26);
-		advanced.add(haarfarbe);
-		
-		btnZurück = new JButton("Zur\u00FCck...");
-		btnZurück.setToolTipText("Zur\u00FCck");
-		btnZurück.setBounds(6, 415, 203, 28);
-		advanced.add(btnZurück);
-		
-		separator_5 = new JSeparator();
-		separator_5.setBounds(6, 31, 203, 2);
-		advanced.add(separator_5);
-		
-		separator_6 = new JSeparator();
-		separator_6.setBounds(6, 410, 203, 2);
-		advanced.add(separator_6);
-		
-		separator_7 = new JSeparator();
-		separator_7.setBounds(6, 447, 203, 2);
-		advanced.add(separator_7);
-		
-		augenfarbe = new JComboBox();
-		augenfarbe.setToolTipText("Augenfarbe");
-		augenfarbe.setBounds(6, 80, 203, 26);
-		advanced.add(augenfarbe);
-		
-		lblKg = new JLabel("Gewicht: 0 kg");
-		lblKg.setToolTipText("Gewicht");
-		lblKg.setBounds(6, 134, 117, 16);
-		advanced.add(lblKg);
-		
-		gewicht = new JSlider();
-		gewicht.setToolTipText("Gewicht");
-		gewicht.setPaintTicks(true);
-		gewicht.setValue(0);
-		gewicht.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) 
-			{
-				lblKg.setText("Gewicht: "+Integer.toString(gewicht.getValue())+ " kg");
-			}
-		});
-		gewicht.setMaximum(200);
-		gewicht.setMinorTickSpacing(5);
-		gewicht.setPaintLabels(true);
-		gewicht.setMajorTickSpacing(50);
-		gewicht.setBounds(6, 152, 200, 42);
-		advanced.add(gewicht);
-		
-		lblCm = new JLabel("Gr\u00F6\u00DFe: 0 cm");
-		lblCm.setToolTipText("Gr\u00F6\u00DFe");
-		lblCm.setBounds(6, 206, 117, 16);
-		advanced.add(lblCm);
-		
-		groesse = new JSlider();
-		groesse.setPaintTicks(true);
-		groesse.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) 
-			{
-				lblCm.setText("Größe: "+Integer.toString(groesse.getValue())+ " cm");
-			}
-		});
-		groesse.setValue(0);
-		groesse.setPaintLabels(true);
-		groesse.setMinorTickSpacing(5);
-		groesse.setMaximum(250);
-		groesse.setMajorTickSpacing(50);
-		groesse.setBounds(6, 225, 200, 42);
-		advanced.add(groesse);
-		
-		hautfarbe = new JComboBox();
-		hautfarbe.setToolTipText("Hautfarbe");
-		hautfarbe.setBounds(6, 106, 203, 26);
-		advanced.add(hautfarbe);
-		
-		religion = new JComboBox();
-		religion.setToolTipText("Religion");
-		religion.setBounds(6, 271, 203, 26);
-		advanced.add(religion);
-		
-		firma = new HintTextField("Firma");
-		firma.setToolTipText("Firma");
-		firma.setName("");
-		firma.setColumns(10);
-		firma.setBounds(6, 309, 203, 28);
-		advanced.add(firma);
-		
-		handy = new HintTextField("Handynummer");
-		handy.setToolTipText("Handynummer");
-		handy.setName("");
-		handy.setColumns(10);
-		handy.setBounds(6, 340, 203, 28);
-		advanced.add(handy);
-		
-		separator_3 = new JSeparator();
-		separator_3.setBounds(6, 302, 203, 2);
-		advanced.add(separator_3);
-		
-		save = new JButton("Speichern");
-		save.setToolTipText("Speichern");
-		save.setBounds(6, 461, 158, 28);
-		advanced.add(save);
-		
-		x = new JButton("X");
-		x.setToolTipText("Schlie\u00DFen");
-		x.setFont(new Font("SansSerif", Font.BOLD, 12));
-		x.setBounds(173, 461, 36, 28);
-		advanced.add(x);
 		
 		
 		
@@ -375,20 +255,9 @@ public class InputMask extends JFrame
 		telefonnummer.setColumns(10);
 		main.add(telefonnummer);
 		
-		btnSpeichern = new JButton("Speichern");
-		btnSpeichern.setToolTipText("Speichern");
-		btnSpeichern.setBounds(6, 461, 158, 28);
-		main.add(btnSpeichern);
-		
 		btnErweitert = new JButton("Erweitert...");
 		btnErweitert.setBounds(6, 415, 203, 28);
 		main.add(btnErweitert);
-		
-		btnX = new JButton("X");
-		btnX.setToolTipText("Schlie\u00DFen");
-		btnX.setBounds(173, 461, 36, 28);
-		btnX.setFont(new Font("SansSerif", Font.BOLD, 12));
-		main.add(btnX);
 		
 		geschlecht = new JComboBox();
 		geschlecht.setBounds(6, 280, 203, 26);
@@ -420,6 +289,150 @@ public class InputMask extends JFrame
 		
 		jahr.addItem("Jahr");
 		
+		geschlecht.addItem(">> Geschlecht <<");
+		
+		btnSpeichern = new JButton("Speichern");
+		btnSpeichern.setToolTipText("Speichern");
+		btnSpeichern.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnSpeichern.setBounds(77, 461, 98, 28);
+		main.add(btnSpeichern);
+		
+		btnX = new JButton("X");
+		btnX.setToolTipText("Schlie\u00DFen");
+		btnX.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnX.setBounds(175, 461, 36, 28);
+		main.add(btnX);
+		
+		button_2 = new JButton("Import");
+		button_2.setToolTipText("Speichern");
+		button_2.setFont(new Font("SansSerif", Font.BOLD, 12));
+		button_2.setBounds(6, 461, 72, 28);
+		main.add(button_2);
+		advanced.setBounds(0, 0, 232, 501);
+		contentPane.add(advanced);
+		advanced.setLayout(null);
+		
+		lblErweitert = new JLabel("Erweitert:");
+		lblErweitert.setHorizontalAlignment(SwingConstants.LEFT);
+		lblErweitert.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblErweitert.setBounds(6, 9, 203, 20);
+		advanced.add(lblErweitert);
+		
+		lblPersnlicheDaten = new JLabel("Pers\u00F6nliche Daten:");
+		lblPersnlicheDaten.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblPersnlicheDaten.setBounds(6, 37, 203, 16);
+		advanced.add(lblPersnlicheDaten);
+		
+		haarfarbe = new JComboBox();
+		haarfarbe.setToolTipText("Haarfarbe");
+		haarfarbe.setBounds(6, 55, 203, 26);
+		advanced.add(haarfarbe);
+		
+		btnZurück = new JButton("Zur\u00FCck...");
+		btnZurück.setToolTipText("Zur\u00FCck");
+		btnZurück.setBounds(6, 415, 203, 28);
+		advanced.add(btnZurück);
+		
+		separator_5 = new JSeparator();
+		separator_5.setBounds(6, 31, 203, 2);
+		advanced.add(separator_5);
+		
+		separator_6 = new JSeparator();
+		separator_6.setBounds(6, 410, 203, 2);
+		advanced.add(separator_6);
+		
+		separator_7 = new JSeparator();
+		separator_7.setBounds(6, 447, 203, 2);
+		advanced.add(separator_7);
+		
+		augenfarbe = new JComboBox();
+		augenfarbe.setToolTipText("Augenfarbe");
+		augenfarbe.setBounds(6, 80, 203, 26);
+		advanced.add(augenfarbe);
+		
+		lblKg = new JLabel("Gewicht: 0 kg");
+		lblKg.setToolTipText("Gewicht");
+		lblKg.setBounds(6, 134, 117, 16);
+		advanced.add(lblKg);
+		
+		gewicht = new JSlider();
+		gewicht.setToolTipText("Gewicht");
+		gewicht.setPaintTicks(true);
+		gewicht.setValue(0);
+		gewicht.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) 
+			{
+				lblKg.setText("Gewicht: "+Integer.toString(gewicht.getValue())+ " kg");
+			}
+		});
+		gewicht.setMaximum(200);
+		gewicht.setMinorTickSpacing(5);
+		gewicht.setPaintLabels(true);
+		gewicht.setMajorTickSpacing(50);
+		gewicht.setBounds(6, 152, 200, 42);
+		advanced.add(gewicht);
+		
+		lblCm = new JLabel("Gr\u00F6\u00DFe: 0 cm");
+		lblCm.setToolTipText("Gr\u00F6\u00DFe");
+		lblCm.setBounds(6, 206, 117, 16);
+		advanced.add(lblCm);
+		
+		groesse = new JSlider();
+		groesse.setPaintTicks(true);
+		groesse.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) 
+			{
+				lblCm.setText("Größe: "+Integer.toString(groesse.getValue())+ " cm");
+			}
+		});
+		groesse.setValue(0);
+		groesse.setPaintLabels(true);
+		groesse.setMinorTickSpacing(5);
+		groesse.setMaximum(250);
+		groesse.setMajorTickSpacing(50);
+		groesse.setBounds(6, 225, 200, 42);
+		advanced.add(groesse);
+		
+		hautfarbe = new JComboBox();
+		hautfarbe.setToolTipText("Hautfarbe");
+		hautfarbe.setBounds(6, 106, 203, 26);
+		advanced.add(hautfarbe);
+		
+		religion = new JComboBox();
+		religion.setToolTipText("Religion");
+		religion.setBounds(6, 271, 203, 26);
+		advanced.add(religion);
+		
+		firma = new HintTextField("Firma");
+		firma.setToolTipText("Firma");
+		firma.setName("");
+		firma.setColumns(10);
+		firma.setBounds(6, 309, 203, 28);
+		advanced.add(firma);
+		
+		handy = new HintTextField("Handynummer");
+		handy.setToolTipText("Handynummer");
+		handy.setName("");
+		handy.setColumns(10);
+		handy.setBounds(6, 340, 203, 28);
+		advanced.add(handy);
+		
+		separator_3 = new JSeparator();
+		separator_3.setBounds(6, 302, 203, 2);
+		advanced.add(separator_3);
+		
+		save = new JButton("Speichern");
+		save.setFont(new Font("SansSerif", Font.BOLD, 12));
+		save.setToolTipText("Speichern");
+		save.setBounds(77, 461, 98, 28);
+		advanced.add(save);
+		
+		x = new JButton("X");
+		x.setToolTipText("Schlie\u00DFen");
+		x.setFont(new Font("SansSerif", Font.BOLD, 12));
+		x.setBounds(175, 461, 36, 28);
+		advanced.add(x);
+		
 		for (int i = 0; i < 13; i++)
 		{
 			monat.addItem(Person.Monat.values()[i].toString());
@@ -442,8 +455,6 @@ public class InputMask extends JFrame
 		{
 			jahr.addItem(Integer.toString(i));
 		}
-		
-		geschlecht.addItem(">> Geschlecht <<");
 		//Combobox Geschlecht
 		for (int i = 0; i < 4; i++)
 		{
@@ -481,6 +492,12 @@ public class InputMask extends JFrame
 		btnBild.setToolTipText("Zur\u00FCck");
 		btnBild.setBounds(6, 375, 203, 28);
 		advanced.add(btnBild);
+		
+		btnImport = new JButton("Import");
+		btnImport.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnImport.setToolTipText("Speichern");
+		btnImport.setBounds(6, 461, 72, 28);
+		advanced.add(btnImport);
 		//Combobox Haarfarbe
 		for (int i = 0; i < 6; i++)
 		{

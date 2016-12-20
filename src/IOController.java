@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -13,6 +14,7 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -42,14 +44,9 @@ public class IOController
 	private FileReader ufr;
 	private Scanner ureader;
 	
-	private FileWriter ifw;
-	private BufferedWriter ibw;
-	private FileReader ifr;
-	private Scanner ireader;
-	
-	
 	private String username;
 	private String password;
+	
 	
 	void setUserInfo(String pUsername, String pPassword)
 	{
@@ -101,28 +98,6 @@ public class IOController
 	{
 		ufr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
 		ureader = new Scanner(ufr);
-	}
-	
-	void initImageWriter() throws FileNotFoundException
-	{
-		File dir = new File("saves");
-		dir.mkdir();
-		
-		try 
-		{
-			ifw = new FileWriter(System.getProperty("user.dir")+"\\saves\\"+username+".jimage");
-		} catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		ibw = new BufferedWriter(ifw);
-	}
-	
-	void initImageReader() throws FileNotFoundException
-	{
-		ifr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jimage");
-		ireader = new Scanner(ifr);
 	}
 	
 	
@@ -223,6 +198,8 @@ public class IOController
 		bw.newLine();
 		bw.write(encryptString(pPerson.getEmail()));
 		bw.newLine();
+		bw.write(pPerson.getBild());
+		bw.newLine();
 		bw.write(encryptString(pPerson.getBildFormat()));
 		bw.newLine();
 		bw.write(encryptString(Integer.toString(pPerson.getGroesse())));
@@ -283,6 +260,7 @@ public class IOController
 		String hausnummer = decryptString(reader.next());
 		String adresszusatz = decryptString(reader.next());
 		String email = decryptString(reader.next());
+		String bild = reader.next();
 		String bildFormat = decryptString(reader.next());;
 		int groesse = Integer.parseInt(decryptString(reader.next()));
 		int gewicht = Integer.parseInt(decryptString(reader.next()));
@@ -315,6 +293,7 @@ public class IOController
 		neu.setHausnummer(hausnummer);
 		neu.setAdresszusatz(adresszusatz);
 		neu.setEmail(email);
+		neu.setBild(bild);
 		neu.setBildFormat(bildFormat);
 		neu.setGroesse(groesse);
 		neu.setGewicht(gewicht);
@@ -365,78 +344,25 @@ public class IOController
 		return neu;
 	}
 	
-	void saveImageToFile(Person pPerson) throws IOException
-	{
-		ibw.write(pPerson.getUuid().toString());
-		ibw.newLine();
-		ibw.write(pPerson.getBild());
-		ibw.newLine();
-		ibw.write("!ImageEnd");
-		ibw.newLine();
-		ibw.write(";");
-		ibw.newLine();
-		ibw.flush();
-	}
-	
-	void readImage()
-	{
-		
-		String uuid = ireader.next();
-		String image = "";
-		
-		while (ireader.hasNextLine() & (!(ireader.nextLine().contains(";"))))
-		{
-			image += ireader.nextLine();
-		}
-
-		ireader.nextLine();
-		
-		ModelController.getObjectAt(ModelController.indexOf(UUID.fromString(uuid))).setBild(image);
-	}
-	
-	int imageLines() throws FileNotFoundException
-	{
-		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jimage");
-		Scanner tempreader = new Scanner(tempfr);
-		
-		int lines = 0;
-		
-		while (tempreader.hasNextLine())
-		{
-			if (tempreader.hasNextLine()) tempreader.nextLine();
-			lines++;
-			
-			while (tempreader.hasNextLine() && tempreader.nextLine().contains("!ImageEnd"))
-			{
-				tempreader.nextLine();
-			}
-			
-			if (tempreader.hasNextLine())tempreader.nextLine();
-			if (tempreader.hasNextLine())lines++;
-			if (tempreader.hasNextLine())tempreader.nextLine();
-			if (tempreader.hasNextLine())lines++;
-		}
-
-		tempreader.close();
-		return lines;
-	}
 	
 	private static byte[] imageToByte (BufferedImage image, String pFormat) throws IOException 
 	{
-		 BufferedImage bufferedImage = image;
+		BufferedImage bufferedImage = image;
 
 		 ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		 ImageIO.write(bufferedImage, pFormat, baos);
 		 byte[] bytes = baos.toByteArray();
-
+		 
+		 
 		 return (bytes);
 	}
 	
 	
-	private static String byteToBase64(byte[] pBytes)
-	{
-		BASE64Encoder encoder = new BASE64Encoder();
-		String encoded = encoder.encode(pBytes);
+	private static String byteToBase64(byte[] pBytes)		
+	{	
+		//BASE64Encoder encoder = new BASE64Encoder();
+		//String encoded = encoder.encode(pBytes);
+		String encoded = Base64.getEncoder().encodeToString(pBytes);
 		return encoded;
 	}
 	
@@ -480,8 +406,6 @@ public class IOController
 	{
 		BufferedWriter VCardbw = null;
 		FileWriter VCardfw = null;
-		
-		
 
 		try 
 		{
@@ -506,7 +430,6 @@ public class IOController
 			VCardbw.write("BDAY:"+pPerson.getGeburtsjahr()+"-"+month+"-"+pPerson.getGeburtstag()+"\n");
 			VCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
 			VCardbw.write("END:VCARD\n");
-			
 
 			System.out.println("Done");
 
@@ -537,5 +460,98 @@ public class IOController
 		}
 
 	}
+	
+static Person importVCard(File pFile) throws FileNotFoundException{
+		
+		
+		Person neu = new Person();
+		FileReader fr;
+		fr = new FileReader(pFile);
+		Scanner reader = new Scanner(fr);
+		
+    	while(reader.hasNext())
+		{
+			
+			
+			String temp = reader.next();
+			String [] split = temp.split(":");
+			
+			
+
+			
+			if(temp.contains("TEL"))
+			{
+				neu.setTelefon(split[1]);
+				reader.nextLine();
+			}
+			
+			switch(split[0]) 
+			{
+				case  	"N": 
+				
+					String [] namesplit = split[1].split(";");
+					neu.setNachname(namesplit[0]);
+					neu.setVorname(namesplit[1]);
+					break; 
+					
+				case  	"EMAIL": 
+				
+					neu.setEmail(split[1]);				
+					break;
+				
+				case  	"BDAY":
+					String[] bday = split[1].split("-");
+					neu.setGeburtsjahr(Integer.parseInt(bday[0]));
+					
+					if(bday[1].contains("0"))
+					{
+						bday[1].replace("0","");
+					}
+					neu.setGeburtsmonat(Person.Monat.values()[Integer.parseInt(bday[1])-1]);	
+					
+					if(bday[2].contains("0"))
+					{
+						bday[2].replace("0","");
+					}
+					neu.setGeburtstag(Integer.parseInt(bday[2]));
+					
+					break;
+					
+				case  		"GENDER":
+					if(split[1].equals("M"))
+					{
+						neu.setGeschlecht(Person.Geschlecht.Männlich);
+					}
+					else
+					{
+						neu.setGeschlecht(Person.Geschlecht.Weiblich);
+					}
+					break;
+				
+				default: 	//no setable  
+							
+							break;
+			
+			}
+			
+	
+		}
+			
+		System.out.println(neu.getVorname());
+		System.out.println(neu.getNachname());
+		System.out.println(neu.getTelefon());
+		System.out.println(neu.getEmail());
+		System.out.println(neu.getGeschlecht());
+		System.out.println(neu.getGeburtsjahr());
+		System.out.println(neu.getGeburtsmonat());
+		System.out.println(neu.getGeburtstag());
+		
+		
+		reader.close();
+    		return neu;
+		
+		
+	}
+	
 		                    
 }

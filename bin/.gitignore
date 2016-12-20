@@ -1,5 +1,7 @@
 /Controller$1.class
 /Controller$2.class
+/Controller$3.class
+/Controller.class
 /Countries.class
 /GUI$1.class
 /GUI$2.class
@@ -11,7 +13,6 @@
 /InputMask.class
 /List$ListNode.class
 /List.class
-/Login.class
 /ModelController.class
 /Person$Augenfarbe.class
 /Person$Geschlecht.class
@@ -20,12 +21,7 @@
 /Person$Monat.class
 /Person$Religion.class
 /Person.class
-/org/
-/resources/
-/UserManager$1.class
+/User.class
 /UserManager.class
 /UserMask.class
-/Controller$3.class
-/User.class
-/UserMask$1$1.class
-/UserMask$1.class
+/org/

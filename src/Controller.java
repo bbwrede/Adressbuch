@@ -254,7 +254,7 @@ public class Controller extends MouseAdapter
 							String ext = selc.getName().substring(selc.getName().lastIndexOf("."));
 							ext = ext.toLowerCase();
 							ext = ext.substring(1);
-							System.out.println(ext);
+							//System.out.println(ext);
 				    		im.setImage(ioc.readImage(chooser.getSelectedFile()), ext);
 				    		im.setImageButton(chooser.getSelectedFile().getName());
 						} catch (IOException e1)
@@ -293,11 +293,11 @@ public class Controller extends MouseAdapter
 						e1.printStackTrace();
 					} catch (NullPointerException e2)
 					{
-						/*JOptionPane.showMessageDialog(gui.getFrame(),
+						JOptionPane.showMessageDialog(gui.getFrame(),
 							    "Die Datei konnte nicht gespeichert werden! \n"
 							    + "Es sind keine Elemente zum Speichern vorhanden!",
 							    "Fehler beim Speichern der Datei",
-							    JOptionPane.ERROR_MESSAGE);*/
+							    JOptionPane.ERROR_MESSAGE);
 						e2.printStackTrace();
 					}
 				}
@@ -411,14 +411,12 @@ public class Controller extends MouseAdapter
 	{
 		ioc.setUserInfo(active.getUsername(), active.getPassword());
 		ioc.initWriter();
-		//ioc.initImageWriter();
 		
 		List<Person> temp = mc.getList();
 		temp.toFirst();
 		while (temp.hasAccess())
 		{
 			ioc.saveToFile(temp.getContent());
-			//ioc.saveImageToFile(temp.getContent());
 			temp.next();
 		}
 		
@@ -434,10 +432,9 @@ public class Controller extends MouseAdapter
 		
 		System.out.println("hier");
 		ioc.initReader();
-		//ioc.initImageReader();
 		
 		int number = ioc.getLines();
-		number = number/26;
+		number = number/27;
 	
 		System.out.println(number);
 	
@@ -445,14 +442,6 @@ public class Controller extends MouseAdapter
 		{
 			mc.sortIn(ioc.readPerson());
 		}
-		
-		/*int numberImage = ioc.imageLines();
-		numberImage = numberImage/3;
-		
-		for (int i = 0; i < numberImage; i++)
-		{
-			ioc.readImage();
-		}*/
 		
 		updateList();
 		
