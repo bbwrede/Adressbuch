@@ -459,22 +459,20 @@ public class GUI
 			@Override
 			public void removeUpdate(DocumentEvent e)
 			{
-				filter();
+				if(!suche.getText().equals("Suchen")) filter();
 				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e)
 			{
-				filter();
-				
+				if(!suche.getText().equals("Suchen")) filter();
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e)
 			{
-				filter();
-				
+				if(!suche.getText().equals("Suchen")) filter();
 			}
 		});
 		
