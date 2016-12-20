@@ -396,6 +396,7 @@ public class Controller extends MouseAdapter
 		{
            index = table.getSelectedRow();
            System.out.println(mc.getObjectAt(index).getNachname());
+           System.out.println(gui.getSelectedUUID());
 		}
 	}
 	

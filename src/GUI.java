@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -91,7 +92,7 @@ public class GUI
 	private JTable table;
 	private DefaultTableModel tablemodel;
 	private DefaultTableModel tablemodel2;
-	private String[] columns = {"Nachname","Vorname","Land","Stadt"};
+	private String[] columns = {"Nachname","Vorname","Land","Stadt","UUID"};
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JPanel panel_1;
@@ -418,6 +419,11 @@ public class GUI
 		panel_2.setBounds(3, 29, 788, 41);
 		mainPanel.add(panel_2);
 		
+		//table.getColumnModel().getColumn(4).setMinWidth(0);
+		//table.getColumnModel().getColumn(4).setMaxWidth(0);
+		
+		table.removeColumn(table.getColumnModel().getColumn(4));
+		
 		sorter = new TableRowSorter<TableModel>(table.getModel());
 		table.setRowSorter(sorter);
 		
@@ -480,7 +486,7 @@ public class GUI
 	
 	void setTableData(Person pPerson)
 	{
-		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), pPerson.getLand(), pPerson.getOrt()});	
+		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), pPerson.getLand(), pPerson.getOrt(), pPerson.getUuid().toString()});	
 	}
 	
 	void initTable()
@@ -585,6 +591,11 @@ public class GUI
 	int getSelectedTableRow()
 	{
 		return table.getSelectedRow();
+	}
+	
+	UUID getSelectedUUID()
+	{
+		return UUID.fromString(tablemodel.getValueAt(table.getSelectedRow(), 4).toString());
 	}
 	
 	void showLoginWarning()
