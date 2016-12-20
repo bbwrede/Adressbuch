@@ -3,9 +3,7 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -461,7 +459,8 @@ public class IOController
 
 	}
 	
-static Person importVCard(File pFile) throws FileNotFoundException{
+	static Person importVCard(File pFile) throws FileNotFoundException
+	{
 		
 		
 		Person neu = new Person();

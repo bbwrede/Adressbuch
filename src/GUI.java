@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,12 +48,18 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 import java.awt.SystemColor;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.border.BevelBorder;
@@ -80,7 +87,7 @@ public class GUI
 	private JMenuItem mntmNeu;
 	private JMenuItem mntmSpeichern;
 	private JMenuItem mntmLaden;
-	private JTextField textField;
+	private JTextField suche;
 	private JTable table;
 	private DefaultTableModel tablemodel;
 	private DefaultTableModel tablemodel2;
@@ -97,6 +104,7 @@ public class GUI
 	private JButton btnRegister;
 	private JMenu mnEingeloggt;
 	private JMenuItem mntmLogout;
+	private TableRowSorter<TableModel> sorter;
 	
 	public GUI() 
 	{
@@ -302,11 +310,11 @@ public class GUI
 		btnDelete.setIcon(new ImageIcon(GUI.class.getResource("/resources/delete.png")));
 		mainPanel.add(btnDelete);
 		
-		textField = new HintTextField("Suchen");
-		textField.setBounds(520, 33, 227, 30);
-		textField.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		mainPanel.add(textField);
-		textField.setColumns(10);
+		suche = new HintTextField("Suchen");
+		suche.setBounds(520, 33, 227, 30);
+		suche.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		mainPanel.add(suche);
+		suche.setColumns(10);
 		
 		menuBar = new JMenuBar();
 		menuBar.setVisible(false);
@@ -410,6 +418,10 @@ public class GUI
 		panel_2.setBounds(3, 29, 788, 41);
 		mainPanel.add(panel_2);
 		
+		sorter = new TableRowSorter<TableModel>(table.getModel());
+		table.setRowSorter(sorter);
+		
+		
 		
 	}
 	private void addPopup(Component component, final JPopupMenu popup) 
@@ -441,6 +453,30 @@ public class GUI
 		btnNeu.setActionCommand("Neu...");
 		btnDelete.addActionListener(al);
 		btnRegister.addActionListener(al);
+		suche.getDocument().addDocumentListener(new DocumentListener()
+		{
+			
+			@Override
+			public void removeUpdate(DocumentEvent e)
+			{
+				filter();
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e)
+			{
+				filter();
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e)
+			{
+				filter();
+				
+			}
+		});
 		
 	}
 	
@@ -452,6 +488,22 @@ public class GUI
 	void initTable()
 	{
 		
+	}
+	void filter() 
+	{
+		ArrayList<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel,Object>>();
+	    try 
+	    {
+	    	for (int i = 0; i<4; i++)
+	    	{
+	    		filters.add(RowFilter.regexFilter("(?i)" + suche.getText(), i));
+	    	}  
+	    } catch (java.util.regex.PatternSyntaxException e) 
+	    {
+	        return;
+	    }
+	    sorter.setRowFilter(RowFilter.orFilter(filters));
+	    
 	}
 	
 	void killTable()
