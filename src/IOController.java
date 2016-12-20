@@ -459,7 +459,7 @@ public class IOController
 
 	}
 	
-	static Person importVCard(File pFile) throws FileNotFoundException
+	Person importVCard(File pFile) throws FileNotFoundException
 	{
 		
 		

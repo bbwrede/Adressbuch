@@ -1,5 +1,6 @@
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class InputMask extends JFrame
 	private JButton btnImport;
 	private JButton btnSpeichern;
 	private JButton btnX;
-	private JButton button_2;
+	private JButton btnImport2;
 
 	/**
 	 * Launch the application.
@@ -303,11 +304,11 @@ public class InputMask extends JFrame
 		btnX.setBounds(175, 461, 36, 28);
 		main.add(btnX);
 		
-		button_2 = new JButton("Import");
-		button_2.setToolTipText("Speichern");
-		button_2.setFont(new Font("SansSerif", Font.BOLD, 12));
-		button_2.setBounds(6, 461, 72, 28);
-		main.add(button_2);
+		btnImport2 = new JButton("Import");
+		btnImport2.setToolTipText("Speichern");
+		btnImport2.setFont(new Font("SansSerif", Font.BOLD, 12));
+		btnImport2.setBounds(6, 461, 72, 28);
+		main.add(btnImport2);
 		advanced.setBounds(0, 0, 232, 501);
 		contentPane.add(advanced);
 		advanced.setLayout(null);
@@ -521,6 +522,8 @@ public class InputMask extends JFrame
 		save.addActionListener(al);
 		btnBild.addActionListener(al);
 		btnBild.setActionCommand("Bild...");
+		btnImport.addActionListener(al);
+		btnImport2.addActionListener(al);
 	}
 	
 	Person getNewPerson()
@@ -618,6 +621,18 @@ public class InputMask extends JFrame
 		}
 		
 		return neu;
+	}
+	
+	void setInput(Person pPerson)
+	{
+		nachname.setText(pPerson.getNachname());
+		vorname.setText(pPerson.getVorname());
+		telefonnummer.setText(pPerson.getTelefon());
+		email.setText(pPerson.getEmail());
+		geschlecht.setSelectedItem(pPerson.getGeschlecht().toString());
+		jahr.setSelectedItem(Integer.toString(pPerson.getGeburtsjahr()));
+		monat.setSelectedItem(pPerson.getGeburtsmonat().toString());
+		tag.setSelectedItem(Integer.toString(pPerson.getGeburtstag()));
 	}
 	
 	

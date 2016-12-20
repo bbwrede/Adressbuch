@@ -45,4 +45,12 @@ class HintTextField extends JTextField implements FocusListener
 	{
 		return showingHint ? "" : super.getText();
 	}
+	
+	@Override
+	public void setText(String pText) 
+	{
+		showingHint = false;
+		setForeground(Color.BLACK);
+		super.setText(pText);
+	}
 }

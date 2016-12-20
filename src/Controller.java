@@ -246,10 +246,30 @@ public class Controller extends MouseAdapter
 							String ext = selc.getName().substring(selc.getName().lastIndexOf("."));
 							ext = ext.toLowerCase();
 							ext = ext.substring(1);
-							//System.out.println(ext);
+							
 				    		im.setImage(ioc.readImage(chooser.getSelectedFile()), ext);
 				    		im.setImageButton(chooser.getSelectedFile().getName());
 						} catch (IOException e1)
+						{
+							// TODO Automatisch generierter Erfassungsblock
+							e1.printStackTrace();
+						}
+				    }
+				}
+				
+				if (cmd.equals("Import"))
+				{
+					JFileChooser chooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("VCard File" ,"vcf");
+				    chooser.setFileFilter(filter);
+				    int returnVal = chooser.showOpenDialog(im.getFrame());
+				    if(returnVal == JFileChooser.APPROVE_OPTION) 
+				    {
+						try
+						{
+							Person neu =  ioc.importVCard(chooser.getSelectedFile());
+							im.setInput(neu);
+						} catch (FileNotFoundException e1)
 						{
 							// TODO Automatisch generierter Erfassungsblock
 							e1.printStackTrace();
@@ -333,6 +353,11 @@ public class Controller extends MouseAdapter
 					mc.removeListElements();
 					updateList();
 					active = null;
+				}
+				
+				if (cmd.equals("Beenden"))
+				{
+					System.exit(0);
 				}
 
 			}

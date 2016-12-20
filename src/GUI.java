@@ -68,6 +68,7 @@ import java.awt.Canvas;
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
+import javax.swing.JProgressBar;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -106,6 +107,9 @@ public class GUI
 	private JMenu mnEingeloggt;
 	private JMenuItem mntmLogout;
 	private TableRowSorter<TableModel> sorter;
+	private JTextField textField;
+	private JMenuItem mntmBeenden;
+	private JMenuItem mntmEinstellungen;
 	
 	public GUI() 
 	{
@@ -340,11 +344,19 @@ public class GUI
 		mntmLaden.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mnDatei.add(mntmLaden);
 		
+		mntmBeenden = new JMenuItem("Beenden");
+		mntmBeenden.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
+		mnDatei.add(mntmBeenden);
+		
 		JMenu mnBearbeiten = new JMenu("Bearbeiten");
 		menuBar.add(mnBearbeiten);
 		
 		JMenu mnSuchen = new JMenu("Suchen");
 		menuBar.add(mnSuchen);
+		
+		textField = new JTextField();
+		mnSuchen.add(textField);
+		textField.setColumns(10);
 		
 		JMenu mnHilfe = new JMenu("Hilfe");
 		menuBar.add(mnHilfe);
@@ -364,6 +376,10 @@ public class GUI
 		mnEingeloggt = new JMenu("<html> Eingeloggt als <b>admin</b>");
 		mnEingeloggt.setFont(new Font("SansSerif", Font.PLAIN, 12));
 		menuBar.add(mnEingeloggt);
+		
+		mntmEinstellungen = new JMenuItem("Einstellungen");
+		mntmEinstellungen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
+		mnEingeloggt.add(mntmEinstellungen);
 		
 		mntmLogout = new JMenuItem("Logout");
 		mntmLogout.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
@@ -521,6 +537,7 @@ public class GUI
 		mntmSpeichern.addActionListener(al);
 		mntmLaden.addActionListener(al);
 		mntmLogout.addActionListener(al);
+		mntmBeenden.addActionListener(al);
 	}
 	
 	void setMenuUsername(String pUsername)
