@@ -69,6 +69,10 @@ import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
 import javax.swing.JProgressBar;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.border.SoftBevelBorder;
+import java.awt.GridLayout;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -96,13 +100,8 @@ public class GUI
 	private String[] columns = {"Nachname","Vorname","Land","Stadt","UUID"};
 	private JPanel panel;
 	private JScrollPane scrollPane;
-	private JPanel panel_1;
-	private JScrollPane scrollPane_1;
 	private JPanel panel_2;
 	private JButton btnDelete;
-	private JButton btnNewButton;
-	private JButton button;
-	private JTable table2;
 	private JButton btnRegister;
 	private JMenu mnEingeloggt;
 	private JMenuItem mntmLogout;
@@ -110,6 +109,37 @@ public class GUI
 	private JTextField textField;
 	private JMenuItem mntmBeenden;
 	private JMenuItem mntmEinstellungen;
+	private JPanel panel_1;
+	private JLabel lblBild;
+	private JLabel vorname;
+	private JLabel lblNachname;
+	private JLabel label;
+	private JLabel label_1;
+	private JLabel lblAdressdaten;
+	private JSeparator separator_2;
+	private JPanel panel_3;
+	private JLabel lblMusterstraea;
+	private JLabel lblMusterstadt;
+	private JLabel lblDeutschland;
+	private JLabel lblImHinterhof;
+	private JLabel label_2;
+	private JPanel panel_4;
+	private JLabel label_3;
+	private JLabel label_4;
+	private JLabel lblMaxmustermannmailcom;
+	private JLabel label_5;
+	private JLabel lblPersnlicheDaten;
+	private JSeparator separator_3;
+	private JPanel panel_5;
+	private JLabel label_6;
+	private JLabel lblKg;
+	private JLabel lblCm;
+	private JLabel lblGrn;
+	private JLabel lblBlond;
+	private JLabel lblWei;
+	private JLabel lblJdisch;
+	private JSeparator separator_4;
+	private JLabel lblNewLabel_2;
 	
 	public GUI() 
 	{
@@ -281,16 +311,6 @@ public class GUI
 		
 		
 		mainPanel.add(lblAdressliste);
-		
-		button = new JButton("\u21C9");
-		button.setFont(new Font("SansSerif", Font.BOLD, 16));
-		button.setBounds(375, 282, 44, 28);
-		mainPanel.add(button);
-		
-		btnNewButton = new JButton("\u21C7");
-		btnNewButton.setFont(new Font("SansSerif", Font.BOLD, 16));
-		btnNewButton.setBounds(375, 242, 44, 28);
-		mainPanel.add(btnNewButton);
 		mainPanel.add(separator);
 		mainPanel.add(btnNeu);
 		mainPanel.add(btnBearbeiten);
@@ -390,7 +410,7 @@ public class GUI
 		tablemodel.setColumnIdentifiers(columns);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 96, 360, 432);
+		scrollPane.setBounds(10, 96, 504, 432);
 		mainPanel.add(scrollPane);
 		
 		
@@ -402,33 +422,196 @@ public class GUI
 		table.setDefaultEditor(Object.class, null);
 		table.setVisible(true);
 		
-		
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(425, 96, 360, 432);
-		mainPanel.add(scrollPane_1);
-		
 		tablemodel2 = new DefaultTableModel(0,0);
 		tablemodel2.setColumnIdentifiers(columns);
 		
-
-		
-		table2 = new JTable();
-		scrollPane_1.setViewportView(table2);
-		table2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table2.setSurrendersFocusOnKeystroke(true);
-		table2.setModel(tablemodel2);
-		table2.setDefaultEditor(Object.class, null);
-		table2.setVisible(true);
-		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Adressliste", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
-		panel.setBounds(0, 72, 380, 470);
+		panel.setBounds(0, 72, 524, 470);
 		mainPanel.add(panel);
 		
 		panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Warteschlange", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
-		panel_1.setBounds(415, 72, 380, 470);
+		panel_1.setBorder(new TitledBorder(null, "Kontakt", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, Color.DARK_GRAY));
+		panel_1.setBounds(530, 72, 256, 470);
 		mainPanel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		lblBild = new JLabel("");
+		lblBild.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblBild.setIcon(new ImageIcon(GUI.class.getResource("/resources/profile_default.png")));
+		lblBild.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		lblBild.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBild.setBounds(10, 22, 105, 107);
+		panel_1.add(lblBild);
+		
+		vorname = new JLabel("Vorname");
+		vorname.setHorizontalAlignment(SwingConstants.CENTER);
+		vorname.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		vorname.setFont(new Font("SansSerif", Font.BOLD, 13));
+		vorname.setBounds(118, 22, 132, 26);
+		panel_1.add(vorname);
+		
+		lblNachname = new JLabel("Nachname");
+		lblNachname.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNachname.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblNachname.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		lblNachname.setBounds(118, 50, 132, 26);
+		panel_1.add(lblNachname);
+		
+		label = new JLabel("01.01.2000");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("SansSerif", Font.BOLD, 13));
+		label.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		label.setBounds(118, 103, 132, 26);
+		panel_1.add(label);
+		
+		label_1 = new JLabel("---");
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setFont(new Font("SansSerif", Font.BOLD, 13));
+		label_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		label_1.setBounds(118, 76, 132, 26);
+		panel_1.add(label_1);
+		
+		lblAdressdaten = new JLabel("Adressdaten");
+		lblAdressdaten.setForeground(Color.DARK_GRAY);
+		lblAdressdaten.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblAdressdaten.setHorizontalAlignment(SwingConstants.LEFT);
+		lblAdressdaten.setBounds(10, 134, 122, 16);
+		panel_1.add(lblAdressdaten);
+		
+		separator_2 = new JSeparator();
+		separator_2.setBounds(93, 141, 146, 9);
+		panel_1.add(separator_2);
+		
+		panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBounds(10, 159, 208, 77);
+		panel_1.add(panel_3);
+		panel_3.setLayout(null);
+		
+		lblMusterstraea = new JLabel("Musterstra\u00DFe 11a");
+		lblMusterstraea.setIcon(new ImageIcon(GUI.class.getResource("/resources/marker.png")));
+		lblMusterstraea.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblMusterstraea.setBounds(6, 6, 212, 16);
+		panel_3.add(lblMusterstraea);
+		
+		lblMusterstadt = new JLabel("33654 Musterstadt");
+		lblMusterstadt.setIcon(new ImageIcon(GUI.class.getResource("/resources/town.png")));
+		lblMusterstadt.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblMusterstadt.setBounds(6, 28, 212, 16);
+		panel_3.add(lblMusterstadt);
+		
+		lblDeutschland = new JLabel("Deutschland");
+		lblDeutschland.setIcon(new ImageIcon(GUI.class.getResource("/resources/world.png")));
+		lblDeutschland.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblDeutschland.setBounds(6, 48, 212, 16);
+		panel_3.add(lblDeutschland);
+		
+		lblImHinterhof = new JLabel("");
+		lblImHinterhof.setFont(new Font("SansSerif", Font.ITALIC, 12));
+		lblImHinterhof.setBounds(22, 46, 212, 16);
+		panel_3.add(lblImHinterhof);
+		
+		label_2 = new JLabel("");
+		label_2.setIcon(new ImageIcon(GUI.class.getResource("/resources/home.png")));
+		label_2.setBounds(226, 189, 24, 16);
+		panel_1.add(label_2);
+		
+		panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_4.setBounds(10, 248, 208, 76);
+		panel_1.add(panel_4);
+		panel_4.setLayout(null);
+		
+		label_4 = new JLabel("01516548669");
+		label_4.setIcon(new ImageIcon(GUI.class.getResource("/resources/telephone.png")));
+		label_4.setFont(new Font("SansSerif", Font.BOLD, 12));
+		label_4.setBounds(6, 6, 182, 16);
+		panel_4.add(label_4);
+		
+		lblMaxmustermannmailcom = new JLabel("max.mustermann@mail.com");
+		lblMaxmustermannmailcom.setIcon(new ImageIcon(GUI.class.getResource("/resources/at.png")));
+		lblMaxmustermannmailcom.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblMaxmustermannmailcom.setBounds(6, 47, 202, 20);
+		panel_4.add(lblMaxmustermannmailcom);
+		
+		label_5 = new JLabel("0151655656465");
+		label_5.setIcon(new ImageIcon(GUI.class.getResource("/resources/mobile.png")));
+		label_5.setFont(new Font("SansSerif", Font.BOLD, 12));
+		label_5.setBounds(6, 27, 182, 16);
+		panel_4.add(label_5);
+		
+		label_3 = new JLabel("");
+		label_3.setIcon(new ImageIcon(GUI.class.getResource("/resources/phone.png")));
+		label_3.setBounds(226, 276, 24, 16);
+		panel_1.add(label_3);
+		
+		lblPersnlicheDaten = new JLabel("Pers\u00F6nliche Daten");
+		lblPersnlicheDaten.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPersnlicheDaten.setForeground(Color.DARK_GRAY);
+		lblPersnlicheDaten.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblPersnlicheDaten.setBounds(10, 336, 122, 16);
+		panel_1.add(lblPersnlicheDaten);
+		
+		separator_3 = new JSeparator();
+		separator_3.setBounds(124, 343, 115, 9);
+		panel_1.add(separator_3);
+		
+		panel_5 = new JPanel();
+		panel_5.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_5.setBounds(10, 364, 208, 70);
+		panel_1.add(panel_5);
+		panel_5.setLayout(null);
+		
+		lblKg = new JLabel("70 Kg");
+		lblKg.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblKg.setIcon(new ImageIcon(GUI.class.getResource("/resources/scale.png")));
+		lblKg.setBounds(6, 6, 65, 16);
+		panel_5.add(lblKg);
+		
+		lblCm = new JLabel("180 cm");
+		lblCm.setIcon(new ImageIcon(GUI.class.getResource("/resources/ruler.png")));
+		lblCm.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblCm.setBounds(83, 6, 65, 16);
+		panel_5.add(lblCm);
+		
+		lblGrn = new JLabel("Gr\u00FCn");
+		lblGrn.setIcon(new ImageIcon(GUI.class.getResource("/resources/eye.png")));
+		lblGrn.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblGrn.setBounds(6, 25, 65, 16);
+		panel_5.add(lblGrn);
+		
+		lblBlond = new JLabel("Blond");
+		lblBlond.setIcon(new ImageIcon(GUI.class.getResource("/resources/hair.png")));
+		lblBlond.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblBlond.setBounds(83, 25, 65, 16);
+		panel_5.add(lblBlond);
+		
+		lblWei = new JLabel("Wei\u00DF");
+		lblWei.setIcon(new ImageIcon(GUI.class.getResource("/resources/skincolor.png")));
+		lblWei.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblWei.setBounds(6, 43, 65, 16);
+		panel_5.add(lblWei);
+		
+		lblJdisch = new JLabel("J\u00FCdisch");
+		lblJdisch.setIcon(new ImageIcon(GUI.class.getResource("/resources/religion.png")));
+		lblJdisch.setFont(new Font("SansSerif", Font.BOLD, 12));
+		lblJdisch.setBounds(83, 43, 119, 16);
+		panel_5.add(lblJdisch);
+		
+		label_6 = new JLabel("");
+		label_6.setIcon(new ImageIcon(GUI.class.getResource("/resources/user.png")));
+		label_6.setBounds(226, 390, 24, 16);
+		panel_1.add(label_6);
+		
+		separator_4 = new JSeparator();
+		separator_4.setBounds(10, 446, 229, 2);
+		panel_1.add(separator_4);
+		
+		lblNewLabel_2 = new JLabel("- Kein Element Ausgew\u00E4hlt -");
+		lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 12));
+		lblNewLabel_2.setBounds(575, 250, 177, 16);
+		mainPanel.add(lblNewLabel_2);
 		
 		panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
