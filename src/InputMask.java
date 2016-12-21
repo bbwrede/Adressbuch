@@ -574,6 +574,7 @@ public class InputMask extends JFrame
 		{
 			neu.setLand(land.getSelectedItem().toString());
 		}
+		else neu.setLand("---");
 		
 		if (!geschlecht.getSelectedItem().toString().equals(">> Geschlecht <<"))
 		{

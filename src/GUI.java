@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -147,6 +148,7 @@ public class GUI
 	private JLabel religion;
 	private JSeparator separator_4;
 	private JLabel lblNewLabel_2;
+	private JLabel geschlecht;
 	
 	public GUI() 
 	{
@@ -313,10 +315,6 @@ public class GUI
 		mainPanel.setLayout(null);
 		
 		
-		
-		
-		
-		
 		mainPanel.add(lblAdressliste);
 		mainPanel.add(separator);
 		mainPanel.add(btnNeu);
@@ -444,11 +442,12 @@ public class GUI
 		panel_1.setLayout(null);
 		
 		bild = new JLabel("");
+		bild.setToolTipText("Image");
 		bild.setHorizontalTextPosition(SwingConstants.CENTER);
 		bild.setIcon(new ImageIcon(GUI.class.getResource("/resources/profile_default.png")));
-		bild.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		bild.setBorder(new LineBorder(Color.DARK_GRAY));
 		bild.setHorizontalAlignment(SwingConstants.CENTER);
-		bild.setBounds(10, 22, 105, 107);
+		bild.setBounds(10, 22, 100, 100);
 		panel_1.add(bild);
 		
 		vorname = new JLabel("Vorname");
@@ -579,7 +578,7 @@ public class GUI
 		
 		panel_5 = new JPanel();
 		panel_5.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_5.setBounds(10, 364, 208, 70);
+		panel_5.setBounds(10, 364, 208, 84);
 		panel_1.add(panel_5);
 		panel_5.setLayout(null);
 		
@@ -608,7 +607,7 @@ public class GUI
 		haarfarbe.setToolTipText("Haarfarbe");
 		haarfarbe.setIcon(new ImageIcon(GUI.class.getResource("/resources/hair.png")));
 		haarfarbe.setFont(new Font("SansSerif", Font.BOLD, 12));
-		haarfarbe.setBounds(83, 25, 65, 16);
+		haarfarbe.setBounds(83, 25, 119, 16);
 		panel_5.add(haarfarbe);
 		
 		hautfarbe = new JLabel("Wei\u00DF");
@@ -625,6 +624,13 @@ public class GUI
 		religion.setBounds(83, 43, 119, 16);
 		panel_5.add(religion);
 		
+		geschlecht = new JLabel("---");
+		geschlecht.setIcon(new ImageIcon(GUI.class.getResource("/resources/gender.png")));
+		geschlecht.setToolTipText("Geschlecht");
+		geschlecht.setFont(new Font("SansSerif", Font.BOLD, 12));
+		geschlecht.setBounds(6, 62, 152, 16);
+		panel_5.add(geschlecht);
+		
 		label_6 = new JLabel("");
 		label_6.setToolTipText("Pers\u00F6nliche Daten");
 		label_6.setIcon(new ImageIcon(GUI.class.getResource("/resources/user.png")));
@@ -632,7 +638,7 @@ public class GUI
 		panel_1.add(label_6);
 		
 		separator_4 = new JSeparator();
-		separator_4.setBounds(10, 446, 229, 2);
+		separator_4.setBounds(10, 450, 229, 2);
 		panel_1.add(separator_4);
 		
 		lblNewLabel_2 = new JLabel("- Kein Element Ausgew\u00E4hlt -");
@@ -647,7 +653,8 @@ public class GUI
 		
 		panel_1.setVisible(false);
 		
-		table.removeColumn(table.getColumnModel().getColumn(4));
+		table.getColumnModel().getColumn(4).setMinWidth(0);
+		table.getColumnModel().getColumn(4).setMaxWidth(0);
 		
 		sorter = new TableRowSorter<TableModel>(table.getModel());
 		table.setRowSorter(sorter);
@@ -769,10 +776,18 @@ public class GUI
 		nachname.setText(pPerson.getNachname());
 		firma.setText(pPerson.getFirma());
 		
+		//Geburtsdaten
 		String monat = Integer.toString((Person.Monat.valueOf(pPerson.getGeburtsmonat().toString()).ordinal()+1));
-		if (monat.length() == 1)  monat = 0 + monat;
+		String tag = Integer.toString(pPerson.getGeburtstag())+". ";
+		String jahr = ". "+Integer.toString(pPerson.getGeburtsjahr());
 		
-		geburtsdatum.setText(pPerson.getGeburtstag()+". "+ monat +". "+pPerson.getGeburtsjahr());
+		if (jahr.equals(". 0")) jahr = "";
+		if (tag.equals("0. ")) tag = "";
+		if (monat.equals("13")) monat = "---";
+		
+		if (tag.length() == 1)  tag = 0 + tag;
+		if (monat.length() == 1)  monat = 0 + monat;
+		geburtsdatum.setText(tag+ monat +jahr);
 		
 		strasse.setText(pPerson.getStrasse()+" "+pPerson.getHausnummer());
 		ort.setText(pPerson.getPostleitzahl()+" "+pPerson.getOrt());
@@ -789,6 +804,7 @@ public class GUI
 		haarfarbe.setText(pPerson.getHaarfarbe().toString());
 		hautfarbe.setText(pPerson.getHautfarbe().toString());
 		religion.setText(pPerson.getReligion().toString());
+		geschlecht.setText(pPerson.getGeschlecht().toString());
 		
 		bild.setIcon(icon);
 		
@@ -867,7 +883,7 @@ public class GUI
 	
 	UUID getSelectedUUID()
 	{
-		return UUID.fromString(tablemodel.getValueAt(table.getSelectedRow(), 4).toString());
+		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 4).toString());
 	}
 	
 	void showLoginWarning()

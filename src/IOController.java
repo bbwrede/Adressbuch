@@ -1,15 +1,18 @@
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteOrder;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,7 +27,10 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.IIOByteBuffer;
+import javax.imageio.stream.ImageInputStream;
 
+import javafx.scene.effect.ImageInput;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -360,8 +366,6 @@ public class IOController
 	
 	private static String byteToBase64(byte[] pBytes)		
 	{	
-		//BASE64Encoder encoder = new BASE64Encoder();
-		//String encoded = encoder.encode(pBytes);
 		String encoded = Base64.getEncoder().encodeToString(pBytes);
 		return encoded;
 	}
@@ -396,18 +400,29 @@ public class IOController
 		return bytesToImage(base64toByte(pBase),pFormat);
 	}
 	
-	BufferedImage readImage(File pFile) throws IOException
+	BufferedImage readImage(File pFile, String pFormat) throws IOException
 	{
-		BufferedImage image = ImageIO.read(pFile);
-		return image;
+		Image temp = ImageIO.read(pFile);
+		temp = temp.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+		
+		BufferedImage bufferedImage = new BufferedImage(temp.getWidth(null), temp.getHeight(null),
+		BufferedImage.TYPE_INT_RGB);
+
+		Graphics g = bufferedImage.createGraphics();
+		g.drawImage(temp, 0, 0, null);
+		g.dispose();
+		
+		return bufferedImage;
 	}
 	
 	static Image createImage(BufferedImage bi, String pFormat) throws IOException
 	{
 		
 		Image image = bi;
+		
 		return image;
 	}
+	
 	
 	void createVCard(Person pPerson) 
 	{

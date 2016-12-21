@@ -116,10 +116,10 @@ public class Controller extends MouseAdapter
 					} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException
 							| NoSuchAlgorithmException | NoSuchPaddingException | IOException e1)
 					{
-						/*JOptionPane.showMessageDialog(gui.getFrame(),
+						JOptionPane.showMessageDialog(gui.getFrame(),
 							    "Es konnte kein Speicherstand geladen werden! \n",
 							    "Fehler beim Laden der Datei",
-							    JOptionPane.ERROR_MESSAGE);*/
+							    JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
 					
@@ -247,7 +247,7 @@ public class Controller extends MouseAdapter
 							ext = ext.toLowerCase();
 							ext = ext.substring(1);
 							
-				    		im.setImage(ioc.readImage(chooser.getSelectedFile()), ext);
+				    		im.setImage(ioc.readImage(chooser.getSelectedFile(), ext), ext);
 				    		im.setImageButton(chooser.getSelectedFile().getName());
 						} catch (IOException e1)
 						{
@@ -417,6 +417,7 @@ public class Controller extends MouseAdapter
 		JTable table = (JTable)e.getSource();
 		int index = 0;
 		
+		System.out.println(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())).getNachname());
 		gui.setPreview(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())));
 		
 		if (e.getClickCount() == 2) 
