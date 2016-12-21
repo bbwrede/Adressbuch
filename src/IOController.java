@@ -1,9 +1,11 @@
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -397,6 +399,13 @@ public class IOController
 	BufferedImage readImage(File pFile) throws IOException
 	{
 		BufferedImage image = ImageIO.read(pFile);
+		return image;
+	}
+	
+	static Image createImage(BufferedImage bi, String pFormat) throws IOException
+	{
+		
+		Image image = bi;
 		return image;
 	}
 	

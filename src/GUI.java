@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
@@ -16,6 +18,7 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -39,6 +42,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.MatteBorder;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import com.sun.org.apache.bcel.internal.generic.LAND;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
@@ -73,6 +79,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.GridLayout;
+import java.awt.Image;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -110,34 +117,34 @@ public class GUI
 	private JMenuItem mntmBeenden;
 	private JMenuItem mntmEinstellungen;
 	private JPanel panel_1;
-	private JLabel lblBild;
+	private JLabel bild;
 	private JLabel vorname;
-	private JLabel lblNachname;
-	private JLabel label;
-	private JLabel label_1;
+	private JLabel nachname;
+	private JLabel geburtsdatum;
+	private JLabel firma;
 	private JLabel lblAdressdaten;
 	private JSeparator separator_2;
 	private JPanel panel_3;
-	private JLabel lblMusterstraea;
-	private JLabel lblMusterstadt;
-	private JLabel lblDeutschland;
-	private JLabel lblImHinterhof;
+	private JLabel strasse;
+	private JLabel ort;
+	private JLabel land;
+	private JLabel adresszusatz;
 	private JLabel label_2;
 	private JPanel panel_4;
 	private JLabel label_3;
-	private JLabel label_4;
-	private JLabel lblMaxmustermannmailcom;
-	private JLabel label_5;
+	private JLabel telefon;
+	private JLabel email;
+	private JLabel handy;
 	private JLabel lblPersnlicheDaten;
 	private JSeparator separator_3;
 	private JPanel panel_5;
 	private JLabel label_6;
-	private JLabel lblKg;
-	private JLabel lblCm;
-	private JLabel lblGrn;
-	private JLabel lblBlond;
-	private JLabel lblWei;
-	private JLabel lblJdisch;
+	private JLabel gewicht;
+	private JLabel groesse;
+	private JLabel augenfarbe;
+	private JLabel haarfarbe;
+	private JLabel hautfarbe;
+	private JLabel religion;
 	private JSeparator separator_4;
 	private JLabel lblNewLabel_2;
 	
@@ -436,41 +443,45 @@ public class GUI
 		mainPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		lblBild = new JLabel("");
-		lblBild.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblBild.setIcon(new ImageIcon(GUI.class.getResource("/resources/profile_default.png")));
-		lblBild.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
-		lblBild.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBild.setBounds(10, 22, 105, 107);
-		panel_1.add(lblBild);
+		bild = new JLabel("");
+		bild.setHorizontalTextPosition(SwingConstants.CENTER);
+		bild.setIcon(new ImageIcon(GUI.class.getResource("/resources/profile_default.png")));
+		bild.setBorder(new TitledBorder(null, "", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		bild.setHorizontalAlignment(SwingConstants.CENTER);
+		bild.setBounds(10, 22, 105, 107);
+		panel_1.add(bild);
 		
 		vorname = new JLabel("Vorname");
+		vorname.setToolTipText("Vorname");
 		vorname.setHorizontalAlignment(SwingConstants.CENTER);
 		vorname.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		vorname.setFont(new Font("SansSerif", Font.BOLD, 13));
 		vorname.setBounds(118, 22, 132, 26);
 		panel_1.add(vorname);
 		
-		lblNachname = new JLabel("Nachname");
-		lblNachname.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNachname.setFont(new Font("SansSerif", Font.BOLD, 13));
-		lblNachname.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		lblNachname.setBounds(118, 50, 132, 26);
-		panel_1.add(lblNachname);
+		nachname = new JLabel("Nachname");
+		nachname.setToolTipText("Nachname");
+		nachname.setHorizontalAlignment(SwingConstants.CENTER);
+		nachname.setFont(new Font("SansSerif", Font.BOLD, 13));
+		nachname.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		nachname.setBounds(118, 50, 132, 26);
+		panel_1.add(nachname);
 		
-		label = new JLabel("01.01.2000");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("SansSerif", Font.BOLD, 13));
-		label.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		label.setBounds(118, 103, 132, 26);
-		panel_1.add(label);
+		geburtsdatum = new JLabel("01.01.2000");
+		geburtsdatum.setToolTipText("Geburtsdatum");
+		geburtsdatum.setHorizontalAlignment(SwingConstants.CENTER);
+		geburtsdatum.setFont(new Font("SansSerif", Font.BOLD, 13));
+		geburtsdatum.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		geburtsdatum.setBounds(118, 103, 132, 26);
+		panel_1.add(geburtsdatum);
 		
-		label_1 = new JLabel("---");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setFont(new Font("SansSerif", Font.BOLD, 13));
-		label_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		label_1.setBounds(118, 76, 132, 26);
-		panel_1.add(label_1);
+		firma = new JLabel("---");
+		firma.setToolTipText("Firma");
+		firma.setHorizontalAlignment(SwingConstants.CENTER);
+		firma.setFont(new Font("SansSerif", Font.BOLD, 13));
+		firma.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		firma.setBounds(118, 76, 132, 26);
+		panel_1.add(firma);
 		
 		lblAdressdaten = new JLabel("Adressdaten");
 		lblAdressdaten.setForeground(Color.DARK_GRAY);
@@ -485,34 +496,39 @@ public class GUI
 		
 		panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_3.setBounds(10, 159, 208, 77);
+		panel_3.setBounds(10, 159, 208, 84);
 		panel_1.add(panel_3);
 		panel_3.setLayout(null);
 		
-		lblMusterstraea = new JLabel("Musterstra\u00DFe 11a");
-		lblMusterstraea.setIcon(new ImageIcon(GUI.class.getResource("/resources/marker.png")));
-		lblMusterstraea.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblMusterstraea.setBounds(6, 6, 212, 16);
-		panel_3.add(lblMusterstraea);
+		strasse = new JLabel("Musterstra\u00DFe 11a");
+		strasse.setToolTipText("Strasse + Hausnummer");
+		strasse.setIcon(new ImageIcon(GUI.class.getResource("/resources/marker.png")));
+		strasse.setFont(new Font("SansSerif", Font.BOLD, 12));
+		strasse.setBounds(6, 6, 212, 16);
+		panel_3.add(strasse);
 		
-		lblMusterstadt = new JLabel("33654 Musterstadt");
-		lblMusterstadt.setIcon(new ImageIcon(GUI.class.getResource("/resources/town.png")));
-		lblMusterstadt.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblMusterstadt.setBounds(6, 28, 212, 16);
-		panel_3.add(lblMusterstadt);
+		ort = new JLabel("33654 Musterstadt");
+		ort.setToolTipText("Postleitzahl + Ort");
+		ort.setIcon(new ImageIcon(GUI.class.getResource("/resources/town.png")));
+		ort.setFont(new Font("SansSerif", Font.BOLD, 12));
+		ort.setBounds(6, 28, 212, 16);
+		panel_3.add(ort);
 		
-		lblDeutschland = new JLabel("Deutschland");
-		lblDeutschland.setIcon(new ImageIcon(GUI.class.getResource("/resources/world.png")));
-		lblDeutschland.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblDeutschland.setBounds(6, 48, 212, 16);
-		panel_3.add(lblDeutschland);
+		land = new JLabel("Deutschland");
+		land.setToolTipText("Land");
+		land.setIcon(new ImageIcon(GUI.class.getResource("/resources/world.png")));
+		land.setFont(new Font("SansSerif", Font.BOLD, 12));
+		land.setBounds(6, 48, 212, 16);
+		panel_3.add(land);
 		
-		lblImHinterhof = new JLabel("");
-		lblImHinterhof.setFont(new Font("SansSerif", Font.ITALIC, 12));
-		lblImHinterhof.setBounds(22, 46, 212, 16);
-		panel_3.add(lblImHinterhof);
+		adresszusatz = new JLabel("");
+		adresszusatz.setToolTipText("");
+		adresszusatz.setFont(new Font("SansSerif", Font.ITALIC, 12));
+		adresszusatz.setBounds(28, 62, 212, 16);
+		panel_3.add(adresszusatz);
 		
 		label_2 = new JLabel("");
+		label_2.setToolTipText("Adressdaten");
 		label_2.setIcon(new ImageIcon(GUI.class.getResource("/resources/home.png")));
 		label_2.setBounds(226, 189, 24, 16);
 		panel_1.add(label_2);
@@ -523,25 +539,29 @@ public class GUI
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
 		
-		label_4 = new JLabel("01516548669");
-		label_4.setIcon(new ImageIcon(GUI.class.getResource("/resources/telephone.png")));
-		label_4.setFont(new Font("SansSerif", Font.BOLD, 12));
-		label_4.setBounds(6, 6, 182, 16);
-		panel_4.add(label_4);
+		telefon = new JLabel("01516548669");
+		telefon.setToolTipText("Telefonnummer");
+		telefon.setIcon(new ImageIcon(GUI.class.getResource("/resources/telephone.png")));
+		telefon.setFont(new Font("SansSerif", Font.BOLD, 12));
+		telefon.setBounds(6, 6, 182, 16);
+		panel_4.add(telefon);
 		
-		lblMaxmustermannmailcom = new JLabel("max.mustermann@mail.com");
-		lblMaxmustermannmailcom.setIcon(new ImageIcon(GUI.class.getResource("/resources/at.png")));
-		lblMaxmustermannmailcom.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblMaxmustermannmailcom.setBounds(6, 47, 202, 20);
-		panel_4.add(lblMaxmustermannmailcom);
+		email = new JLabel("max.mustermann@mail.com");
+		email.setToolTipText("E-Mail");
+		email.setIcon(new ImageIcon(GUI.class.getResource("/resources/at.png")));
+		email.setFont(new Font("SansSerif", Font.BOLD, 12));
+		email.setBounds(6, 47, 202, 20);
+		panel_4.add(email);
 		
-		label_5 = new JLabel("0151655656465");
-		label_5.setIcon(new ImageIcon(GUI.class.getResource("/resources/mobile.png")));
-		label_5.setFont(new Font("SansSerif", Font.BOLD, 12));
-		label_5.setBounds(6, 27, 182, 16);
-		panel_4.add(label_5);
+		handy = new JLabel("0151655656465");
+		handy.setToolTipText("Handynummer");
+		handy.setIcon(new ImageIcon(GUI.class.getResource("/resources/mobile.png")));
+		handy.setFont(new Font("SansSerif", Font.BOLD, 12));
+		handy.setBounds(6, 27, 182, 16);
+		panel_4.add(handy);
 		
 		label_3 = new JLabel("");
+		label_3.setToolTipText("Kontaktdaten");
 		label_3.setIcon(new ImageIcon(GUI.class.getResource("/resources/phone.png")));
 		label_3.setBounds(226, 276, 24, 16);
 		panel_1.add(label_3);
@@ -563,43 +583,50 @@ public class GUI
 		panel_1.add(panel_5);
 		panel_5.setLayout(null);
 		
-		lblKg = new JLabel("70 Kg");
-		lblKg.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblKg.setIcon(new ImageIcon(GUI.class.getResource("/resources/scale.png")));
-		lblKg.setBounds(6, 6, 65, 16);
-		panel_5.add(lblKg);
+		gewicht = new JLabel("70 Kg");
+		gewicht.setToolTipText("K\u00F6rpergewicht");
+		gewicht.setFont(new Font("SansSerif", Font.BOLD, 12));
+		gewicht.setIcon(new ImageIcon(GUI.class.getResource("/resources/scale.png")));
+		gewicht.setBounds(6, 6, 65, 16);
+		panel_5.add(gewicht);
 		
-		lblCm = new JLabel("180 cm");
-		lblCm.setIcon(new ImageIcon(GUI.class.getResource("/resources/ruler.png")));
-		lblCm.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblCm.setBounds(83, 6, 65, 16);
-		panel_5.add(lblCm);
+		groesse = new JLabel("180 cm");
+		groesse.setToolTipText("K\u00F6rpergr\u00F6\u00DFe");
+		groesse.setIcon(new ImageIcon(GUI.class.getResource("/resources/ruler.png")));
+		groesse.setFont(new Font("SansSerif", Font.BOLD, 12));
+		groesse.setBounds(83, 6, 65, 16);
+		panel_5.add(groesse);
 		
-		lblGrn = new JLabel("Gr\u00FCn");
-		lblGrn.setIcon(new ImageIcon(GUI.class.getResource("/resources/eye.png")));
-		lblGrn.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblGrn.setBounds(6, 25, 65, 16);
-		panel_5.add(lblGrn);
+		augenfarbe = new JLabel("Gr\u00FCn");
+		augenfarbe.setToolTipText("Augenfarbe");
+		augenfarbe.setIcon(new ImageIcon(GUI.class.getResource("/resources/eye.png")));
+		augenfarbe.setFont(new Font("SansSerif", Font.BOLD, 12));
+		augenfarbe.setBounds(6, 25, 65, 16);
+		panel_5.add(augenfarbe);
 		
-		lblBlond = new JLabel("Blond");
-		lblBlond.setIcon(new ImageIcon(GUI.class.getResource("/resources/hair.png")));
-		lblBlond.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblBlond.setBounds(83, 25, 65, 16);
-		panel_5.add(lblBlond);
+		haarfarbe = new JLabel("Blond");
+		haarfarbe.setToolTipText("Haarfarbe");
+		haarfarbe.setIcon(new ImageIcon(GUI.class.getResource("/resources/hair.png")));
+		haarfarbe.setFont(new Font("SansSerif", Font.BOLD, 12));
+		haarfarbe.setBounds(83, 25, 65, 16);
+		panel_5.add(haarfarbe);
 		
-		lblWei = new JLabel("Wei\u00DF");
-		lblWei.setIcon(new ImageIcon(GUI.class.getResource("/resources/skincolor.png")));
-		lblWei.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblWei.setBounds(6, 43, 65, 16);
-		panel_5.add(lblWei);
+		hautfarbe = new JLabel("Wei\u00DF");
+		hautfarbe.setToolTipText("Hautfarbe");
+		hautfarbe.setIcon(new ImageIcon(GUI.class.getResource("/resources/skincolor.png")));
+		hautfarbe.setFont(new Font("SansSerif", Font.BOLD, 12));
+		hautfarbe.setBounds(6, 43, 65, 16);
+		panel_5.add(hautfarbe);
 		
-		lblJdisch = new JLabel("J\u00FCdisch");
-		lblJdisch.setIcon(new ImageIcon(GUI.class.getResource("/resources/religion.png")));
-		lblJdisch.setFont(new Font("SansSerif", Font.BOLD, 12));
-		lblJdisch.setBounds(83, 43, 119, 16);
-		panel_5.add(lblJdisch);
+		religion = new JLabel("J\u00FCdisch");
+		religion.setToolTipText("Religion");
+		religion.setIcon(new ImageIcon(GUI.class.getResource("/resources/religion.png")));
+		religion.setFont(new Font("SansSerif", Font.BOLD, 12));
+		religion.setBounds(83, 43, 119, 16);
+		panel_5.add(religion);
 		
 		label_6 = new JLabel("");
+		label_6.setToolTipText("Pers\u00F6nliche Daten");
 		label_6.setIcon(new ImageIcon(GUI.class.getResource("/resources/user.png")));
 		label_6.setBounds(226, 390, 24, 16);
 		panel_1.add(label_6);
@@ -618,8 +645,7 @@ public class GUI
 		panel_2.setBounds(3, 29, 788, 41);
 		mainPanel.add(panel_2);
 		
-		//table.getColumnModel().getColumn(4).setMinWidth(0);
-		//table.getColumnModel().getColumn(4).setMaxWidth(0);
+		panel_1.setVisible(false);
 		
 		table.removeColumn(table.getColumnModel().getColumn(4));
 		
@@ -721,6 +747,52 @@ public class GUI
 		mntmLaden.addActionListener(al);
 		mntmLogout.addActionListener(al);
 		mntmBeenden.addActionListener(al);
+	}
+	
+	void setPreview(Person pPerson)
+	{
+		Image image = null;
+		try
+		{
+			image = IOController.createImage(IOController.base64ToImage(pPerson.getBild(), pPerson.getBildFormat()), pPerson.getBildFormat());
+		} catch (IOException e)
+		{
+			JOptionPane.showMessageDialog(getFrame(),
+				    "Die Datei konnte nicht geladen werden!",
+				    "Fehler beim Laden der Datei",
+				    JOptionPane.ERROR_MESSAGE);
+		}
+		
+		ImageIcon icon = new ImageIcon(image);
+		
+		vorname.setText(pPerson.getVorname());
+		nachname.setText(pPerson.getNachname());
+		firma.setText(pPerson.getFirma());
+		
+		String monat = Integer.toString((Person.Monat.valueOf(pPerson.getGeburtsmonat().toString()).ordinal()+1));
+		if (monat.length() == 1)  monat = 0 + monat;
+		
+		geburtsdatum.setText(pPerson.getGeburtstag()+". "+ monat +". "+pPerson.getGeburtsjahr());
+		
+		strasse.setText(pPerson.getStrasse()+" "+pPerson.getHausnummer());
+		ort.setText(pPerson.getPostleitzahl()+" "+pPerson.getOrt());
+		land.setText(pPerson.getLand());
+		adresszusatz.setText(pPerson.getAdresszusatz());
+		
+		telefon.setText(pPerson.getTelefon());
+		handy.setText(pPerson.getTelefonMobil());
+		email.setText(pPerson.getEmail());
+		
+		gewicht.setText(pPerson.getGewicht()+ " kg");
+		groesse.setText(pPerson.getGroesse()+ " cm");
+		augenfarbe.setText(pPerson.getAugenfarbe().toString());
+		haarfarbe.setText(pPerson.getHaarfarbe().toString());
+		hautfarbe.setText(pPerson.getHautfarbe().toString());
+		religion.setText(pPerson.getReligion().toString());
+		
+		bild.setIcon(icon);
+		
+		panel_1.setVisible(true);
 	}
 	
 	void setMenuUsername(String pUsername)

@@ -112,7 +112,7 @@ public class ModelController
 		liste = pList;
 	}
 	
-	static int indexOf(UUID pUUID)
+	int indexOf(UUID pUUID)
 	{
 		liste.toFirst();
 		int i = 0;

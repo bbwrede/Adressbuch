@@ -417,11 +417,11 @@ public class Controller extends MouseAdapter
 		JTable table = (JTable)e.getSource();
 		int index = 0;
 		
+		gui.setPreview(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())));
+		
 		if (e.getClickCount() == 2) 
 		{
-           index = table.getSelectedRow();
-           System.out.println(mc.getObjectAt(index).getNachname());
-           System.out.println(gui.getSelectedUUID());
+           
 		}
 	}
 	
