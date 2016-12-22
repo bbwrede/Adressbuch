@@ -105,7 +105,7 @@ public class GUI
 	private JTable table;
 	private DefaultTableModel tablemodel;
 	private DefaultTableModel tablemodel2;
-	private String[] columns = {"Nachname","Vorname","Land","Stadt","UUID"};
+	private String[] columns = {"Nachname","Vorname","Land","Stadt","Geburtsdatum","UUID"};
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JPanel panel_2;
@@ -521,7 +521,6 @@ public class GUI
 		panel_3.add(land);
 		
 		adresszusatz = new JLabel("");
-		adresszusatz.setToolTipText("");
 		adresszusatz.setFont(new Font("SansSerif", Font.ITALIC, 12));
 		adresszusatz.setBounds(28, 62, 212, 16);
 		panel_3.add(adresszusatz);
@@ -653,8 +652,8 @@ public class GUI
 		
 		panel_1.setVisible(false);
 		
-		table.getColumnModel().getColumn(4).setMinWidth(0);
-		table.getColumnModel().getColumn(4).setMaxWidth(0);
+		table.getColumnModel().getColumn(5).setMinWidth(0);
+		table.getColumnModel().getColumn(5).setMaxWidth(0);
 		
 		sorter = new TableRowSorter<TableModel>(table.getModel());
 		table.setRowSorter(sorter);
@@ -718,7 +717,8 @@ public class GUI
 	
 	void setTableData(Person pPerson)
 	{
-		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), pPerson.getLand(), pPerson.getOrt(), pPerson.getUuid().toString()});	
+		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), pPerson.getLand(), pPerson.getOrt(),
+				pPerson.getGeburtstag()+". "+pPerson.getGeburtsmonat()+" "+ pPerson.getGeburtsjahr(),pPerson.getUuid().toString()});	
 	}
 	
 	void initTable()
@@ -730,7 +730,7 @@ public class GUI
 		ArrayList<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel,Object>>();
 	    try 
 	    {
-	    	for (int i = 0; i<4; i++)
+	    	for (int i = 0; i<5; i++)
 	    	{
 	    		filters.add(RowFilter.regexFilter("(?i)" + suche.getText(), i));
 	    	}  
@@ -806,6 +806,33 @@ public class GUI
 		religion.setText(pPerson.getReligion().toString());
 		geschlecht.setText(pPerson.getGeschlecht().toString());
 		
+		JLabel[] temp = {augenfarbe,haarfarbe,hautfarbe,religion,geschlecht};
+		for (int i=0; i<temp.length; i++)
+		{
+			switch (temp[i].getText())
+			{
+			case "unbekannt": temp[i].setText("---");
+			}	
+		}
+		
+		JLabel[] scales = {gewicht,groesse};
+		int[] scalesData = {pPerson.getGewicht(),pPerson.getGroesse()};
+		for (int i=0; i<scales.length; i++)
+		{
+			switch (scalesData[i])
+			{
+			case 0: scales[i].setText("---");
+			}	
+		}
+		
+		gewicht = scales[0];
+		groesse = scales[1];
+		augenfarbe = temp[0];
+		haarfarbe = temp[1];
+		hautfarbe = temp[2];
+		religion = temp[3];
+		geschlecht = temp[4];
+
 		bild.setIcon(icon);
 		
 		panel_1.setVisible(true);
@@ -883,7 +910,7 @@ public class GUI
 	
 	UUID getSelectedUUID()
 	{
-		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 4).toString());
+		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 5).toString());
 	}
 	
 	void showLoginWarning()

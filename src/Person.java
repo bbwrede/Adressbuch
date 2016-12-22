@@ -52,7 +52,7 @@ public class Person
   private String telefon = "---";
   private String telefonMobil = "---";
   private String nationalitaet = "---";
-  private String firma = "-";
+  private String firma = "---";
   private Religion religion = Religion.unbekannt;
   private Haarfarbe haarfarbe = Haarfarbe.unbekannt;
   private Hautfarbe hautfarbe = Hautfarbe.unbekannt;
@@ -68,6 +68,31 @@ public class Person
     return vorname;
   }
 
+  public void removeEmpty()
+  {
+	  String[] temp = {vorname,nachname,land,postleitzahl,ort,strasse,hausnummer,email,telefon,telefonMobil,firma};
+	  
+	  for (int i = 0; i<temp.length; i++)
+	  {
+		  switch (temp[i])
+		  {
+		  case "": temp[i] = "---";
+		  }
+	  }
+	  
+	  vorname = temp[0];
+	  nachname = temp[1];
+	  land = temp[2];
+	  postleitzahl = temp[3];
+	  ort = temp[4];
+	  strasse = temp[5];
+	  hausnummer = temp[6];
+	  email = temp[7];
+	  telefon = temp[8];
+	  telefonMobil = temp[9];
+	  firma = temp[10];
+	
+  }
   
   public void setVorname(String vorname) 
   {

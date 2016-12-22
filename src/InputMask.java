@@ -621,6 +621,8 @@ public class InputMask extends JFrame
 			neu.setGeburtsjahr(Integer.parseInt(jahr.getSelectedItem().toString()));
 		}
 		
+		neu.removeEmpty();
+		
 		return neu;
 	}
 	

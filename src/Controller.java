@@ -181,7 +181,7 @@ public class Controller extends MouseAdapter
 					       
 						 	if (reply == JOptionPane.YES_OPTION) 
 					        {
-						 		mc.removeObjectAt(gui.getSelectedTableRow());
+						 		mc.removeObjectAt(mc.indexOf(gui.getSelectedUUID()));
 								updateList();
 					        }
 						}
