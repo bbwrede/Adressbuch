@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.omg.CORBA.Current;
+
 @SuppressWarnings("rawtypes")
 public class Controller extends MouseAdapter
 {	
@@ -29,6 +31,7 @@ public class Controller extends MouseAdapter
 	private InputMask im;
 	private UserMask um;
 	private UserManager uman;
+	private SettingManager sman;
 	private ActionListener menuAl;
 	private ActionListener al;
 	private KeyListener loginKl;
@@ -41,6 +44,7 @@ public class Controller extends MouseAdapter
 		gui = new GUI();
 		mc = new ModelController();
 		uman = new UserManager();
+		sman = new SettingManager();
 		ioc =  new IOController();
 		initLoginKeyListener();
 		initMenuActionListener();
@@ -170,7 +174,6 @@ public class Controller extends MouseAdapter
 					mc.sortIn(im.getNewPerson());
 					im.dispose();
 					updateList();
-					gui.initTable();
 				}
 				
 				if (cmd.equals("Löschen"))
@@ -276,6 +279,15 @@ public class Controller extends MouseAdapter
 						}
 				    }
 				}
+				
+				if (cmd.equals("UserSettings"))
+				{
+					um = new UserMask(gui.getFrame());
+					um.setUsernameEditable(false);
+					um.setFieldData(active.getUsername(), active.getPassword());
+					um.setActionListeners(al);
+					um.setLabelTitle("Benutzerdaten ändern");
+				}
 			}
 		};
 		gui.setActionListeners(al);
@@ -358,6 +370,12 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Beenden"))
 				{
 					System.exit(0);
+				}
+				
+				if (cmd.equals("Einstellungen"))
+				{
+					SettingsMask sm = new SettingsMask(gui.getFrame());
+					sm.setActionListeners(al);
 				}
 
 			}

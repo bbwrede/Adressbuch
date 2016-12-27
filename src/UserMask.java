@@ -99,7 +99,7 @@ public class UserMask extends JFrame
 		lblNewLabel = new JLabel("Neuer Benutzer");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(82, 9, 138, 14);
+		lblNewLabel.setBounds(6, 9, 291, 14);
 		contentPane.add(lblNewLabel);
 		
 		username = new JTextField();
@@ -239,5 +239,23 @@ public class UserMask extends JFrame
 	void usernameIcon(boolean visible)
 	{
 		un.setVisible(visible);
+	}
+	
+	void setLabelTitle(String pTitle)
+	{
+		lblNewLabel.setText(pTitle);
+	}
+	
+	void setFieldData(String pUsername, String pPassword)
+	{
+		username.setText(pUsername);
+		password.setText(pPassword);
+		confirmPassword.setText(pPassword);
+	}
+	
+	void setUsernameEditable(boolean pEditable)
+	{
+		username.setEditable(pEditable);
+		username.setEnabled(pEditable);
 	}
 }

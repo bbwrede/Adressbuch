@@ -105,7 +105,8 @@ public class GUI
 	private JTable table;
 	private DefaultTableModel tablemodel;
 	private DefaultTableModel tablemodel2;
-	private String[] columns = {"Nachname","Vorname","Land","Stadt","Geburtsdatum","UUID"};
+	private String[] columns = {"Nachname","Vorname","Land","Stadt","Geburtsdatum","Geburtsmonat","Geburtstag","Geburtsjahr","Augenfarbe","Haarfarbe","Hautfarbe",
+			"E-Mail","Straﬂe","Telefon","Handy","Firma","Religion","UUID"};
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JPanel panel_2;
@@ -652,8 +653,11 @@ public class GUI
 		
 		panel_1.setVisible(false);
 		
-		table.getColumnModel().getColumn(5).setMinWidth(0);
-		table.getColumnModel().getColumn(5).setMaxWidth(0);
+		for (int i = 5; i < 18; i++)
+		{
+			table.getColumnModel().getColumn(i).setMinWidth(0);
+			table.getColumnModel().getColumn(i).setMaxWidth(0);
+		}
 		
 		sorter = new TableRowSorter<TableModel>(table.getModel());
 		table.setRowSorter(sorter);
@@ -718,19 +722,18 @@ public class GUI
 	void setTableData(Person pPerson)
 	{
 		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), pPerson.getLand(), pPerson.getOrt(),
-				pPerson.getGeburtstag()+". "+pPerson.getGeburtsmonat()+" "+ pPerson.getGeburtsjahr(),pPerson.getUuid().toString()});	
+				pPerson.getGeburtstag()+". "+pPerson.getGeburtsmonat()+" "+ pPerson.getGeburtsjahr(),pPerson.getGeburtsmonat().toString(),
+				Integer.toString(pPerson.getGeburtstag()),Integer.toString(pPerson.getGeburtsjahr()),pPerson.getAugenfarbe().toString(),
+				pPerson.getHaarfarbe().toString(),pPerson.getHautfarbe().toString(),pPerson.getEmail(),pPerson.getStrasse(),pPerson.getTelefon(),
+				pPerson.getTelefonMobil(),pPerson.getFirma(),pPerson.getReligion().toString(),pPerson.getUuid().toString()});	
 	}
 	
-	void initTable()
-	{
-		
-	}
 	void filter() 
 	{
 		ArrayList<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel,Object>>();
 	    try 
 	    {
-	    	for (int i = 0; i<5; i++)
+	    	for (int i = 0; i<17; i++)
 	    	{
 	    		filters.add(RowFilter.regexFilter("(?i)" + suche.getText(), i));
 	    	}  
@@ -754,6 +757,7 @@ public class GUI
 		mntmLaden.addActionListener(al);
 		mntmLogout.addActionListener(al);
 		mntmBeenden.addActionListener(al);
+		mntmEinstellungen.addActionListener(al);
 	}
 	
 	void setPreview(Person pPerson)
@@ -807,6 +811,7 @@ public class GUI
 		geschlecht.setText(pPerson.getGeschlecht().toString());
 		
 		JLabel[] temp = {augenfarbe,haarfarbe,hautfarbe,religion,geschlecht};
+		
 		for (int i=0; i<temp.length; i++)
 		{
 			switch (temp[i].getText())
@@ -817,6 +822,7 @@ public class GUI
 		
 		JLabel[] scales = {gewicht,groesse};
 		int[] scalesData = {pPerson.getGewicht(),pPerson.getGroesse()};
+		
 		for (int i=0; i<scales.length; i++)
 		{
 			switch (scalesData[i])
@@ -881,7 +887,9 @@ public class GUI
 	{
 		mainPanel.setVisible(false);
 		menuBar.setVisible(false);
-		loginPanel.setVisible(true);	
+		panel_1.setVisible(false);
+		loginPanel.setVisible(true);
+		
 	}
 	
 	void removeListElements()
@@ -910,7 +918,7 @@ public class GUI
 	
 	UUID getSelectedUUID()
 	{
-		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 5).toString());
+		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 17).toString());
 	}
 	
 	void showLoginWarning()

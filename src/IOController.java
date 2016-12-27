@@ -50,6 +50,11 @@ public class IOController
 	private FileReader ufr;
 	private Scanner ureader;
 	
+	private FileWriter sfw;
+	private BufferedWriter sbw;
+	private FileReader sfr;
+	private Scanner sreader;
+	
 	private String username;
 	private String password;
 	
@@ -104,6 +109,30 @@ public class IOController
 	{
 		ufr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
 		ureader = new Scanner(ufr);
+	}
+	
+	void initSettingsWriter() throws FileNotFoundException
+	{
+		//saves
+		File dir = new File("saves");
+		dir.mkdir();
+		
+		try 
+		{
+			sfw = new FileWriter(System.getProperty("user.dir")+"\\saves\\"+username+".jsettings");
+		} catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		sbw = new BufferedWriter(sfw);
+		
+	}
+	
+	void initSettingsReader() throws FileNotFoundException
+	{
+		sfr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jsettings");
+		sreader = new Scanner(sfr);
 	}
 	
 	
@@ -350,6 +379,26 @@ public class IOController
 		return neu;
 	}
 	
+	void saveSettingsToFile(Settings pSettings) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	{
+	
+		ubw.newLine();
+		ubw.write(";");
+		ubw.newLine();
+		ubw.flush();
+	}
+	
+	Settings readSettings()
+	{
+		Settings neu = new Settings();
+		
+		String name = ureader.next();
+		String pw = ureader.next();
+		ureader.next();
+		
+		
+		return neu;
+	}
 	
 	private static byte[] imageToByte (BufferedImage image, String pFormat) throws IOException 
 	{

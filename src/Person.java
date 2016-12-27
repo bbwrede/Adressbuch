@@ -5,32 +5,32 @@ public class Person
   
   public enum Haarfarbe
   {
-    Schwarz, Weiß, Braun, Blond, Grün, Blau, Grau, Rot, Gelb, Lila, Orange, unbekannt
+    Schwarz, WeiÃŸ, Braun, Blond, GrÃ¼n, Blau, Grau, Rot, Gelb, Lila, Orange, unbekannt
   }
   
   public enum Hautfarbe
   {
-    Schwarz, Weiß, unbekannt
+    Schwarz, WeiÃŸ, unbekannt
   }
   
   public enum Augenfarbe
   {
-    Braun, Grün, Blau, Grau, unbekannt
+    Braun, GrÃ¼n, Blau, Grau, unbekannt
   }
   
   public enum Geschlecht
   {
-    Männlich, Weiblich, Sonstiges, unbekannt
+    MÃ¤nnlich, Weiblich, Sonstiges, unbekannt
   }
   
   public enum Religion
   {
-    Muslimisch, Katholisch, Evangelisch, Jüdisch, Atheistisch, unbekannt
+    Muslimisch, Katholisch, Evangelisch, JÃ¼disch, Atheistisch, unbekannt
   }
   
   public enum Monat
   {
-    Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember, unbekannt
+    Januar, Februar, MÃ¤rz, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember, unbekannt
   }
   
   // Anfang Attribute

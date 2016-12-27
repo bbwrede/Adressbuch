@@ -9,8 +9,6 @@ public class ModelController
 	ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
-		queue = new List<Person>();
-		
 	}
 	
 	
