@@ -208,8 +208,10 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("save"))
 				{
+					uman.removeUser(active.getUsername());
 					if (um.isPasswordCorrect() && !uman.isInList(um.getNewUser().getUsername()) && um.isUserName3())
 					{
+						
 						uman.sortIn(um.getNewUser());
 						try
 						{
@@ -316,7 +318,6 @@ public class Controller extends MouseAdapter
 					um.setFieldData(active.getUsername(), active.getPassword());
 					um.setActionListeners(al);
 					um.setLabelTitle("Benutzerdaten ändern");
-					uman.removeUser(active.getUsername());
 				}
 				
 				if (cmd.equals("closeSettings"))
@@ -338,9 +339,9 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("saveSettings"))
 				{
-					/*if (font != null) */activeSetting.setBgColor(background);
-					/*if (background != null) */activeSetting.setFontColor(font);
-					/*if (background != null && font != null) */ changeColors(background,font);
+					activeSetting.setBgColor(background);
+					activeSetting.setFontColor(font);
+					changeColors(background,font);
 					
 					sm.dispose();
 				}

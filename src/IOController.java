@@ -55,6 +55,8 @@ public class IOController
 	private FileReader sfr;
 	private Scanner sreader;
 	
+	private String masterkey = "zHwQXNLcEVzXFT8VXWd4EK86RIESO0cbzM7u3XQiGp1wkiqLV32zkYmgqjyZP3A";
+	
 	private String username;
 	private String password;
 	
@@ -168,6 +170,46 @@ public class IOController
 		
 		Cipher cipher2 = Cipher.getInstance("AES");
 		cipher2.init(Cipher.DECRYPT_MODE, initEncrypt());
+		byte[] cipherData2 = cipher2.doFinal(crypted2);
+		String text = new String(cipherData2);
+		
+		return text;
+
+	}
+	
+	
+	private SecretKeySpec initMasterEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
+	{
+		String keytext = masterkey;
+		byte[] key = keytext.getBytes("UTF-8");
+		MessageDigest sha = MessageDigest.getInstance("SHA-256");
+		key = sha.digest(key);
+		key = Arrays.copyOf(key, 16);
+		SecretKeySpec secretkey = new SecretKeySpec(key, "AES");
+		return secretkey;
+	}
+	
+	
+	
+	private String encryptMasterString(String pText) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+	{
+		Cipher cipher = Cipher.getInstance("AES");
+		cipher.init(Cipher.ENCRYPT_MODE, initMasterEncrypt());
+		byte[] encrypted = cipher.doFinal(pText.getBytes());
+		
+		BASE64Encoder myEncoder = new BASE64Encoder();
+		String verschluesselt = myEncoder.encode(encrypted);
+		
+		return verschluesselt;
+	}
+	
+	private String decryptMasterString(String pText) throws IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
+	{
+		BASE64Decoder myDecoder2 = new BASE64Decoder();
+		byte[] crypted2 = myDecoder2.decodeBuffer(pText);
+		
+		Cipher cipher2 = Cipher.getInstance("AES");
+		cipher2.init(Cipher.DECRYPT_MODE, initMasterEncrypt());
 		byte[] cipherData2 = cipher2.doFinal(crypted2);
 		String text = new String(cipherData2);
 		
