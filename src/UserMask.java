@@ -258,4 +258,9 @@ public class UserMask extends JFrame
 		username.setEditable(pEditable);
 		username.setEnabled(pEditable);
 	}
+	
+	String getLabelTitle()
+	{
+		return lblNewLabel.getText();
+	}
 }

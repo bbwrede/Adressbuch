@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -14,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -26,17 +28,19 @@ public class Controller extends MouseAdapter
 {	
 	private GUI gui;
 	private ModelController mc;
-	private String password = "1111";
-	private String username = "admin";
 	private InputMask im;
 	private UserMask um;
 	private UserManager uman;
 	private SettingManager sman;
+	private SettingsMask sm;
 	private ActionListener menuAl;
 	private ActionListener al;
 	private KeyListener loginKl;
 	private IOController ioc;
 	private User active;
+	private Settings activeSetting;
+	private Color background;
+	private Color font;
 
 	
 	Controller() throws FileNotFoundException 
@@ -46,6 +50,9 @@ public class Controller extends MouseAdapter
 		uman = new UserManager();
 		sman = new SettingManager();
 		ioc =  new IOController();
+		background = Color.GRAY;
+		font = Color.BLACK;
+		activeSetting = new Settings();
 		initLoginKeyListener();
 		initMenuActionListener();
 		initActionListener();
@@ -109,6 +116,9 @@ public class Controller extends MouseAdapter
 			public void actionPerformed(ActionEvent e)
 			{
 				String cmd = e.getActionCommand();
+				
+				
+				
 				if (cmd.equals("Login"))
 				{
 					authentification();
@@ -232,6 +242,25 @@ public class Controller extends MouseAdapter
 						um.pwCheckIcon(false);
 					}
 					
+					try
+					{
+						if (um.getLabelTitle().equals("Benutzerdaten ändern")) active = uman.getObjectAt(uman.indexOf(active.getUsername()));
+						if (um.getLabelTitle().equals("Benutzerdaten ändern")) saveList();
+						System.out.println("Gespeichert");
+						
+					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
+							| IllegalBlockSizeException | BadPaddingException | IOException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Die Datei konnte nicht gespeichert werden!",
+							    "Fehler beim Speichern der Datei",
+							    JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					} catch (NullPointerException e2)
+					{
+						e2.printStackTrace();
+					}
+					
 				}
 				
 				if (cmd.equals("Bild..."))
@@ -287,6 +316,33 @@ public class Controller extends MouseAdapter
 					um.setFieldData(active.getUsername(), active.getPassword());
 					um.setActionListeners(al);
 					um.setLabelTitle("Benutzerdaten ändern");
+					uman.removeUser(active.getUsername());
+				}
+				
+				if (cmd.equals("closeSettings"))
+				{
+					sm.dispose();
+				}
+				
+				if (cmd.equals("BG"))
+				{
+					background = JColorChooser.showDialog(gui.getFrame(), "Wähle eine Farbe aus", Color.GRAY);
+					sm.setBgColorLabel(background);
+				}
+				
+				if (cmd.equals("Font"))
+				{
+					font = JColorChooser.showDialog(gui.getFrame(), "Wähle eine Farbe aus", Color.BLACK);
+					sm.setFontColorLabel(font);
+				}
+				
+				if (cmd.equals("saveSettings"))
+				{
+					/*if (font != null) */activeSetting.setBgColor(background);
+					/*if (background != null) */activeSetting.setFontColor(font);
+					/*if (background != null && font != null) */ changeColors(background,font);
+					
+					sm.dispose();
 				}
 			}
 		};
@@ -374,7 +430,7 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Einstellungen"))
 				{
-					SettingsMask sm = new SettingsMask(gui.getFrame());
+					sm = new SettingsMask(gui.getFrame());
 					sm.setActionListeners(al);
 				}
 
@@ -457,7 +513,7 @@ public class Controller extends MouseAdapter
 			temp.next();
 		}
 		
-		ioc.createVCard(mc.getObjectAt(0));
+		//ioc.createVCard(mc.getObjectAt(0));
 		
 		ioc.closeWriteStream();
 	}
@@ -515,6 +571,14 @@ public class Controller extends MouseAdapter
 			uman.sortIn(ioc.readUser());
 		}
 
+	}
+	
+	
+	
+	
+	void changeColors(Color bg, Color font)
+	{
+		gui.changeColor(bg, font);
 	}
 }
 	

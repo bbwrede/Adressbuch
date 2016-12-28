@@ -947,4 +947,23 @@ public class GUI
 	{
 		return table;
 	}
+	
+	void changeColor(Color bg, Color font)
+	{
+		mainPanel.setBackground(bg);
+		panel_1.setBackground(bg);
+		panel.setBackground(bg);
+		panel_2.setBackground(bg);
+		panel_3.setBackground(bg);
+		panel_4.setBackground(bg);
+		panel_5.setBackground(bg);
+		scrollPane.setBackground(bg);
+		table.setBackground(bg);
+		table.setGridColor(bg);
+		
+		btnDelete.setBackground(bg);
+		btnNeu.setBackground(bg);
+		logoutBtn.setBackground(bg);
+		
+	}
 }
