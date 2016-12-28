@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -12,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.nio.ByteOrder;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -39,7 +41,7 @@ import sun.misc.BASE64Encoder;
 
 public class IOController 
 {
-	// Reader und Writer für .jbook
+	// Reader und Writer fï¿½r .jbook
 	private FileWriter fw;
 	private BufferedWriter bw;
 	private Scanner reader;
@@ -121,7 +123,7 @@ public class IOController
 		
 		try 
 		{
-			sfw = new FileWriter(System.getProperty("user.dir")+"\\saves\\"+username+".jsettings");
+			sfw = new FileWriter(System.getProperty("user.dir")+"\\saves\\settings.jsettings");
 		} catch (IOException e) 
 		{
 			e.printStackTrace();
@@ -133,7 +135,7 @@ public class IOController
 	
 	void initSettingsReader() throws FileNotFoundException
 	{
-		sfr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jsettings");
+		sfr = new FileReader(System.getProperty("user.dir")+"\\saves\\settings.jsettings");
 		sreader = new Scanner(sfr);
 	}
 	
@@ -423,21 +425,43 @@ public class IOController
 	
 	void saveSettingsToFile(Settings pSettings) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
-	
-		ubw.newLine();
-		ubw.write(";");
-		ubw.newLine();
-		ubw.flush();
+		sbw.write(pSettings.getLaf());
+		sbw.newLine();
+		
+		int r = pSettings.getBgColor().getRed();
+		int g = pSettings.getBgColor().getGreen();
+		int b = pSettings.getBgColor().getBlue();
+		
+		String hex = String.format("#%02x%02x%02x", r, g, b);
+		
+		sbw.write(hex);
+		sbw.newLine();
+		
+		r = pSettings.getFontColor().getRed();
+		g = pSettings.getFontColor().getGreen();
+		b = pSettings.getFontColor().getBlue();
+		
+		hex = String.format("#%02x%02x%02x", r, g, b);
+		
+		sbw.write(hex);
+		sbw.newLine();
+		sbw.write(";");
+		sbw.newLine();
+		sbw.flush();
 	}
 	
-	Settings readSettings()
+	Settings readSettings() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		Settings neu = new Settings();
 		
-		String name = ureader.next();
-		String pw = ureader.next();
-		ureader.next();
+		String laf = sreader.next();
+		Color bg = Color.decode(sreader.next());
+		Color font = Color.decode(sreader.next());
+		sreader.next();
 		
+		neu.setLaf(laf);
+		neu.setBgColor(bg);
+		neu.setFontColor(font);
 		
 		return neu;
 	}
@@ -634,7 +658,7 @@ public class IOController
 				case  		"GENDER":
 					if(split[1].equals("M"))
 					{
-						neu.setGeschlecht(Person.Geschlecht.Männlich);
+						neu.setGeschlecht(Person.Geschlecht.MÃ¤nnlich);
 					}
 					else
 					{

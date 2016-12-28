@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -13,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
@@ -23,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JMenuBar;
+import java.awt.CardLayout;
 
 public class InputMask extends JFrame
 {
@@ -57,7 +62,7 @@ public class InputMask extends JFrame
 	private JLabel lblErweitert;
 	private JLabel lblPersnlicheDaten;
 	private JComboBox haarfarbe;
-	private JButton btnZurück;
+	private JButton btnZurÃ¼ck;
 	private JSeparator separator_5;
 	private JSeparator separator_6;
 	private JSeparator separator_7;
@@ -138,18 +143,17 @@ public class InputMask extends JFrame
 		contentPane.setName("");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		advanced = new JPanel();
 		advanced.setVisible(false);
+		contentPane.setLayout(new CardLayout(0, 0));
 		
 		
 		
 		
 		
 		main = new JPanel();
-		main.setBounds(0, 0, 232, 501);
-		contentPane.add(main);
+		contentPane.add(main, "name_806875294871929");
 		main.setLayout(null);
 		
 		label = new JLabel("Neu:");
@@ -309,8 +313,7 @@ public class InputMask extends JFrame
 		btnImport2.setFont(new Font("SansSerif", Font.BOLD, 12));
 		btnImport2.setBounds(6, 461, 72, 28);
 		main.add(btnImport2);
-		advanced.setBounds(0, 0, 232, 501);
-		contentPane.add(advanced);
+		contentPane.add(advanced, "name_806875309807244");
 		advanced.setLayout(null);
 		
 		lblErweitert = new JLabel("Erweitert:");
@@ -329,10 +332,10 @@ public class InputMask extends JFrame
 		haarfarbe.setBounds(6, 55, 203, 26);
 		advanced.add(haarfarbe);
 		
-		btnZurück = new JButton("Zur\u00FCck...");
-		btnZurück.setToolTipText("Zur\u00FCck");
-		btnZurück.setBounds(6, 415, 203, 28);
-		advanced.add(btnZurück);
+		btnZurÃ¼ck = new JButton("Zur\u00FCck...");
+		btnZurÃ¼ck.setToolTipText("Zur\u00FCck");
+		btnZurÃ¼ck.setBounds(6, 415, 203, 28);
+		advanced.add(btnZurÃ¼ck);
 		
 		separator_5 = new JSeparator();
 		separator_5.setBounds(6, 31, 203, 2);
@@ -383,7 +386,7 @@ public class InputMask extends JFrame
 		groesse.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) 
 			{
-				lblCm.setText("Größe: "+Integer.toString(groesse.getValue())+ " cm");
+				lblCm.setText("GrÃ¶ÃŸe: "+Integer.toString(groesse.getValue())+ " cm");
 			}
 		});
 		groesse.setValue(0);
@@ -517,7 +520,7 @@ public class InputMask extends JFrame
 		btnErweitert.addActionListener(al);
 		btnSpeichern.addActionListener(al);
 		btnX.addActionListener(al);
-		btnZurück.addActionListener(al);
+		btnZurÃ¼ck.addActionListener(al);
 		x.addActionListener(al);
 		save.addActionListener(al);
 		btnBild.addActionListener(al);
@@ -533,7 +536,7 @@ public class InputMask extends JFrame
 		neu.setNachname(nachname.getText());
 		neu.setVorname(vorname.getText());
 		
-		//Persönliche Daten
+		//Persï¿½nliche Daten
 		
 		neu.setPostleitzahl(plz.getText());
 		neu.setOrt(ort.getText());
@@ -555,7 +558,7 @@ public class InputMask extends JFrame
 	    	{
 				JOptionPane.showMessageDialog(this,
 					    "Die Datei konnte nicht geladen werden! \n"
-					    + "Das Dateiformat wird nicht unterstützt!",
+					    + "Das Dateiformat wird nicht unterstÃ¼tzt!",
 					    "Fehler beim Speichern der Datei",
 					    JOptionPane.ERROR_MESSAGE);
 	    	}
@@ -606,17 +609,17 @@ public class InputMask extends JFrame
 		
 		//Geburtsdaten
 		
-		if (!tag.getSelectedItem().toString().equals("Tag")) //Wenn was ausgewählt
+		if (!tag.getSelectedItem().toString().equals("Tag")) //Wenn was ausgewï¿½hlt
 		{
 			neu.setGeburtstag(Integer.parseInt(tag.getSelectedItem().toString()));
 		}
 		
-		if (!monat.getSelectedItem().toString().equals("Monat")) //Wenn was ausgewählt
+		if (!monat.getSelectedItem().toString().equals("Monat")) //Wenn was ausgewï¿½hlt
 		{
 			neu.setGeburtsmonat(Person.Monat.valueOf(monat.getSelectedItem().toString()));
 		}
 		
-		if (!jahr.getSelectedItem().toString().equals("Jahr")) //Wenn was ausgewählt
+		if (!jahr.getSelectedItem().toString().equals("Jahr")) //Wenn was ausgewï¿½hlt
 		{
 			neu.setGeburtsjahr(Integer.parseInt(jahr.getSelectedItem().toString()));
 		}
@@ -666,5 +669,38 @@ public class InputMask extends JFrame
 	JFrame getFrame()
 	{
 		return this;
+	}
+	
+	public void setPanelColor(Container parent, Color bg, Color font)
+	{
+	    for(Component c : parent.getComponents())
+	    {
+	        if(c instanceof Container)
+	        {
+	            if(c instanceof JPanel)
+	            {
+	                c.setBackground(bg);
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JButton)
+	            {
+	                c.setBackground(bg);
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JLabel)
+	            {
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JSlider)
+	            {
+	                c.setForeground(font);
+	            }
+	            
+	            setPanelColor((Container)c,bg,font);
+	        }
+	    }
 	}
 }

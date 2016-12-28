@@ -1,16 +1,16 @@
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Container;
 import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -18,15 +18,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -34,53 +32,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.MatteBorder;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
-import com.sun.org.apache.bcel.internal.generic.LAND;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JInternalFrame;
-import javax.swing.JLayeredPane;
-import javax.swing.JDesktopPane;
-import javax.swing.JToolBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
-
-import java.awt.SystemColor;
-import javax.swing.ListSelectionModel;
-import javax.swing.RowFilter;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.Box;
-import javax.swing.ButtonGroup;
-import javax.swing.border.BevelBorder;
-import java.awt.Canvas;
-import javax.swing.KeyStroke;
-import java.awt.event.KeyEvent;
-import java.awt.event.InputEvent;
-import javax.swing.JProgressBar;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import javax.swing.border.SoftBevelBorder;
-import java.awt.GridLayout;
-import java.awt.Image;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -106,7 +75,7 @@ public class GUI
 	private DefaultTableModel tablemodel;
 	private DefaultTableModel tablemodel2;
 	private String[] columns = {"Nachname","Vorname","Land","Stadt","Geburtsdatum","Geburtsmonat","Geburtstag","Geburtsjahr","Augenfarbe","Haarfarbe","Hautfarbe",
-			"E-Mail","Straﬂe","Telefon","Handy","Firma","Religion","UUID"};
+			"E-Mail","Stra√üe","Telefon","Handy","Firma","Religion","UUID"};
 	private JPanel panel;
 	private JScrollPane scrollPane;
 	private JPanel panel_2;
@@ -150,6 +119,9 @@ public class GUI
 	private JSeparator separator_4;
 	private JLabel lblNewLabel_2;
 	private JLabel geschlecht;
+	private JLabel lblAdressliste_1;
+	private JLabel lblKontakt;
+	private JCheckBox checkbox;
 	
 	public GUI() 
 	{
@@ -198,6 +170,7 @@ public class GUI
 
 	private void initialize() {
 		frmAdressbuch = new JFrame();
+		frmAdressbuch.setForeground(Color.RED);
 		frmAdressbuch.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.class.getResource("/resources/logo.png")));
 		frmAdressbuch.setResizable(false);
 		frmAdressbuch.setTitle("Adressbuch");
@@ -246,11 +219,11 @@ public class GUI
 		lblJbook.setBounds(237, 0, 320, 252);
 		loginPanel.add(lblJbook);
 		
-		JCheckBox chckbxLoginSpeichern = new JCheckBox("Login speichern");
-		chckbxLoginSpeichern.setForeground(Color.BLACK);
-		chckbxLoginSpeichern.setHorizontalAlignment(SwingConstants.CENTER);
-		chckbxLoginSpeichern.setBounds(308, 417, 178, 23);
-		loginPanel.add(chckbxLoginSpeichern);
+		checkbox = new JCheckBox("Login speichern");
+		checkbox.setForeground(Color.BLACK);
+		checkbox.setHorizontalAlignment(SwingConstants.CENTER);
+		checkbox.setBounds(308, 417, 178, 23);
+		loginPanel.add(checkbox);
 		
 		loginBtn = new JButton("Login");
 		loginBtn.setIcon(new ImageIcon(GUI.class.getResource("/resources/pfeil-rechts.png")));
@@ -314,6 +287,12 @@ public class GUI
 		btnBearbeiten.setIcon(new ImageIcon(GUI.class.getResource("/resources/edit.png")));
 		btnBearbeiten.setFont(new Font("SansSerif", Font.BOLD, 14));
 		mainPanel.setLayout(null);
+		
+		lblAdressliste_1 = new JLabel("Adressliste");
+		lblAdressliste_1.setForeground(Color.DARK_GRAY);
+		lblAdressliste_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAdressliste_1.setBounds(218, 72, 88, 16);
+		mainPanel.add(lblAdressliste_1);
 		
 		
 		mainPanel.add(lblAdressliste);
@@ -432,12 +411,19 @@ public class GUI
 		tablemodel2.setColumnIdentifiers(columns);
 		
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Adressliste", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
+		panel.setBorder(new TitledBorder(null, " ", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
 		panel.setBounds(0, 72, 524, 470);
 		mainPanel.add(panel);
 		
+		lblKontakt = new JLabel("Kontakt");
+		lblKontakt.setForeground(Color.DARK_GRAY);
+		lblKontakt.setBounds(614, 72, 88, 16);
+		mainPanel.add(lblKontakt);
+		lblKontakt.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(null, "Kontakt", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, Color.DARK_GRAY));
+		panel_1.setForeground(Color.BLACK);
+		panel_1.setBorder(new TitledBorder(null, " ", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(64, 64, 64)));
 		panel_1.setBounds(530, 72, 256, 470);
 		mainPanel.add(panel_1);
 		panel_1.setLayout(null);
@@ -651,6 +637,7 @@ public class GUI
 		panel_2.setBounds(3, 29, 788, 41);
 		mainPanel.add(panel_2);
 		
+		lblKontakt.setVisible(false);
 		panel_1.setVisible(false);
 		
 		for (int i = 5; i < 18; i++)
@@ -661,7 +648,6 @@ public class GUI
 		
 		sorter = new TableRowSorter<TableModel>(table.getModel());
 		table.setRowSorter(sorter);
-		
 		
 		
 	}
@@ -842,6 +828,8 @@ public class GUI
 		bild.setIcon(icon);
 		
 		panel_1.setVisible(true);
+		lblKontakt.setVisible(true);
+		
 	}
 	
 	void setMenuUsername(String pUsername)
@@ -965,5 +953,61 @@ public class GUI
 		btnNeu.setBackground(bg);
 		logoutBtn.setBackground(bg);
 		
+	}
+	
+	public void setPanelColor(Container parent, Color bg, Color font)
+	{
+	    for(Component c : parent.getComponents())
+	    {
+	        if(c instanceof Container)
+	        {
+	            if(c instanceof JPanel)
+	            {
+	                c.setBackground(bg);
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JButton)
+	            {
+	                c.setBackground(bg);
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JLabel)
+	            {
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JScrollPane)
+	            {
+	            	scrollPane.getViewport().setBackground(bg);
+	                c.setBackground(bg);
+	            }
+	            
+	            if(c instanceof JMenuBar)
+	            {
+	                c.setBackground(bg);
+	                c.setForeground(bg);
+	            }
+	            if(c instanceof JCheckBox)
+	            {
+	                c.setForeground(font);
+	            }
+	            
+	            
+	            setPanelColor((Container)c,bg,font);
+	        }
+	    }
+	}
+	
+	public boolean getCheckBoxStatus()
+	{
+		return checkbox.isSelected();
+	}
+	
+	public void removeLoginContent()
+	{
+		usernameField.setText("");
+		passwordField.setText("");
 	}
 }

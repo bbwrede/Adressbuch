@@ -1,4 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -21,6 +24,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.JSeparator;
+import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
@@ -262,5 +266,43 @@ public class UserMask extends JFrame
 	String getLabelTitle()
 	{
 		return lblNewLabel.getText();
+	}
+	
+	public void setPanelColor(Container parent, Color bg, Color font)
+	{
+	    for(Component c : parent.getComponents())
+	    {
+	        if(c instanceof Container)
+	        {
+	            if(c instanceof JPanel)
+	            {
+	                c.setBackground(bg);
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JButton)
+	            {
+	                c.setBackground(bg);
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JLabel)
+	            {
+	                c.setForeground(font);
+	            }
+	            
+	            if(c instanceof JSlider)
+	            {
+	                c.setForeground(font);
+	            }
+	            
+	            setPanelColor((Container)c,bg,font);
+	        }
+	    }
+	}
+	
+	public JFrame getFrame()
+	{
+		return this;
 	}
 }

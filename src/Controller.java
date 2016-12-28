@@ -21,8 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.omg.CORBA.Current;
-
 @SuppressWarnings("rawtypes")
 public class Controller extends MouseAdapter
 {	
@@ -72,6 +70,18 @@ public class Controller extends MouseAdapter
 		if (!uman.isInList("admin"))
 		{
 			uman.initAdmin();
+		}
+		
+		try
+		{
+			loadSetting();
+		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
+				| NoSuchPaddingException | IOException e)
+		{
+			JOptionPane.showMessageDialog(gui.getFrame(),
+				    "Es konnten keine Einstellungen geladen werden. \n"
+				    + "Ist dies der erste Start des Programms?");
+			e.printStackTrace();
 		}
 		
 		updateList();
@@ -144,6 +154,7 @@ public class Controller extends MouseAdapter
 					gui.openLogin();
 					mc.removeListElements();
 					updateList();
+					if (!gui.getCheckBoxStatus()) gui.removeLoginContent();
 					active = null;
 				}
 				
@@ -151,6 +162,7 @@ public class Controller extends MouseAdapter
 				{
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
+					im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 					im.setVisible(true);
 				}
 				
@@ -174,7 +186,7 @@ public class Controller extends MouseAdapter
 					im.openAdvanced();
 				}
 				
-				if (cmd.equals("Zurück..."))
+				if (cmd.equals("ZurÃ¼ck..."))
 				{
 					im.openMain();
 				}
@@ -186,11 +198,11 @@ public class Controller extends MouseAdapter
 					updateList();
 				}
 				
-				if (cmd.equals("Löschen"))
+				if (cmd.equals("LÃ¶schen"))
 				{
 						if (!mc.isEmpty())
 						{
-							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "MÃ¶chten Sie den Kontakt wirklich lÃ¶schen?", "LÃ¶schen", JOptionPane.YES_NO_OPTION);
 					       
 						 	if (reply == JOptionPane.YES_OPTION) 
 					        {
@@ -203,6 +215,7 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Registrieren"))
 				{
 					um = new UserMask(gui.getFrame());
+					um.setPanelColor(um.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
 					um.setActionListeners(al);
 				}
 				
@@ -246,8 +259,8 @@ public class Controller extends MouseAdapter
 					
 					try
 					{
-						if (um.getLabelTitle().equals("Benutzerdaten ändern")) active = uman.getObjectAt(uman.indexOf(active.getUsername()));
-						if (um.getLabelTitle().equals("Benutzerdaten ändern")) saveList();
+						if (um.getLabelTitle().equals("Benutzerdaten Ã¤ndern")) active = uman.getObjectAt(uman.indexOf(active.getUsername()));
+						if (um.getLabelTitle().equals("Benutzerdaten Ã¤ndern")) saveList();
 						System.out.println("Gespeichert");
 						
 					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
@@ -317,7 +330,8 @@ public class Controller extends MouseAdapter
 					um.setUsernameEditable(false);
 					um.setFieldData(active.getUsername(), active.getPassword());
 					um.setActionListeners(al);
-					um.setLabelTitle("Benutzerdaten ändern");
+					um.setPanelColor(um.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
+					um.setLabelTitle("Benutzerdaten Ã¤ndern");
 				}
 				
 				if (cmd.equals("closeSettings"))
@@ -327,13 +341,13 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("BG"))
 				{
-					background = JColorChooser.showDialog(gui.getFrame(), "Wähle eine Farbe aus", Color.GRAY);
+					background = JColorChooser.showDialog(gui.getFrame(), "WÃ¤hle eine Farbe aus", Color.decode("#d6d9df"));
 					sm.setBgColorLabel(background);
 				}
 				
 				if (cmd.equals("Font"))
 				{
-					font = JColorChooser.showDialog(gui.getFrame(), "Wähle eine Farbe aus", Color.BLACK);
+					font = JColorChooser.showDialog(gui.getFrame(), "WÃ¤hle eine Farbe aus", Color.BLACK);
 					sm.setFontColorLabel(font);
 				}
 				
@@ -342,6 +356,19 @@ public class Controller extends MouseAdapter
 					activeSetting.setBgColor(background);
 					activeSetting.setFontColor(font);
 					changeColors(background,font);
+					
+					try
+					{
+						saveSetting();
+					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
+							| IllegalBlockSizeException | BadPaddingException | IOException e1)
+					{
+						
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Die Einstellungen konnten nicht gespeichert werden!",
+							    "Fehler beim Speichern der Datei",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 					
 					sm.dispose();
 				}
@@ -387,6 +414,7 @@ public class Controller extends MouseAdapter
 				{
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
+					im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 					im.setVisible(true);
 				}
 				
@@ -432,6 +460,9 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Einstellungen"))
 				{
 					sm = new SettingsMask(gui.getFrame());
+					sm.setPanelColor(sm.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
+					sm.setBgColorLabel(activeSetting.getBgColor());
+					sm.setFontColorLabel(activeSetting.getFontColor());
 					sm.setActionListeners(al);
 				}
 
@@ -574,12 +605,22 @@ public class Controller extends MouseAdapter
 
 	}
 	
+	void saveSetting() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	{
+		ioc.initSettingsWriter();
+		ioc.saveSettingsToFile(activeSetting);
+	}
 	
-	
+	void loadSetting() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	{
+		ioc.initSettingsReader();
+		activeSetting = ioc.readSettings();
+		changeColors(activeSetting.getBgColor(), activeSetting.getFontColor());
+	}
 	
 	void changeColors(Color bg, Color font)
 	{
-		gui.changeColor(bg, font);
+		gui.setPanelColor(gui.getFrame(),bg, font);
 	}
 }
 	
