@@ -42,6 +42,7 @@ public class SettingsMask extends JFrame
 
 	public SettingsMask(JFrame pFrame)
 	{
+		setResizable(false);
 		try 
 		{
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
