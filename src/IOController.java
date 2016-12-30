@@ -57,7 +57,7 @@ public class IOController
 	private FileReader sfr;
 	private Scanner sreader;
 	
-	private String masterkey = "zHwQXNLcEVzXFT8VXWd4EK86RIESO0cbzM7u3XQiGp1wkiqLV32zkYmgqjyZP3A";
+	private byte[] masterkey;
 	
 	private String username;
 	private String password;
@@ -182,12 +182,11 @@ public class IOController
 	
 	private SecretKeySpec initMasterEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
-		String keytext = masterkey;
-		byte[] key = keytext.getBytes("UTF-8");
+		masterkey = "zHwQXNLcEVzXFT8VXWd4EK86RIESO0cbzM7u3XQiGp1wkiqLV32zkYmgqjyZP3A".getBytes("UTF-8");
 		MessageDigest sha = MessageDigest.getInstance("SHA-256");
-		key = sha.digest(key);
-		key = Arrays.copyOf(key, 16);
-		SecretKeySpec secretkey = new SecretKeySpec(key, "AES");
+		masterkey = sha.digest(masterkey);
+		masterkey = Arrays.copyOf(masterkey, 16);
+		SecretKeySpec secretkey = new SecretKeySpec(masterkey, "AES");
 		return secretkey;
 	}
 	
@@ -400,21 +399,21 @@ public class IOController
 	
 	void saveUserToFile(User pUser) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
-		ubw.write(pUser.getUsername());
+		ubw.write(encryptMasterString(pUser.getUsername()));
 		ubw.newLine();
-		ubw.write(pUser.getPassword());
+		ubw.write(encryptMasterString(pUser.getPassword()));
 		ubw.newLine();
 		ubw.write(";");
 		ubw.newLine();
 		ubw.flush();
 	}
 	
-	User readUser()
+	User readUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		User neu = new User();
 		
-		String name = ureader.next();
-		String pw = ureader.next();
+		String name = decryptMasterString(ureader.next());
+		String pw = decryptMasterString(ureader.next());
 		ureader.next();
 		
 		neu.setUsername(name);
