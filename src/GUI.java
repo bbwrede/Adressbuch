@@ -84,7 +84,7 @@ public class GUI
 	private JMenu mnEingeloggt;
 	private JMenuItem mntmLogout;
 	private TableRowSorter<TableModel> sorter;
-	private JTextField textField;
+	private JTextField menuSearch;
 	private JMenuItem mntmBeenden;
 	private JMenuItem mntmEinstellungen;
 	private JPanel panel_1;
@@ -170,9 +170,9 @@ public class GUI
 
 	private void initialize() {
 		frmAdressbuch = new JFrame();
+		frmAdressbuch.setResizable(false);
 		frmAdressbuch.setForeground(Color.RED);
 		frmAdressbuch.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.class.getResource("/resources/logo.png")));
-		frmAdressbuch.setResizable(false);
 		frmAdressbuch.setTitle("Adressbuch");
 		frmAdressbuch.setBounds(100, 100, 800, 600);
 		frmAdressbuch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -359,9 +359,9 @@ public class GUI
 		JMenu mnSuchen = new JMenu("Suchen");
 		menuBar.add(mnSuchen);
 		
-		textField = new JTextField();
-		mnSuchen.add(textField);
-		textField.setColumns(10);
+		menuSearch = new JTextField();
+		mnSuchen.add(menuSearch);
+		menuSearch.setColumns(10);
 		
 		JMenu mnHilfe = new JMenu("Hilfe");
 		menuBar.add(mnHilfe);
@@ -686,24 +686,48 @@ public class GUI
 			@Override
 			public void removeUpdate(DocumentEvent e)
 			{
-				if(!suche.getText().equals("Suchen")) filter();
+				if(!suche.getText().equals("Suchen")) filter(suche);
 				
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e)
 			{
-				if(!suche.getText().equals("Suchen")) filter();
+				if(!suche.getText().equals("Suchen")) filter(suche);
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e)
 			{
-				if(!suche.getText().equals("Suchen")) filter();
+				if(!suche.getText().equals("Suchen")) filter(suche);
+			}
+		});
+		
+		menuSearch.getDocument().addDocumentListener(new DocumentListener()
+		{
+			
+			@Override
+			public void removeUpdate(DocumentEvent e)
+			{
+				if(!menuSearch.getText().equals("Suchen")) filter(menuSearch);
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e)
+			{
+				if(!menuSearch.getText().equals("Suchen")) filter(menuSearch);
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e)
+			{
+				if(!menuSearch.getText().equals("Suchen")) filter(menuSearch);
 			}
 		});
 		
 	}
+	
 	
 	void setTableData(Person pPerson)
 	{
@@ -714,14 +738,14 @@ public class GUI
 				pPerson.getTelefonMobil(),pPerson.getFirma(),pPerson.getReligion().toString(),pPerson.getUuid().toString()});	
 	}
 	
-	void filter() 
+	void filter(JTextField pTextField) 
 	{
 		ArrayList<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel,Object>>();
 	    try 
 	    {
 	    	for (int i = 0; i<17; i++)
 	    	{
-	    		filters.add(RowFilter.regexFilter("(?i)" + suche.getText(), i));
+	    		filters.add(RowFilter.regexFilter("(?i)" + pTextField.getText(), i));
 	    	}  
 	    } catch (java.util.regex.PatternSyntaxException e) 
 	    {
