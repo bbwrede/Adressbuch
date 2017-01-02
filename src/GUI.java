@@ -50,6 +50,10 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Dimension;
 
 @SuppressWarnings({"rawtypes", "unchecked" , "unused"})
 public class GUI  
@@ -122,6 +126,8 @@ public class GUI
 	private JLabel lblAdressliste_1;
 	private JLabel lblKontakt;
 	private JCheckBox checkbox;
+	private JPanel panel_6;
+	private JButton btnBearbeiten;
 	
 	public GUI() 
 	{
@@ -170,34 +176,33 @@ public class GUI
 
 	private void initialize() {
 		frmAdressbuch = new JFrame();
-		frmAdressbuch.setResizable(false);
+		frmAdressbuch.setPreferredSize(new Dimension(1366, 630));
+		frmAdressbuch.setMinimumSize(new Dimension(540, 630));
+		frmAdressbuch.setMaximumSize(new Dimension(1366, 768));
 		frmAdressbuch.setForeground(Color.RED);
 		frmAdressbuch.setIconImage(Toolkit.getDefaultToolkit().getImage(GUI.class.getResource("/resources/logo.png")));
 		frmAdressbuch.setTitle("Adressbuch");
-		frmAdressbuch.setBounds(100, 100, 800, 600);
+		frmAdressbuch.setBounds(100, 100, 810, 630);
 		frmAdressbuch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAdressbuch.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		mainPanel = new JPanel();
+		mainPanel.setMaximumSize(new Dimension(1366, 768));
 		mainPanel.setVisible(false);
 		
 		loginPanel = new JPanel();
+		loginPanel.setMaximumSize(new Dimension(1366, 768));
 		loginPanel.setBackground(UIManager.getColor("Menu.background"));
 		loginPanel.setVisible(true);
 		frmAdressbuch.getContentPane().add(loginPanel, "name_943493824808102");
-		loginPanel.setLayout(null);
 		
 		passwordField = new JPasswordField();
 		passwordField.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		passwordField.setBounds(308, 372, 178, 35);
-		loginPanel.add(passwordField);
 		
 		usernameField = new JTextField();
 		usernameField.setHorizontalAlignment(SwingConstants.CENTER);
 		usernameField.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		usernameField.setBounds(308, 305, 178, 35);
-		loginPanel.add(usernameField);
 		usernameField.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel(" Login");
@@ -205,63 +210,134 @@ public class GUI
 		lblNewLabel.setIcon(new ImageIcon(GUI.class.getResource("/resources/key.png")));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(308, 239, 178, 41);
-		loginPanel.add(lblNewLabel);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(6, 278, 774, 2);
-		loginPanel.add(separator_1);
 		
 		JLabel lblJbook = new JLabel("");
 		lblJbook.setIcon(new ImageIcon(GUI.class.getResource("/resources/logo.png")));
 		lblJbook.setHorizontalAlignment(SwingConstants.CENTER);
 		lblJbook.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblJbook.setBounds(237, 0, 320, 252);
-		loginPanel.add(lblJbook);
 		
 		checkbox = new JCheckBox("Login speichern");
 		checkbox.setForeground(Color.BLACK);
 		checkbox.setHorizontalAlignment(SwingConstants.CENTER);
-		checkbox.setBounds(308, 417, 178, 23);
-		loginPanel.add(checkbox);
 		
 		loginBtn = new JButton("Login");
 		loginBtn.setIcon(new ImageIcon(GUI.class.getResource("/resources/pfeil-rechts.png")));
 		loginBtn.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
-		loginBtn.setBounds(308, 452, 89, 23);
-		loginPanel.add(loginBtn);
-		
-		JLabel lblNewLabel_1 = new JLabel("Benutzername");
+		JLabel lblNewLabel_1 = new JLabel("Benutzername:");
 		lblNewLabel_1.setForeground(Color.BLACK);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(308, 283, 178, 14);
-		loginPanel.add(lblNewLabel_1);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 		
-		JLabel lblPasswort = new JLabel("Passwort");
+		JLabel lblPasswort = new JLabel("Passwort:");
 		lblPasswort.setForeground(Color.BLACK);
-		lblPasswort.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPasswort.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPasswort.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblPasswort.setBounds(308, 351, 178, 14);
-		loginPanel.add(lblPasswort);
 		
 		hilfeBtn = new JButton("Hilfe");
+		hilfeBtn.setPreferredSize(new Dimension(59, 28));
 		hilfeBtn.setIcon(new ImageIcon(GUI.class.getResource("/resources/help.PNG")));
-		hilfeBtn.setBounds(396, 452, 90, 23);
-		loginPanel.add(hilfeBtn);
 		
 		loginMessage = new JLabel("Bentzername oder Passwort falsch");
 		loginMessage.setVisible(false);
 		loginMessage.setForeground(Color.RED);
 		loginMessage.setFont(new Font("SansSerif", Font.ITALIC, 11));
 		loginMessage.setHorizontalAlignment(SwingConstants.CENTER);
-		loginMessage.setBounds(237, 476, 327, 16);
-		loginPanel.add(loginMessage);
 		
 		btnRegister = new JButton("Registrieren");
+		btnRegister.setMaximumSize(new Dimension(120, 38));
+		btnRegister.setMinimumSize(new Dimension(50, 10));
 		btnRegister.setIcon(new ImageIcon(GUI.class.getResource("/resources/new-user.png")));
-		btnRegister.setBounds(330, 497, 134, 23);
-		loginPanel.add(btnRegister);
+		
+		panel_6 = new JPanel();
+		GroupLayout gl_loginPanel = new GroupLayout(loginPanel);
+		gl_loginPanel.setHorizontalGroup(
+			gl_loginPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_loginPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_loginPanel.createSequentialGroup()
+							.addGap(302)
+							.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+							.addGap(287))
+						.addGroup(gl_loginPanel.createSequentialGroup()
+							.addGap(231)
+							.addComponent(lblJbook, GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+							.addGap(216))
+						.addComponent(separator_1, GroupLayout.DEFAULT_SIZE, 774, Short.MAX_VALUE))
+					.addGap(14))
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGap(308)
+					.addComponent(usernameField, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+					.addGap(301))
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGap(237)
+					.addComponent(loginMessage, GroupLayout.PREFERRED_SIZE, 327, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(230, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_loginPanel.createSequentialGroup()
+					.addGap(308)
+					.addComponent(loginBtn, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(hilfeBtn, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+					.addGap(301))
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGap(308)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(301, Short.MAX_VALUE))
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGap(75)
+					.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+					.addGap(103)
+					.addGroup(gl_loginPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPasswort, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+						.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
+					.addGap(301))
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGap(270)
+					.addComponent(checkbox, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(339, Short.MAX_VALUE))
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGap(310)
+					.addComponent(btnRegister, GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+					.addGap(301))
+		);
+		gl_loginPanel.setVerticalGroup(
+			gl_loginPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_loginPanel.createSequentialGroup()
+					.addGroup(gl_loginPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_loginPanel.createSequentialGroup()
+							.addGap(239)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblJbook, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_loginPanel.createSequentialGroup()
+							.addGap(278)
+							.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(3)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addGroup(gl_loginPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_loginPanel.createSequentialGroup()
+							.addComponent(lblPasswort, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+							.addGap(7)
+							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(checkbox, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_loginPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(loginBtn)
+								.addComponent(hilfeBtn, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+							.addGap(1)
+							.addComponent(loginMessage, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnRegister, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(53))
+		);
+		panel_6.setLayout(null);
+		loginPanel.setLayout(gl_loginPanel);
 		mainPanel.setName("");
 		mainPanel.setToolTipText(null);
 		mainPanel.setBackground(UIManager.getColor("InternalFrame.minimizeIconBackground"));
@@ -269,62 +345,13 @@ public class GUI
 		
 		JLabel lblAdressliste = new JLabel("Adressliste");
 		lblAdressliste.setIcon(new ImageIcon(GUI.class.getResource("/resources/list.png")));
-		lblAdressliste.setBounds(10, 6, 110, 21);
 		lblAdressliste.setFont(new Font("SansSerif", Font.BOLD, 16));
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(132, 16, 654, 13);
-		
-		btnNeu = new JButton(" Neu...");
-		btnNeu.setBounds(10, 32, 96, 32);
-		btnNeu.setIcon(new ImageIcon(GUI.class.getResource("/resources/plus.png")));
-		btnNeu.setHorizontalAlignment(SwingConstants.LEFT);
-		btnNeu.setFont(new Font("SansSerif", Font.BOLD, 14));
-		
-		JButton btnBearbeiten = new JButton("Bearbeiten...");
-		btnBearbeiten.setBounds(110, 32, 142, 32);
-		btnBearbeiten.setHorizontalAlignment(SwingConstants.LEFT);
-		btnBearbeiten.setIcon(new ImageIcon(GUI.class.getResource("/resources/edit.png")));
-		btnBearbeiten.setFont(new Font("SansSerif", Font.BOLD, 14));
-		mainPanel.setLayout(null);
 		
 		lblAdressliste_1 = new JLabel("Adressliste");
 		lblAdressliste_1.setForeground(Color.DARK_GRAY);
 		lblAdressliste_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAdressliste_1.setBounds(218, 72, 88, 16);
-		mainPanel.add(lblAdressliste_1);
-		
-		
-		mainPanel.add(lblAdressliste);
-		mainPanel.add(separator);
-		mainPanel.add(btnNeu);
-		mainPanel.add(btnBearbeiten);
-		
-		JButton btnSortieren = new JButton("Sortieren");
-		btnSortieren.setBounds(255, 32, 126, 32);
-		btnSortieren.setHorizontalAlignment(SwingConstants.LEFT);
-		btnSortieren.setIcon(new ImageIcon(GUI.class.getResource("/resources/sort.png")));
-		btnSortieren.setFont(new Font("SansSerif", Font.BOLD, 14));
-		mainPanel.add(btnSortieren);
-		
-		logoutBtn = new JButton("");
-		logoutBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
-		logoutBtn.setIcon(new ImageIcon(GUI.class.getResource("/resources/logout.png")));
-		logoutBtn.setBounds(748, 32, 38, 30);
-		mainPanel.add(logoutBtn);
-		
-		btnDelete = new JButton("L\u00F6schen");
-		btnDelete.setHorizontalAlignment(SwingConstants.LEFT);
-		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 14));
-		btnDelete.setBounds(385, 32, 133, 32);
-		btnDelete.setIcon(new ImageIcon(GUI.class.getResource("/resources/delete.png")));
-		mainPanel.add(btnDelete);
-		
-		suche = new HintTextField("Suchen");
-		suche.setBounds(520, 33, 227, 30);
-		suche.setFont(new Font("SansSerif", Font.PLAIN, 14));
-		mainPanel.add(suche);
-		suche.setColumns(10);
 		
 		menuBar = new JMenuBar();
 		menuBar.setVisible(false);
@@ -395,8 +422,6 @@ public class GUI
 		tablemodel.setColumnIdentifiers(columns);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 96, 504, 432);
-		mainPanel.add(scrollPane);
 		
 		
 		table = new JTable();
@@ -412,20 +437,14 @@ public class GUI
 		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, " ", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(59, 59, 59)));
-		panel.setBounds(0, 72, 524, 470);
-		mainPanel.add(panel);
 		
 		lblKontakt = new JLabel("Kontakt");
 		lblKontakt.setForeground(Color.DARK_GRAY);
-		lblKontakt.setBounds(614, 72, 88, 16);
-		mainPanel.add(lblKontakt);
 		lblKontakt.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		panel_1 = new JPanel();
 		panel_1.setForeground(Color.BLACK);
 		panel_1.setBorder(new TitledBorder(null, " ", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(64, 64, 64)));
-		panel_1.setBounds(530, 72, 256, 470);
-		mainPanel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		bild = new JLabel("");
@@ -629,13 +648,52 @@ public class GUI
 		
 		lblNewLabel_2 = new JLabel("- Kein Element Ausgew\u00E4hlt -");
 		lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD | Font.ITALIC, 12));
-		lblNewLabel_2.setBounds(575, 250, 177, 16);
-		mainPanel.add(lblNewLabel_2);
 		
 		panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(3, 29, 788, 41);
-		mainPanel.add(panel_2);
+		
+		btnNeu = new JButton(" Neu...");
+		btnNeu.setIcon(new ImageIcon(GUI.class.getResource("/resources/plus.png")));
+		btnNeu.setFont(new Font("SansSerif", Font.BOLD, 14));
+		
+		btnBearbeiten = new JButton("Bearbeiten...");
+		btnBearbeiten.setIcon(new ImageIcon(GUI.class.getResource("/resources/edit.png")));
+		btnBearbeiten.setFont(new Font("SansSerif", Font.BOLD, 14));
+		
+		btnDelete = new JButton("L\u00F6schen");
+		btnDelete.setFont(new Font("SansSerif", Font.BOLD, 14));
+		btnDelete.setIcon(new ImageIcon(GUI.class.getResource("/resources/delete.png")));
+		
+		suche = new HintTextField("Suchen");
+		suche.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		suche.setColumns(10);
+		
+		logoutBtn = new JButton("");
+		logoutBtn.setFont(new Font("SansSerif", Font.BOLD, 14));
+		logoutBtn.setIcon(new ImageIcon(GUI.class.getResource("/resources/logout.png")));
+		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
+		gl_panel_2.setHorizontalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
+					.addComponent(btnNeu, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+					.addGap(2)
+					.addComponent(btnBearbeiten, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+					.addGap(2)
+					.addComponent(btnDelete, GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+					.addGap(2)
+					.addComponent(suche, GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+					.addGap(2)
+					.addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 38, Short.MAX_VALUE))
+		);
+		gl_panel_2.setVerticalGroup(
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addComponent(btnNeu)
+				.addComponent(btnBearbeiten)
+				.addComponent(btnDelete)
+				.addComponent(suche, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+				.addComponent(logoutBtn, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+		);
+		panel_2.setLayout(gl_panel_2);
 		
 		lblKontakt.setVisible(false);
 		panel_1.setVisible(false);
@@ -648,6 +706,67 @@ public class GUI
 		
 		sorter = new TableRowSorter<TableModel>(table.getModel());
 		table.setRowSorter(sorter);
+		GroupLayout gl_mainPanel = new GroupLayout(mainPanel);
+		gl_mainPanel.setHorizontalGroup(
+			gl_mainPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_mainPanel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblAdressliste, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addComponent(separator, GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
+					.addGap(8))
+				.addGroup(gl_mainPanel.createSequentialGroup()
+					.addGroup(gl_mainPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_mainPanel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+							.addGap(10))
+						.addGroup(gl_mainPanel.createSequentialGroup()
+							.addGap(218)
+							.addComponent(lblAdressliste_1, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+							.addGap(218))
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE))
+					.addGap(6)
+					.addGroup(gl_mainPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_mainPanel.createSequentialGroup()
+							.addGap(84)
+							.addComponent(lblKontakt, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_mainPanel.createSequentialGroup()
+							.addGap(45)
+							.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE))
+					.addGap(5))
+				.addGroup(gl_mainPanel.createSequentialGroup()
+					.addGap(3)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 791, Short.MAX_VALUE))
+		);
+		gl_mainPanel.setVerticalGroup(
+			gl_mainPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_mainPanel.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_mainPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblAdressliste)
+						.addGroup(gl_mainPanel.createSequentialGroup()
+							.addGap(10)
+							.addComponent(separator, GroupLayout.PREFERRED_SIZE, 13, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_mainPanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_mainPanel.createSequentialGroup()
+							.addGap(24)
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+							.addGap(14))
+						.addComponent(lblAdressliste_1)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+						.addComponent(lblKontakt)
+						.addGroup(gl_mainPanel.createSequentialGroup()
+							.addGap(178)
+							.addComponent(lblNewLabel_2))
+						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 470, GroupLayout.PREFERRED_SIZE))
+					.addGap(5))
+		);
+		mainPanel.setLayout(gl_mainPanel);
 		
 		
 	}
@@ -680,6 +799,8 @@ public class GUI
 		btnNeu.setActionCommand("Neu...");
 		btnDelete.addActionListener(al);
 		btnRegister.addActionListener(al);
+		btnBearbeiten.addActionListener(al);
+		btnBearbeiten.setActionCommand("Edit");
 		suche.getDocument().addDocumentListener(new DocumentListener()
 		{
 			
@@ -854,6 +975,7 @@ public class GUI
 		panel_1.setVisible(true);
 		lblKontakt.setVisible(true);
 		
+		lblNewLabel_2.setVisible(false);
 	}
 	
 	void setMenuUsername(String pUsername)
@@ -902,6 +1024,8 @@ public class GUI
 		panel_1.setVisible(false);
 		loginPanel.setVisible(true);
 		
+		lblNewLabel_2.setVisible(true);
+		lblKontakt.setVisible(false);
 	}
 	
 	void removeListElements()
@@ -933,7 +1057,7 @@ public class GUI
 		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 17).toString());
 	}
 	
-	void showLoginWarning()
+	void showLoginWarning(Color pColor)
 	{
 		loginMessage.setVisible(true);
 		usernameField.setBackground(Color.RED);
@@ -944,8 +1068,8 @@ public class GUI
 			public void run() 
 			{ 
 				loginMessage.setVisible(false);
-				usernameField.setBackground(null);
-				passwordField.setBackground(null);
+				usernameField.setBackground(pColor);
+				passwordField.setBackground(pColor);
 			}
 		},  3000);
 	}
@@ -1033,5 +1157,12 @@ public class GUI
 	{
 		usernameField.setText("");
 		passwordField.setText("");
+	}
+	
+	public void setPreviewVisible(boolean pVisible)
+	{
+		panel_1.setVisible(pVisible);
+		lblKontakt.setVisible(pVisible);
+		lblNewLabel_2.setVisible(!pVisible);
 	}
 }

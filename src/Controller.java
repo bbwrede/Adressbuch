@@ -41,6 +41,7 @@ public class Controller extends MouseAdapter
 	private Settings activeSetting;
 	private Color background;
 	private Color font;
+	private int activeIndex;
 
 	
 	Controller() throws FileNotFoundException 
@@ -116,7 +117,7 @@ public class Controller extends MouseAdapter
 		}
 		else
 		{
-			gui.showLoginWarning();
+			gui.showLoginWarning(Color.WHITE);
 		}
 	}
 
@@ -195,6 +196,7 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Speichern"))
 				{
+					if (im.getRemoveOnClose()) mc.removeObjectAt(activeIndex);
 					mc.sortIn(im.getNewPerson());
 					im.dispose();
 					updateList();
@@ -374,6 +376,20 @@ public class Controller extends MouseAdapter
 					
 					sm.dispose();
 				}
+				
+				if (cmd.equals("Edit"))
+				{
+					im = new InputMask(gui.getFrame());
+					im.setActionListeners(al);
+					im.setMode("Bearbeiten", true);
+					im.setVisible(true);
+					activeIndex = mc.indexOf(gui.getSelectedUUID());
+					Person temp = (mc.getObjectAt(activeIndex));
+					im.setData(temp);
+					updateList();
+					
+					gui.setPreviewVisible(false);
+				}
 			}
 		};
 		gui.setActionListeners(al);
@@ -530,7 +546,16 @@ public class Controller extends MouseAdapter
 		
 		if (e.getClickCount() == 2) 
 		{
-           
+			im = new InputMask(gui.getFrame());
+			im.setActionListeners(al);
+			im.setMode("Bearbeiten", true);
+			im.setVisible(true);
+			activeIndex = mc.indexOf(gui.getSelectedUUID());
+			Person temp = (mc.getObjectAt(activeIndex));
+			im.setData(temp);
+			updateList();
+			
+			gui.setPreviewVisible(false);
 		}
 	}
 	

@@ -26,6 +26,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import com.sun.jndi.cosnaming.IiopUrl.Address;
+
 import javax.swing.JMenuBar;
 import java.awt.CardLayout;
 
@@ -85,6 +88,7 @@ public class InputMask extends JFrame
 	private JButton btnSpeichern;
 	private JButton btnX;
 	private JButton btnImport2;
+	private boolean removeOnClose = false;
 
 	/**
 	 * Launch the application.
@@ -157,20 +161,20 @@ public class InputMask extends JFrame
 		main.setLayout(null);
 		
 		label = new JLabel("Neu:");
-		label.setBounds(6, 9, 38, 20);
+		label.setBounds(6, 6, 38, 20);
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		main.add(label);
 		
 		nachname = new HintTextField("Nachname");
-		nachname.setBounds(6, 34, 203, 28);
+		nachname.setBounds(6, 58, 203, 28);
 		nachname.setToolTipText("Nachname");
 		nachname.setName("");
 		nachname.setColumns(10);
 		main.add(nachname);
 		
 		vorname = new HintTextField("Vorname");
-		vorname.setBounds(56, 6, 153, 28);
+		vorname.setBounds(6, 30, 203, 28);
 		vorname.setToolTipText("Vorname");
 		vorname.setName("");
 		vorname.setHorizontalAlignment(SwingConstants.LEFT);
@@ -178,83 +182,83 @@ public class InputMask extends JFrame
 		main.add(vorname);
 		
 		plz = new HintTextField("PLZ / ZIP");
-		plz.setBounds(6, 89, 76, 28);
+		plz.setBounds(6, 118, 76, 28);
 		plz.setToolTipText("Postleitzahl bzw. ZIP-Code");
 		plz.setName("");
 		plz.setColumns(10);
 		main.add(plz);
 		
 		ort = new HintTextField("Ort");
-		ort.setBounds(82, 89, 127, 28);
+		ort.setBounds(82, 118, 127, 28);
 		ort.setToolTipText("Ort bzw. Stadt");
 		ort.setName("");
 		ort.setColumns(10);
 		main.add(ort);
 		
 		strasse = new HintTextField("Strasse");
-		strasse.setBounds(6, 116, 158, 28);
+		strasse.setBounds(6, 145, 158, 28);
 		strasse.setToolTipText("Strasse");
 		strasse.setName("");
 		strasse.setColumns(10);
 		main.add(strasse);
 		
 		nr = new HintTextField("Nr.");
-		nr.setBounds(166, 116, 43, 28);
+		nr.setBounds(166, 145, 43, 28);
 		nr.setToolTipText("Hausnummer");
 		nr.setName("");
 		nr.setColumns(10);
 		main.add(nr);
 		
 		zusatz = new HintTextField("Adresszusatz");
-		zusatz.setBounds(6, 143, 203, 28);
+		zusatz.setBounds(6, 172, 203, 28);
 		zusatz.setToolTipText("Adresszusatz");
 		zusatz.setName("");
 		zusatz.setColumns(10);
 		main.add(zusatz);
 		
 		email = new HintTextField("E-Mail");
-		email.setBounds(6, 224, 203, 28);
+		email.setBounds(6, 246, 203, 28);
 		email.setToolTipText("E-Mail");
 		email.setName("");
 		email.setColumns(10);
 		main.add(email);
 		
 		label_1 = new JLabel("Adressdaten:");
-		label_1.setBounds(6, 74, 76, 16);
+		label_1.setBounds(6, 103, 76, 16);
 		label_1.setFont(new Font("SansSerif", Font.BOLD, 12));
 		main.add(label_1);
 		
 		label_2 = new JLabel("Pers\u00F6nliche Daten:");
-		label_2.setBounds(6, 207, 107, 16);
+		label_2.setBounds(6, 229, 107, 16);
 		label_2.setFont(new Font("SansSerif", Font.BOLD, 12));
 		main.add(label_2);
 		
 		monat = new JComboBox();
-		monat.setBounds(66, 333, 143, 26);
+		monat.setBounds(66, 350, 143, 26);
 		monat.setToolTipText("Geburtsmonat");
 		main.add(monat);
 		
 		land = new JComboBox();
-		land.setBounds(6, 170, 203, 26);
+		land.setBounds(6, 199, 203, 26);
 		land.setToolTipText("Land");
 		main.add(land);
 		
 		jahr = new JComboBox();
-		jahr.setBounds(6, 360, 203, 26);
+		jahr.setBounds(6, 377, 203, 26);
 		jahr.setToolTipText("Geburtsjahr");
 		main.add(jahr);
 		
 		tag = new JComboBox();
-		tag.setBounds(6, 333, 60, 26);
+		tag.setBounds(6, 350, 60, 26);
 		tag.setToolTipText("Geburtstag");
 		main.add(tag);
 		
 		label_3 = new JLabel("Geburtsdaten:");
-		label_3.setBounds(6, 318, 78, 16);
+		label_3.setBounds(6, 335, 78, 16);
 		main.add(label_3);
 		
 		telefonnummer = new HintTextField("Telefonnummer");
-		telefonnummer.setBounds(6, 253, 203, 28);
+		telefonnummer.setBounds(6, 275, 203, 28);
 		telefonnummer.setToolTipText("Telefonnummer");
 		telefonnummer.setName("");
 		telefonnummer.setColumns(10);
@@ -265,16 +269,16 @@ public class InputMask extends JFrame
 		main.add(btnErweitert);
 		
 		geschlecht = new JComboBox();
-		geschlecht.setBounds(6, 280, 203, 26);
+		geschlecht.setBounds(6, 302, 203, 26);
 		geschlecht.setToolTipText("Geschlecht");
 		main.add(geschlecht);
 		
 		separator = new JSeparator();
-		separator.setBounds(6, 203, 203, 2);
+		separator.setBounds(6, 226, 203, 2);
 		main.add(separator);
 		
 		separator_1 = new JSeparator();
-		separator_1.setBounds(6, 68, 203, 2);
+		separator_1.setBounds(6, 98, 203, 2);
 		main.add(separator_1);
 		
 		separator_2 = new JSeparator();
@@ -702,5 +706,50 @@ public class InputMask extends JFrame
 	            setPanelColor((Container)c,bg,font);
 	        }
 	    }
+	}
+	
+	void setData(Person pPerson)
+	{
+		vorname.setText(pPerson.getVorname());
+		nachname.setText(pPerson.getNachname());
+		
+		plz.setText(pPerson.getPostleitzahl());
+		ort.setText(pPerson.getOrt());
+		strasse.setText(pPerson.getStrasse());
+		nr.setText(pPerson.getHausnummer());
+		zusatz.setText(pPerson.getAdresszusatz());
+		
+		land.setSelectedItem(pPerson.getLand());
+		email.setText(pPerson.getEmail());
+		telefonnummer.setText(pPerson.getTelefon());
+		geschlecht.setSelectedItem(pPerson.getGeschlecht().toString());
+		
+		tag.setSelectedItem(Integer.toString(pPerson.getGeburtstag()));
+		monat.setSelectedItem(pPerson.getGeburtsmonat().toString());
+		jahr.setSelectedItem(Integer.toString(pPerson.getGeburtsjahr()));
+		
+		haarfarbe.setSelectedItem(pPerson.getHaarfarbe().toString());
+		hautfarbe.setSelectedItem(pPerson.getHautfarbe().toString());
+		augenfarbe.setSelectedItem(pPerson.getAugenfarbe().toString());
+		
+		gewicht.setValue(pPerson.getGewicht());
+		groesse.setValue(pPerson.getGroesse());
+		
+		religion.setSelectedItem(pPerson.getReligion().toString());
+		firma.setText(pPerson.getFirma());
+		handy.setText(pPerson.getTelefonMobil());
+		
+	}
+	
+	void setMode(String pTitle, boolean pRemoveOnClose)
+	{
+		label.setText(pTitle);
+		setTitle(pTitle);
+		removeOnClose = pRemoveOnClose ;
+	}
+	
+	boolean getRemoveOnClose()
+	{
+		return removeOnClose;
 	}
 }

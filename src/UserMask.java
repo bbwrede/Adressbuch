@@ -248,6 +248,7 @@ public class UserMask extends JFrame
 	void setLabelTitle(String pTitle)
 	{
 		lblNewLabel.setText(pTitle);
+		setTitle(pTitle);
 	}
 	
 	void setFieldData(String pUsername, String pPassword)
