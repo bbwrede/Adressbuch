@@ -1,11 +1,10 @@
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,22 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.sun.jndi.cosnaming.IiopUrl.Address;
-
-import javax.swing.JMenuBar;
-import java.awt.CardLayout;
-
+@SuppressWarnings("rawtypes")
 public class InputMask extends JFrame
 {
 
@@ -49,6 +40,7 @@ public class InputMask extends JFrame
 	private HintTextField email;
 	private JLabel label_1;
 	private JLabel label_2;
+	
 	private JComboBox monat;
 	private JComboBox land;
 	private JComboBox jahr;
@@ -518,8 +510,10 @@ public class InputMask extends JFrame
 				neu.setBild(IOController.imageToBase64(image, format));
 			} catch (IOException e)
 			{
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(this,
+					    "Die Datei konnte nicht geladen werden!",
+					    "Fehler beim Speichern der Datei",
+					    JOptionPane.ERROR_MESSAGE);
 			} catch (IllegalArgumentException e1)
 	    	{
 				JOptionPane.showMessageDialog(this,
@@ -594,19 +588,6 @@ public class InputMask extends JFrame
 		
 		return neu;
 	}
-	
-	void setInput(Person pPerson)
-	{
-		nachname.setText(pPerson.getNachname());
-		vorname.setText(pPerson.getVorname());
-		telefonnummer.setText(pPerson.getTelefon());
-		email.setText(pPerson.getEmail());
-		geschlecht.setSelectedItem(pPerson.getGeschlecht().toString());
-		jahr.setSelectedItem(Integer.toString(pPerson.getGeburtsjahr()));
-		monat.setSelectedItem(pPerson.getGeburtsmonat().toString());
-		tag.setSelectedItem(Integer.toString(pPerson.getGeburtstag()));
-	}
-	
 	
 	void setImage(BufferedImage pImage, String pFormat)
 	{
@@ -684,20 +665,27 @@ public class InputMask extends JFrame
 		land.setSelectedItem(pPerson.getLand());
 		email.setText(pPerson.getEmail());
 		telefonnummer.setText(pPerson.getTelefon());
-		geschlecht.setSelectedItem(pPerson.getGeschlecht().toString());
+		if(pPerson.getGeschlecht().toString().equals("unbekannt")) geschlecht.setSelectedItem(">> Geschlecht <<");
+		else geschlecht.setSelectedItem(pPerson.getGeschlecht().toString());
 		
 		tag.setSelectedItem(Integer.toString(pPerson.getGeburtstag()));
-		monat.setSelectedItem(pPerson.getGeburtsmonat().toString());
+		if (pPerson.getGeburtsmonat().toString().equals("unbekannt")) monat.setSelectedItem("Monat");
+		else monat.setSelectedItem(pPerson.getGeburtsmonat().toString());
 		jahr.setSelectedItem(Integer.toString(pPerson.getGeburtsjahr()));
 		
-		haarfarbe.setSelectedItem(pPerson.getHaarfarbe().toString());
-		hautfarbe.setSelectedItem(pPerson.getHautfarbe().toString());
-		augenfarbe.setSelectedItem(pPerson.getAugenfarbe().toString());
+		if(pPerson.getHaarfarbe().toString().equals("unbekannt")) haarfarbe.setSelectedItem(">> Haarfarbe <<");
+		else haarfarbe.setSelectedItem(pPerson.getHaarfarbe().toString());
+		if(pPerson.getHautfarbe().toString().equals("unbekannt")) hautfarbe.setSelectedItem(">> Hautfarbe <<");
+		else hautfarbe.setSelectedItem(pPerson.getHautfarbe().toString());
+		if(pPerson.getAugenfarbe().toString().equals("unbekannt")) augenfarbe.setSelectedItem(">> Augenfarbe <<");
+		else augenfarbe.setSelectedItem(pPerson.getAugenfarbe().toString());
 		
 		gewicht.setValue(pPerson.getGewicht());
 		groesse.setValue(pPerson.getGroesse());
 		
-		religion.setSelectedItem(pPerson.getReligion().toString());
+		if(pPerson.getReligion().toString().equals("unbekannt")) religion.setSelectedItem(">> Religion <<");
+		else religion.setSelectedItem(pPerson.getReligion().toString());
+		
 		firma.setText(pPerson.getFirma());
 		handy.setText(pPerson.getTelefonMobil());
 		

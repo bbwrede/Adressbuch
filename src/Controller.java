@@ -19,7 +19,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -29,7 +28,7 @@ import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("static-access")
 public class Controller extends MouseAdapter
 {	
 	private GUI gui;
@@ -314,8 +313,10 @@ public class Controller extends MouseAdapter
 						} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 								| IllegalBlockSizeException | BadPaddingException | IOException e1)
 						{
-							// TODO Automatisch generierter Erfassungsblock
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Die Benutzer konnten nicht gespeichert werden!",
+								    "Fehler beim Speichern der Datei",
+								    JOptionPane.ERROR_MESSAGE);
 						}
 						um.dispose();
 					}
@@ -380,8 +381,10 @@ public class Controller extends MouseAdapter
 				    		im.setImageButton(chooser.getSelectedFile().getName());
 						} catch (IOException e1)
 						{
-							// TODO Automatisch generierter Erfassungsblock
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Die Datei konnte nicht geladen werden!",
+								    "Fehler beim Laden der Datei",
+								    JOptionPane.ERROR_MESSAGE);
 						}
 				    }
 				}
@@ -397,11 +400,13 @@ public class Controller extends MouseAdapter
 						try
 						{
 							Person neu =  ioc.importVCard(chooser.getSelectedFile());
-							im.setInput(neu);
+							im.setData(neu);
 						} catch (FileNotFoundException e1)
 						{
-							// TODO Automatisch generierter Erfassungsblock
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Die Datei konnte nicht geladen werden!",
+								    "Fehler beim Laden der Datei",
+								    JOptionPane.ERROR_MESSAGE);
 						}
 				    }
 				}
@@ -544,8 +549,10 @@ public class Controller extends MouseAdapter
 					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 							| IllegalBlockSizeException | BadPaddingException | IOException e1)
 					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Die Datei konnte nicht gespeichert werden!",
+							    "Fehler beim Speichern der Datei",
+							    JOptionPane.ERROR_MESSAGE);
 					} catch (NullPointerException e2)
 					{
 						JOptionPane.showMessageDialog(gui.getFrame(),
@@ -639,22 +646,36 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Export"))
 				{
-					JFileChooser chooser = new JFileChooser();
-				    chooser.setCurrentDirectory(new File("C:\\"));
-				    int retrival = chooser.showSaveDialog(gui.getFrame());
-				    if (retrival == JFileChooser.APPROVE_OPTION) 
-				    {
-				    	try
-						{
-							ioc.createVCard(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())), chooser.getSelectedFile()+".vcf");
-						} catch (IOException e1)
-						{
-							JOptionPane.showMessageDialog(gui.getFrame(),
-								    "Die Datei konnte nicht gespeichert werden!",
-								    "Fehler beim Speichern der Datei",
-								    JOptionPane.ERROR_MESSAGE);
-						}
-				    }
+					
+					try
+					{
+						//Damit Error vor Dialog auftritt
+						mc.indexOf(gui.getSelectedUUID());
+						
+						JFileChooser chooser = new JFileChooser();
+					    chooser.setCurrentDirectory(new File("C:\\"));
+					    int retrival = chooser.showSaveDialog(gui.getFrame());
+					    if (retrival == JFileChooser.APPROVE_OPTION) 
+					    {
+					    	try
+							{
+								ioc.createVCard(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())), chooser.getSelectedFile()+".vcf");
+							} catch (IOException e1)
+							{
+								JOptionPane.showMessageDialog(gui.getFrame(),
+									    "Die Datei konnte nicht gespeichert werden!",
+									    "Fehler beim Speichern der Datei",
+									    JOptionPane.ERROR_MESSAGE);
+							}
+					    }
+					}
+				    catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Exportieren nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 				}
 
 			}
@@ -691,17 +712,13 @@ public class Controller extends MouseAdapter
 				
 			}
 
-			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				// TODO Automatisch generierter Methodenstub
 				
 			}
 
-			@Override
 			public void keyTyped(KeyEvent e)
 			{
-				// TODO Automatisch generierter Methodenstub
 				
 			}
 		};
@@ -711,9 +728,6 @@ public class Controller extends MouseAdapter
 	
 	public void mouseClicked(MouseEvent e)
 	{
-		JTable table = (JTable)e.getSource();
-		int index = 0;
-		
 		System.out.println(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())).getNachname());
 		gui.setPreview(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())));
 		
