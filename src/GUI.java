@@ -127,6 +127,14 @@ public class GUI
 	private JLabel lblKontakt;
 	private JCheckBox checkbox;
 	private JButton btnBearbeiten;
+	private JMenuItem mntmBearbeiten;
+	private JMenuItem mntmLschen;
+	private JSeparator separator_5;
+	private JMenuItem mntmAllesLschen;
+	private JSeparator separator_6;
+	private JMenuItem mntmImport;
+	private JMenuItem mntmExport;
+	private JSeparator separator_7;
 	
 	public GUI() 
 	{
@@ -333,6 +341,20 @@ public class GUI
 		mntmLaden.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mnDatei.add(mntmLaden);
 		
+		separator_7 = new JSeparator();
+		mnDatei.add(separator_7);
+		
+		mntmImport = new JMenuItem("Import");
+		mntmImport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		mnDatei.add(mntmImport);
+		
+		mntmExport = new JMenuItem("Export");
+		mntmExport.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.CTRL_MASK));
+		mnDatei.add(mntmExport);
+		
+		separator_6 = new JSeparator();
+		mnDatei.add(separator_6);
+		
 		mntmBeenden = new JMenuItem("Beenden");
 		mntmBeenden.setIcon(null);
 		mntmBeenden.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
@@ -340,6 +362,21 @@ public class GUI
 		
 		JMenu mnBearbeiten = new JMenu("Bearbeiten");
 		menuBar.add(mnBearbeiten);
+		
+		mntmBearbeiten = new JMenuItem("Bearbeiten");
+		mntmBearbeiten.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
+		mnBearbeiten.add(mntmBearbeiten);
+		
+		mntmLschen = new JMenuItem("Entfernen");
+		mntmLschen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+		mnBearbeiten.add(mntmLschen);
+		
+		separator_5 = new JSeparator();
+		mnBearbeiten.add(separator_5);
+		
+		mntmAllesLschen = new JMenuItem("Alles entfernen");
+		mntmAllesLschen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, InputEvent.CTRL_MASK));
+		mnBearbeiten.add(mntmAllesLschen);
 		
 		JMenu mnSuchen = new JMenu("Suchen");
 		menuBar.add(mnSuchen);
@@ -810,10 +847,23 @@ public class GUI
 	
 	void setTableData(Person pPerson)
 	{
+		String monat = Integer.toString((Person.Monat.valueOf(pPerson.getGeburtsmonat().toString()).ordinal()+1));
+		String tag = Integer.toString(pPerson.getGeburtstag())+". ";
+		String jahr = ". "+Integer.toString(pPerson.getGeburtsjahr());
+		
+		if (jahr.equals(". 0")) jahr = "";
+		if (tag.equals("0. ")) tag = "";
+		if (monat.equals("13")) monat = "---";
+		
+		if (tag.length() == 1)  tag = 0 + tag;
+		if (monat.length() == 1)  monat = 0 + monat;
+		geburtsdatum.setText(tag+ monat +jahr);
+		
+		
 		tablemodel.addRow(new String[] {pPerson.getNachname(), pPerson.getVorname(), pPerson.getLand(), pPerson.getOrt(),
-				pPerson.getGeburtstag()+". "+pPerson.getGeburtsmonat()+" "+ pPerson.getGeburtsjahr(),pPerson.getGeburtsmonat().toString(),
+				tag+ monat +jahr,pPerson.getGeburtsmonat().toString(),
 				Integer.toString(pPerson.getGeburtstag()),Integer.toString(pPerson.getGeburtsjahr()),pPerson.getAugenfarbe().toString(),
-				pPerson.getHaarfarbe().toString(),pPerson.getHautfarbe().toString(),pPerson.getEmail(),pPerson.getStrasse(),pPerson.getTelefon(),
+				pPerson.getHaarfarbe().toString(),pPerson.getGeschlecht().toString(),pPerson.getEmail(),pPerson.getStrasse(),pPerson.getTelefon(),
 				pPerson.getTelefonMobil(),pPerson.getFirma(),pPerson.getReligion().toString(),pPerson.getUuid().toString()});	
 	}
 	
@@ -847,6 +897,8 @@ public class GUI
 		mntmLogout.addActionListener(al);
 		mntmBeenden.addActionListener(al);
 		mntmEinstellungen.addActionListener(al);
+		mntmImport.addActionListener(al);
+		mntmExport.addActionListener(al);
 	}
 	
 	void setPreview(Person pPerson)
@@ -1005,11 +1057,6 @@ public class GUI
 		listmodel.addElement(anzeige);
 	}
 	
-	int getSelectedTableRow()
-	{
-		return table.getSelectedRow();
-	}
-	
 	UUID getSelectedUUID()
 	{
 		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 17).toString());
@@ -1128,5 +1175,4 @@ public class GUI
 	{
 		frmAdressbuch.dispose();
 	}
-	
 }

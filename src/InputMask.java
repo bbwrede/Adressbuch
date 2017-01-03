@@ -123,7 +123,7 @@ public class InputMask extends JFrame
 		main.setLayout(null);
 		
 		label = new JLabel("Neu:");
-		label.setBounds(6, 6, 38, 20);
+		label.setBounds(6, 6, 184, 20);
 		label.setHorizontalAlignment(SwingConstants.LEFT);
 		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		main.add(label);

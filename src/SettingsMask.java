@@ -38,6 +38,7 @@ public class SettingsMask extends JFrame
 	private JButton btnX;
 	private JPanel bgColor;
 	private JPanel fontColor;
+	private JLabel lblFarbeinstellungenWerdenNur;
 
 
 	public SettingsMask(JFrame pFrame)
@@ -89,27 +90,33 @@ public class SettingsMask extends JFrame
 		
 		lblAnpassen = new JLabel("Anpassen");
 		lblAnpassen.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnpassen.setBounds(74, 207, 94, 16);
+		lblAnpassen.setBounds(74, 193, 94, 16);
 		panel.add(lblAnpassen);
 		
 		btnBgColor = new JButton("Hintergrundfarbe...");
-		btnBgColor.setBounds(37, 235, 186, 28);
+		btnBgColor.setBounds(37, 212, 186, 28);
 		panel.add(btnBgColor);
 		
 		btnFontColor = new JButton("Textfarbe...");
-		btnFontColor.setBounds(37, 275, 186, 28);
+		btnFontColor.setBounds(37, 250, 186, 28);
 		panel.add(btnFontColor);
 		
 		bgColor = new JPanel();
 		bgColor.setBorder(new LineBorder(new Color(0, 0, 0)));
-		bgColor.setBounds(12, 235, 23, 28);
+		bgColor.setBounds(12, 212, 23, 28);
 		panel.add(bgColor);
 		
 		fontColor = new JPanel();
 		fontColor.setBorder(new LineBorder(new Color(0, 0, 0)));
 		fontColor.setBackground(Color.BLACK);
-		fontColor.setBounds(12, 275, 23, 28);
+		fontColor.setBounds(12, 250, 23, 28);
 		panel.add(fontColor);
+		
+		lblFarbeinstellungenWerdenNur = new JLabel("<html>Farbeinstellungen werden\r\nnur für das Standard Look and Feel übernommen</html>");
+		lblFarbeinstellungenWerdenNur.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFarbeinstellungenWerdenNur.setFont(new Font("SansSerif", Font.ITALIC, 11));
+		lblFarbeinstellungenWerdenNur.setBounds(22, 284, 196, 34);
+		panel.add(lblFarbeinstellungenWerdenNur);
 		
 		lblSettings = new JLabel("Einstellungen");
 		lblSettings.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -127,7 +134,7 @@ public class SettingsMask extends JFrame
 		btnX.setBounds(217, 375, 46, 28);
 		contentPane.add(btnX);
 		
-		String[] laf = {"Standard", "Aluminium", "HiFi", "Acryl", "Aero", "Graphite"};
+		String[] laf = {"Standard", "Aluminium", "HiFi", "Acryl", "Aero", "Graphite","Seaglass"};
 		
 		for (int i = 0; i < laf.length; i++)
 		{
@@ -208,6 +215,7 @@ public class SettingsMask extends JFrame
 		case "Aero": return "com.jtattoo.plaf.aero.AeroLookAndFeel";
 		case "Graphite": return "com.jtattoo.plaf.graphite.GraphiteLookAndFeel";
 		case "Standard": return "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+		case "Seaglass": return "com.seaglasslookandfeel.SeaGlassLookAndFeel";
 		}
 		
 		return null;
@@ -240,6 +248,8 @@ public class SettingsMask extends JFrame
 			cbLaf.setSelectedItem("Graphite");
 			break;
 		case "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel": cbLaf.setSelectedItem("Standard");
+			break;
+		case "com.seaglasslookandfeel.SeaGlassLookAndFeel": cbLaf.setSelectedItem("Seaglass");
 			break;
 		}
 	}
