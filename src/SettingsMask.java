@@ -25,7 +25,7 @@ public class SettingsMask extends JFrame
 	private JPanel panel;
 	private JLabel lblSettings;
 	private JButton btnUserSettings;
-	private JComboBox comboBox;
+	private JComboBox cbLaf;
 	private JSeparator separator;
 	private JSeparator separator_1;
 	private JLabel lblLookAndFeel;
@@ -43,15 +43,6 @@ public class SettingsMask extends JFrame
 	public SettingsMask(JFrame pFrame)
 	{
 		setResizable(false);
-		try 
-		{
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (Throwable e) 
-		{
-			e.printStackTrace();
-		}
-		
-		
 		setTitle("Einstellungen");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 452);
@@ -70,9 +61,9 @@ public class SettingsMask extends JFrame
 		btnUserSettings.setBounds(12, 32, 211, 28);
 		panel.add(btnUserSettings);
 		
-		comboBox = new JComboBox();
-		comboBox.setBounds(12, 107, 211, 26);
-		panel.add(comboBox);
+		cbLaf = new JComboBox();
+		cbLaf.setBounds(12, 107, 211, 26);
+		panel.add(cbLaf);
 		
 		separator = new JSeparator();
 		separator.setBounds(12, 193, 211, 2);
@@ -136,6 +127,15 @@ public class SettingsMask extends JFrame
 		btnX.setBounds(217, 375, 46, 28);
 		contentPane.add(btnX);
 		
+		String[] laf = {"Standard", "Aluminium", "HiFi", "Acryl", "Aero", "Graphite"};
+		
+		for (int i = 0; i < laf.length; i++)
+		{
+			cbLaf.addItem(laf[i]);
+		}
+		
+		
+		
 		setLocationRelativeTo(pFrame);
 		
 		setVisible(true);
@@ -198,8 +198,49 @@ public class SettingsMask extends JFrame
 	    }
 	}
 	
+	public String getLaf()
+	{
+		switch (cbLaf.getSelectedItem().toString())
+		{
+		case "Aluminium": return "com.jtattoo.plaf.aluminium.AluminiumLookAndFeel";
+		case "HiFi": return "com.jtattoo.plaf.hifi.HiFiLookAndFeel";
+		case "Acryl": return "com.jtattoo.plaf.acryl.AcrylLookAndFeel";
+		case "Aero": return "com.jtattoo.plaf.aero.AeroLookAndFeel";
+		case "Graphite": return "com.jtattoo.plaf.graphite.GraphiteLookAndFeel";
+		case "Standard": return "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+		}
+		
+		return null;
+			
+	}
+	
 	public JFrame getFrame()
 	{
 		return this;
+	}
+	
+	public void setSelected(String pSelectedLaf)
+	{
+		System.out.println(pSelectedLaf);
+		switch (pSelectedLaf)
+		{
+		case "com.jtattoo.plaf.aluminium.AluminiumLookAndFeel": 
+			cbLaf.setSelectedItem("Aluminium");
+			break;
+		case "com.jtattoo.plaf.hifi.HiFiLookAndFeel": 
+			cbLaf.setSelectedItem("HiFi");
+			break;
+		case "com.jtattoo.plaf.acryl.AcrylLookAndFeel":
+			cbLaf.setSelectedItem("Acryl");
+			break;
+		case "com.jtattoo.plaf.aero.AeroLookAndFeel": 
+			cbLaf.setSelectedItem("Aero");
+			break;
+		case "com.jtattoo.plaf.graphite.GraphiteLookAndFeel": 
+			cbLaf.setSelectedItem("Graphite");
+			break;
+		case "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel": cbLaf.setSelectedItem("Standard");
+			break;
+		}
 	}
 }

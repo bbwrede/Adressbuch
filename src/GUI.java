@@ -126,49 +126,10 @@ public class GUI
 	private JLabel lblAdressliste_1;
 	private JLabel lblKontakt;
 	private JCheckBox checkbox;
-	private JPanel panel_6;
 	private JButton btnBearbeiten;
 	
 	public GUI() 
 	{
-		try {
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		} catch (Exception e) 
-		{
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
-			{
-		        if ("Windows".equals(info.getName())) 
-		        {
-		            try
-					{
-						UIManager.setLookAndFeel(info.getClassName());
-					} catch (ClassNotFoundException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (InstantiationException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (IllegalAccessException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (UnsupportedLookAndFeelException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					}
-		            break;
-		        }
-			}
-		}
-		
 		initialize();
 		frmAdressbuch.setVisible(true);
 	}
@@ -249,11 +210,9 @@ public class GUI
 		btnRegister.setMaximumSize(new Dimension(120, 38));
 		btnRegister.setMinimumSize(new Dimension(50, 10));
 		btnRegister.setIcon(new ImageIcon(GUI.class.getResource("/resources/new-user.png")));
-		
-		panel_6 = new JPanel();
 		GroupLayout gl_loginPanel = new GroupLayout(loginPanel);
 		gl_loginPanel.setHorizontalGroup(
-			gl_loginPanel.createParallelGroup(Alignment.LEADING)
+			gl_loginPanel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_loginPanel.createSequentialGroup()
 					.addGap(6)
 					.addGroup(gl_loginPanel.createParallelGroup(Alignment.LEADING)
@@ -275,7 +234,7 @@ public class GUI
 					.addGap(237)
 					.addComponent(loginMessage, GroupLayout.PREFERRED_SIZE, 327, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(230, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_loginPanel.createSequentialGroup()
+				.addGroup(gl_loginPanel.createSequentialGroup()
 					.addGap(308)
 					.addComponent(loginBtn, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -286,9 +245,7 @@ public class GUI
 					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(301, Short.MAX_VALUE))
 				.addGroup(gl_loginPanel.createSequentialGroup()
-					.addGap(75)
-					.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
-					.addGap(103)
+					.addGap(308)
 					.addGroup(gl_loginPanel.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblPasswort, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
 						.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE))
@@ -318,25 +275,21 @@ public class GUI
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
-					.addGroup(gl_loginPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_loginPanel.createSequentialGroup()
-							.addComponent(lblPasswort, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
-							.addGap(7)
-							.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(checkbox, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_loginPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(loginBtn)
-								.addComponent(hilfeBtn, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
-							.addGap(1)
-							.addComponent(loginMessage, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel_6, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE))
+					.addComponent(lblPasswort, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+					.addGap(7)
+					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(checkbox, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_loginPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(loginBtn)
+						.addComponent(hilfeBtn, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addGap(1)
+					.addComponent(loginMessage, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnRegister, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 					.addGap(53))
 		);
-		panel_6.setLayout(null);
 		loginPanel.setLayout(gl_loginPanel);
 		mainPanel.setName("");
 		mainPanel.setToolTipText(null);
@@ -358,25 +311,30 @@ public class GUI
 		frmAdressbuch.setJMenuBar(menuBar);
 		
 		JMenu mnDatei = new JMenu("Datei");
+		mnDatei.setIcon(null);
 		mnDatei.setLocale(Locale.GERMAN);
 		menuBar.add(mnDatei);
 		
 		mntmNeu = new JMenuItem("Neu");
+		mntmNeu.setIcon(null);
 		mntmNeu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
 		mntmNeu.setHorizontalTextPosition(SwingConstants.CENTER);
 		mntmNeu.setHorizontalAlignment(SwingConstants.LEFT);
 		mnDatei.add(mntmNeu);
 		
 		mntmSpeichern = new JMenuItem("Speichern");
+		mntmSpeichern.setIcon(null);
 		mntmSpeichern.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mntmSpeichern.setHorizontalAlignment(SwingConstants.LEFT);
 		mnDatei.add(mntmSpeichern);
 		
 		mntmLaden = new JMenuItem("Laden");
+		mntmLaden.setIcon(null);
 		mntmLaden.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
 		mnDatei.add(mntmLaden);
 		
 		mntmBeenden = new JMenuItem("Beenden");
+		mntmBeenden.setIcon(null);
 		mntmBeenden.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
 		mnDatei.add(mntmBeenden);
 		
@@ -1165,4 +1123,10 @@ public class GUI
 		lblKontakt.setVisible(pVisible);
 		lblNewLabel_2.setVisible(!pVisible);
 	}
+	
+	public void disposeGUI()
+	{
+		frmAdressbuch.dispose();
+	}
+	
 }

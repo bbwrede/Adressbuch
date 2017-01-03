@@ -101,45 +101,7 @@ public class InputMask extends JFrame
 		setTitle("Neuer Kontakt");
 		
 		setResizable(false);
-		try {
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		} catch (Exception e) 
-		{
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
-			{
-		        if ("Windows".equals(info.getName())) 
-		        {
-		            try
-					{
-						UIManager.setLookAndFeel(info.getClassName());
-					} catch (ClassNotFoundException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (InstantiationException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (IllegalAccessException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (UnsupportedLookAndFeelException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					}
-		            break;
-		        }
-			}
-		}
-		
-		
+
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 238, 530);
 		contentPane = new JPanel();

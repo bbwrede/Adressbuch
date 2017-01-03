@@ -53,43 +53,6 @@ public class UserMask extends JFrame
 	public UserMask(JFrame pFrame)
 	{
 		setVisible(true);
-		try {
-		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		} catch (Exception e) 
-		{
-			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
-			{
-		        if ("Windows".equals(info.getName())) 
-		        {
-		            try
-					{
-						UIManager.setLookAndFeel(info.getClassName());
-					} catch (ClassNotFoundException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (InstantiationException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (IllegalAccessException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					} catch (UnsupportedLookAndFeelException e1)
-					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					}
-		            break;
-		        }
-			}
-		}
 		
 		setTitle("Neuer Benutzer");
 		setResizable(false);

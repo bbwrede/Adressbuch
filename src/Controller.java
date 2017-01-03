@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -19,9 +20,14 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import sun.swing.AccumulativeRunnable;
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
+import com.jtattoo.plaf.aero.AeroLookAndFeel;
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 
 @SuppressWarnings("rawtypes")
 public class Controller extends MouseAdapter
@@ -46,7 +52,7 @@ public class Controller extends MouseAdapter
 	
 	Controller() throws FileNotFoundException 
 	{
-		gui = new GUI();
+		
 		mc = new ModelController();
 		uman = new UserManager();
 		sman = new SettingManager();
@@ -54,10 +60,79 @@ public class Controller extends MouseAdapter
 		background = Color.GRAY;
 		font = Color.BLACK;
 		activeSetting = new Settings();
+		
+		
+		try
+		{
+			loadSetting();
+		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
+				| NoSuchPaddingException | IOException e)
+		{
+			JOptionPane.showMessageDialog(gui.getFrame(),
+				    "Es konnten keine Einstellungen geladen werden. \n"
+				    + "Ist dies der erste Start des Programms?");
+			e.printStackTrace();
+		}
+		
+		try 
+		{
+			Properties props;
+			switch (activeSetting.getLaf())
+			{
+			case "com.jtattoo.plaf.aluminium.AluminiumLookAndFeel":
+				props = new Properties();
+				props.put("logoString", "");
+				AluminiumLookAndFeel.setCurrentTheme(props);
+				break;
+			case "com.jtattoo.plaf.acryl.AcrylLookAndFeel":
+				props = new Properties();
+				props.put("logoString", "");
+				AcrylLookAndFeel.setCurrentTheme(props);
+				break;
+			case "com.jtattoo.plaf.aero.AeroLookAndFeel":
+				props = new Properties();
+				props.put("logoString", "");
+				AeroLookAndFeel.setCurrentTheme(props);
+				break;
+			case "com.jtattoo.plaf.hifi.HiFiLookAndFeel":
+				props = new Properties();
+				props.put("logoString", "");
+				HiFiLookAndFeel.setCurrentTheme(props);
+				break;
+			case "com.jtattoo.plaf.graphite.GraphiteLookAndFeel":
+				props = new Properties();
+				props.put("logoString", "");
+				GraphiteLookAndFeel.setCurrentTheme(props);
+				break;
+			}
+			UIManager.setLookAndFeel(activeSetting.getLaf());
+			
+		} catch (Exception e) 
+		{
+			try
+			{
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			}
+			catch (Exception e2) 
+			{
+				try
+				{
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				} catch (Exception e3)
+				{
+						e3.printStackTrace();
+				}
+			}
+		}
+
+		gui = new GUI();
+		
+		
+		if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) changeColors(activeSetting.getBgColor(), activeSetting.getFontColor());
+		gui.setMouseListeners(this);
 		initLoginKeyListener();
 		initMenuActionListener();
 		initActionListener();
-		gui.setMouseListeners(this);
 		
 		try
 		{
@@ -74,19 +149,7 @@ public class Controller extends MouseAdapter
 		{
 			uman.initAdmin();
 		}
-		
-		try
-		{
-			loadSetting();
-		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
-				| NoSuchPaddingException | IOException e)
-		{
-			JOptionPane.showMessageDialog(gui.getFrame(),
-				    "Es konnten keine Einstellungen geladen werden. \n"
-				    + "Ist dies der erste Start des Programms?");
-			e.printStackTrace();
-		}
-		
+
 		updateList();
 		
 		
@@ -165,12 +228,13 @@ public class Controller extends MouseAdapter
 				{
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
-					im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 					im.setVisible(true);
 				}
 				
 				if (cmd.equals("Hilfe"))
 				{
+					
 					gui.showLoginInfo();
 				}
 				
@@ -334,7 +398,7 @@ public class Controller extends MouseAdapter
 					um.setUsernameEditable(false);
 					um.setFieldData(active.getUsername(), active.getPassword());
 					um.setActionListeners(al);
-					um.setPanelColor(um.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) um.setPanelColor(um.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
 					um.setLabelTitle("Benutzerdaten ändern");
 				}
 				
@@ -359,8 +423,15 @@ public class Controller extends MouseAdapter
 				{
 					activeSetting.setBgColor(background);
 					activeSetting.setFontColor(font);
-					changeColors(background,font);
+					activeSetting.setLaf(sm.getLaf());
 					
+					int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Damit die Änderungen Wirksam werden muss das Programm neugestartet werden.\n"
+							+ "Soll das Programm jetzt neugestartet werden?", "Neustart benötigt", JOptionPane.YES_NO_OPTION);
+				       
+				 	
+					
+					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) changeColors(background,font);
+
 					try
 					{
 						saveSetting();
@@ -375,6 +446,39 @@ public class Controller extends MouseAdapter
 					}
 					
 					sm.dispose();
+					
+					if (reply == JOptionPane.YES_OPTION) 
+			        {
+				 		try
+						{
+				 			try
+							{
+								saveList();
+								System.out.println("Gespeichert");
+							} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
+									| IllegalBlockSizeException | BadPaddingException | IOException e1)
+							{
+								// TODO Automatisch generierter Erfassungsblock
+								e1.printStackTrace();
+							} catch (NullPointerException e2)
+							{
+								JOptionPane.showMessageDialog(gui.getFrame(),
+									    "Die Datei konnte nicht gespeichert werden! \n"
+									    + "Es sind keine Elemente zum Speichern vorhanden!",
+									    "Fehler beim Speichern der Datei",
+									    JOptionPane.ERROR_MESSAGE);
+								e2.printStackTrace();
+							}
+				 			new Controller();
+							gui.disposeGUI();
+						} catch (FileNotFoundException e1)
+						{
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Das Programm konnte nicht neugestartet werden!",
+								    "Fehler beim Neustarten",
+								    JOptionPane.ERROR_MESSAGE);
+						}
+			        }
 				}
 				
 				if (cmd.equals("Edit"))
@@ -382,6 +486,7 @@ public class Controller extends MouseAdapter
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
 					im.setMode("Bearbeiten", true);
+					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 					im.setVisible(true);
 					activeIndex = mc.indexOf(gui.getSelectedUUID());
 					Person temp = (mc.getObjectAt(activeIndex));
@@ -432,7 +537,7 @@ public class Controller extends MouseAdapter
 				{
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
-					im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 					im.setVisible(true);
 				}
 				
@@ -478,10 +583,11 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Einstellungen"))
 				{
 					sm = new SettingsMask(gui.getFrame());
-					sm.setPanelColor(sm.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) sm.setPanelColor(sm.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
 					sm.setBgColorLabel(activeSetting.getBgColor());
 					sm.setFontColorLabel(activeSetting.getFontColor());
 					sm.setActionListeners(al);
+					sm.setSelected(activeSetting.getLaf());
 				}
 
 			}
@@ -642,7 +748,6 @@ public class Controller extends MouseAdapter
 	{
 		ioc.initSettingsReader();
 		activeSetting = ioc.readSettings();
-		changeColors(activeSetting.getBgColor(), activeSetting.getFontColor());
 	}
 	
 	void changeColors(Color bg, Color font)
