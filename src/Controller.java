@@ -677,6 +677,60 @@ public class Controller extends MouseAdapter
 							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
+				
+				if (cmd.equals("Entfernen"))
+				{
+					try
+					{
+						if (!mc.isEmpty())
+						{
+							//Damit Error vor Dialog auftritt
+							mc.indexOf(gui.getSelectedUUID());
+							
+							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+					       
+						 	if (reply == JOptionPane.YES_OPTION) 
+					        {
+						 		mc.removeObjectAt(mc.indexOf(gui.getSelectedUUID()));
+								updateList();
+					        }
+						 	gui.setPreviewVisible(false);;
+						}
+					}
+					catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Löschen nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				
+				if (cmd.equals("Alles entfernen"))
+				{
+					try
+					{
+						if (!mc.isEmpty())
+						{
+							
+							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie wirklich alle Kontakte löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+					       
+						 	if (reply == JOptionPane.YES_OPTION) 
+					        {
+						 		mc.removeListElements();
+					        }
+						 	updateList();
+						 	gui.setPreviewVisible(false);;
+						}
+					}
+					catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Löschen nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
+				}
 
 			}
 		};

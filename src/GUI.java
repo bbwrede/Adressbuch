@@ -899,7 +899,9 @@ public class GUI
 		mntmEinstellungen.addActionListener(al);
 		mntmImport.addActionListener(al);
 		mntmExport.addActionListener(al);
-	}
+		mntmLschen.addActionListener(al);
+		mntmAllesLschen.addActionListener(al);
+		}
 	
 	void setPreview(Person pPerson)
 	{
