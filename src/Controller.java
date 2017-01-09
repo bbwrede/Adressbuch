@@ -614,6 +614,7 @@ public class Controller extends MouseAdapter
 					gui.openLogin();
 					mc.removeListElements();
 					updateList();
+					if (!gui.getCheckBoxStatus()) gui.removeLoginContent();
 					active = null;
 				}
 				
@@ -752,6 +753,20 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Über"))
 				{
 					CreditsMask cm = new CreditsMask();
+				}
+				
+				if (cmd.equals("Bearbeiten"))
+				{
+					im = new InputMask(gui.getFrame());
+					im.setActionListeners(al);
+					im.setMode("Bearbeiten", true);
+					if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
+					activeIndex = mc.indexOf(gui.getSelectedUUID());
+					Person temp = (mc.getObjectAt(activeIndex));
+					im.setData(temp);
+					updateList();
+					im.setVisible(true);
+					gui.setPreviewVisible(false);
 				}
 
 			}

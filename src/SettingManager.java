@@ -6,7 +6,7 @@ public class SettingManager
 	
 	public SettingManager()
 	{
-		themes = new Settings[5];
+		themes = new Settings[6];
 		
 		for (int i = 0; i< themes.length; i++)
 		{
@@ -27,6 +27,8 @@ public class SettingManager
 		
 		themes[4].setBgColor(Color.WHITE);
 		themes[4].setFontColor(Color.BLACK);
+		
+		
 		
 	}
 	

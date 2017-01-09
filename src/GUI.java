@@ -904,6 +904,7 @@ public class GUI
 		mntmLschen.addActionListener(al);
 		mntmAllesLschen.addActionListener(al);
 		mntmber.addActionListener(al);
+		mntmBearbeiten.addActionListener(al);
 		}
 	
 	void setPreview(Person pPerson)
