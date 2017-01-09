@@ -32,6 +32,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.IIOByteBuffer;
 import javax.imageio.stream.ImageInputStream;
 
+
 import javafx.scene.effect.ImageInput;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -41,7 +42,7 @@ import sun.misc.BASE64Encoder;
 
 public class IOController 
 {
-	// Reader und Writer f�r .jbook
+	// Reader und Writer für .jbook
 	private FileWriter fw;
 	private BufferedWriter bw;
 	private Scanner reader;
@@ -552,7 +553,7 @@ public class IOController
 			
 			vCardbw.write("BEGIN:VCARD\n");
 			vCardbw.write("VERSION:4.0\n");
-			vCardbw.write("N:"+pPerson.getNachname()+"; "+pPerson.getVorname()+"\n");
+			vCardbw.write("N:"+pPerson.getNachname()+";"+pPerson.getVorname()+"\n");
 			vCardbw.write("TEL;TYPE=home:"+ pPerson.getTelefon()+"\n");
 			vCardbw.write("EMAIL:"+pPerson.getEmail()+"\n");
 			
@@ -564,7 +565,10 @@ public class IOController
 			}
 			
 			vCardbw.write("BDAY:"+pPerson.getGeburtsjahr()+"-"+month+"-"+pPerson.getGeburtstag()+"\n");
-			vCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
+			//vCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
+			if(pPerson.getGeschlecht() != Person.Geschlecht.Sonstiges||pPerson.getGeschlecht() !=Person.Geschlecht.unbekannt)   vCardbw.write("GENDER:");
+			if(pPerson.getGeschlecht() == Person.Geschlecht.Männlich) vCardbw.write(" M\n");
+			if(pPerson.getGeschlecht() == Person.Geschlecht.Weiblich) vCardbw.write(" F\n");
 			vCardbw.write("END:VCARD\n");
 
 			System.out.println("Done");
@@ -630,15 +634,21 @@ public class IOController
 					
 					break;
 					
-				case  		"GENDER":
-					if(split[1].equals("M"))
-					{
-						neu.setGeschlecht(Person.Geschlecht.Männlich);
-					}
-					else
-					{
-						neu.setGeschlecht(Person.Geschlecht.Weiblich);
-					}
+					case  "GENDER":
+					
+					try{
+							if(split[1].contains("M"))
+							{
+								neu.setGeschlecht(Person.Geschlecht.Männlich);
+							}
+							if(split[1].contains("F"))
+							{
+								neu.setGeschlecht(Person.Geschlecht.Weiblich);
+							}
+				}catch(Exception e){
+					//Muss so TODO Warum?
+				}
+					
 					break;
 				
 				default: 	//no setable  
