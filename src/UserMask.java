@@ -27,6 +27,7 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class UserMask extends JFrame
 {
@@ -52,6 +53,7 @@ public class UserMask extends JFrame
 	 */
 	public UserMask(JFrame pFrame)
 	{
+		setIconImage(Toolkit.getDefaultToolkit().getImage(UserMask.class.getResource("/resources/user.png")));
 		setVisible(true);
 		
 		setTitle("Neuer Benutzer");

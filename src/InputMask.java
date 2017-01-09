@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.Toolkit;
 
 @SuppressWarnings("rawtypes")
 public class InputMask extends JFrame
@@ -89,6 +90,7 @@ public class InputMask extends JFrame
 	@SuppressWarnings("unchecked")
 	public InputMask(JFrame pFrame)
 	{
+		setIconImage(Toolkit.getDefaultToolkit().getImage(InputMask.class.getResource("/resources/user.png")));
 		setAlwaysOnTop(true);
 		setTitle("Neuer Kontakt");
 		

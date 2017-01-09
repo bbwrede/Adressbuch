@@ -17,6 +17,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import javax.swing.border.LineBorder;
+import java.awt.Toolkit;
 
 public class SettingsMask extends JFrame
 {
@@ -39,10 +40,12 @@ public class SettingsMask extends JFrame
 	private JPanel bgColor;
 	private JPanel fontColor;
 	private JLabel lblFarbeinstellungenWerdenNur;
+	private JLabel lblFarbtheme;
 
 
 	public SettingsMask(JFrame pFrame)
 	{
+		setIconImage(Toolkit.getDefaultToolkit().getImage(SettingsMask.class.getResource("/resources/settings.png")));
 		setResizable(false);
 		setTitle("Einstellungen");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -54,7 +57,7 @@ public class SettingsMask extends JFrame
 		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(21, 39, 242, 324);
+		panel.setBounds(21, 39, 242, 333);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -63,7 +66,7 @@ public class SettingsMask extends JFrame
 		panel.add(btnUserSettings);
 		
 		cbLaf = new JComboBox();
-		cbLaf.setBounds(12, 107, 211, 26);
+		cbLaf.setBounds(12, 96, 211, 26);
 		panel.add(cbLaf);
 		
 		separator = new JSeparator();
@@ -112,11 +115,16 @@ public class SettingsMask extends JFrame
 		fontColor.setBounds(12, 250, 23, 28);
 		panel.add(fontColor);
 		
-		lblFarbeinstellungenWerdenNur = new JLabel("<html>Farbeinstellungen werden\r\nnur für das Standard Look and Feel übernommen</html>");
+		lblFarbeinstellungenWerdenNur = new JLabel("<html>Farbeinstellungen werden\r\nnur für das <b>\"Standard\"</b> Look and Feel und dem <b>\"Eigene\"</b> Farbtheme übernommen</html>");
 		lblFarbeinstellungenWerdenNur.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFarbeinstellungenWerdenNur.setFont(new Font("SansSerif", Font.ITALIC, 11));
-		lblFarbeinstellungenWerdenNur.setBounds(22, 284, 196, 34);
+		lblFarbeinstellungenWerdenNur.setBounds(22, 282, 196, 45);
 		panel.add(lblFarbeinstellungenWerdenNur);
+		
+		lblFarbtheme = new JLabel("Farbtheme");
+		lblFarbtheme.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFarbtheme.setBounds(74, 128, 94, 16);
+		panel.add(lblFarbtheme);
 		
 		lblSettings = new JLabel("Einstellungen");
 		lblSettings.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -141,7 +149,7 @@ public class SettingsMask extends JFrame
 			cbLaf.addItem(laf[i]);
 		}
 		
-		String[] themes = {"Standard", "LM-Theme", "Royal Blue", "Dark Sense", "Polar White"};
+		String[] themes = {"Standard", "LM-Theme", "Royal Blue", "Dark Sense", "Polar White", "Eigene"};
 		
 		for (int i = 0; i < themes.length; i++)
 		{
@@ -244,7 +252,7 @@ public class SettingsMask extends JFrame
 		return this;
 	}
 	
-	public void setSelected(String pSelectedLaf)
+	public void setSelected(String pSelectedLaf, String pThemeName)
 	{
 		System.out.println(pSelectedLaf);
 		switch (pSelectedLaf)
@@ -269,5 +277,7 @@ public class SettingsMask extends JFrame
 		case "com.seaglasslookandfeel.SeaGlassLookAndFeel": cbLaf.setSelectedItem("Seaglass");
 			break;
 		}
+		
+		comboBox_1.setSelectedItem(pThemeName);
 	}
 }

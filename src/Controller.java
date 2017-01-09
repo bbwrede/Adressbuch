@@ -27,7 +27,6 @@ import com.jtattoo.plaf.aero.AeroLookAndFeel;
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
-import com.sun.glass.events.WindowEvent;
 
 @SuppressWarnings("static-access")
 public class Controller extends MouseAdapter
@@ -447,8 +446,9 @@ public class Controller extends MouseAdapter
 
 					activeSetting.setBgColor(sman.getThemes()[sm.getSelectedThemeIndex()].getBgColor());
 					activeSetting.setFontColor(sman.getThemes()[sm.getSelectedThemeIndex()].getFontColor());
+					activeSetting.setThemeName(sm.getTheme());
 					
-					if (!sm.getTheme().equals("Standard")) 
+					if (sm.getTheme().equals("Eigene")) 
 					{
 						activeSetting.setBgColor(background);
 						activeSetting.setFontColor(font);
@@ -629,7 +629,7 @@ public class Controller extends MouseAdapter
 					sm.setBgColorLabel(activeSetting.getBgColor());
 					sm.setFontColorLabel(activeSetting.getFontColor());
 					sm.setActionListeners(al);
-					sm.setSelected(activeSetting.getLaf());
+					sm.setSelected(activeSetting.getLaf(),activeSetting.getThemeName());
 				}
 				
 				if (cmd.equals("Import"))
@@ -742,6 +742,11 @@ public class Controller extends MouseAdapter
 							    JOptionPane.ERROR_MESSAGE);
 					}
 				}
+				
+				if (cmd.equals("Über"))
+				{
+					CreditsMask cm = new CreditsMask();
+				}
 
 			}
 		};
@@ -809,11 +814,6 @@ public class Controller extends MouseAdapter
 			
 			gui.setPreviewVisible(false);
 		}
-	}
-	public void windowClosing(WindowEvent e)
-	{
-		System.out.println("close");
-		
 	}
 	
 	void saveList() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException

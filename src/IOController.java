@@ -426,6 +426,8 @@ public class IOController
 	{
 		sbw.write(pSettings.getLaf());
 		sbw.newLine();
+		sbw.write(pSettings.getThemeName());
+		sbw.newLine();
 		
 		int r = pSettings.getBgColor().getRed();
 		int g = pSettings.getBgColor().getGreen();
@@ -453,14 +455,16 @@ public class IOController
 	{
 		Settings neu = new Settings();
 		
-		String laf = sreader.next();
-		Color bg = Color.decode(sreader.next());
-		Color font = Color.decode(sreader.next());
-		sreader.next();
+		String laf = sreader.nextLine();
+		String name = sreader.nextLine();
+		Color bg = Color.decode(sreader.nextLine());
+		Color font = Color.decode(sreader.nextLine());
+		sreader.nextLine();
 		
 		neu.setLaf(laf);
 		neu.setBgColor(bg);
 		neu.setFontColor(font);
+		neu.setThemeName(name);
 		
 		return neu;
 	}
@@ -548,7 +552,7 @@ public class IOController
 			
 			vCardbw.write("BEGIN:VCARD\n");
 			vCardbw.write("VERSION:4.0\n");
-			vCardbw.write("N:"+pPerson.getNachname()+"; "+pPerson.getVorname()+"\n");
+			vCardbw.write("N:"+pPerson.getNachname()+", "+pPerson.getVorname()+"\n");
 			vCardbw.write("TEL;TYPE=home:"+ pPerson.getTelefon()+"\n");
 			vCardbw.write("EMAIL:"+pPerson.getEmail()+"\n");
 			
@@ -597,14 +601,10 @@ public class IOController
 			switch(split[0]) 
 			{
 				case  	"N": 
-					try{
+				
 					String [] namesplit = split[1].split(";");
 					neu.setNachname(namesplit[0]);
-					
-						neu.setVorname(namesplit[1]);
-					}catch(Exception e){
-						//TODO 
-					}
+					neu.setVorname(namesplit[1]);
 					break; 
 					
 				case  	"EMAIL": 

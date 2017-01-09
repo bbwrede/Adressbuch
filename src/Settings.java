@@ -8,6 +8,7 @@ public class Settings
 	private Color bgColor;
 	private Color fontColor;
 	private String laf;
+	private String themeName;
 	
 	public Settings()
 	{
@@ -36,5 +37,13 @@ public class Settings
 	public void setBgColor(Color bgColor)
 	{
 		this.bgColor = bgColor;
+	}
+	public String getThemeName()
+	{
+		return themeName;
+	}
+	public void setThemeName(String themeName)
+	{
+		this.themeName = themeName;
 	}
 }

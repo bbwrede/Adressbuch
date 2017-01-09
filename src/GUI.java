@@ -135,6 +135,8 @@ public class GUI
 	private JMenuItem mntmImport;
 	private JMenuItem mntmExport;
 	private JSeparator separator_7;
+	private JMenuItem mntmber;
+	private JMenuItem mntmHilfe;
 	
 	public GUI() 
 	{
@@ -388,12 +390,12 @@ public class GUI
 		JMenu mnHilfe = new JMenu("Hilfe");
 		menuBar.add(mnHilfe);
 		
-		JMenuItem mntmHilfe = new JMenuItem("Hilfe");
+		mntmHilfe = new JMenuItem("Hilfe");
 		mntmHilfe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mntmHilfe.setHorizontalAlignment(SwingConstants.CENTER);
 		mnHilfe.add(mntmHilfe);
 		
-		JMenuItem mntmber = new JMenuItem("\u00DCber");
+		mntmber = new JMenuItem("\u00DCber");
 		mntmber.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0));
 		mnHilfe.add(mntmber);
 		
@@ -901,6 +903,7 @@ public class GUI
 		mntmExport.addActionListener(al);
 		mntmLschen.addActionListener(al);
 		mntmAllesLschen.addActionListener(al);
+		mntmber.addActionListener(al);
 		}
 	
 	void setPreview(Person pPerson)
