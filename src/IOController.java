@@ -548,7 +548,7 @@ public class IOController
 			
 			vCardbw.write("BEGIN:VCARD\n");
 			vCardbw.write("VERSION:4.0\n");
-			vCardbw.write("N:"+pPerson.getNachname()+", "+pPerson.getVorname()+"\n");
+			vCardbw.write("N:"+pPerson.getNachname()+"; "+pPerson.getVorname()+"\n");
 			vCardbw.write("TEL;TYPE=home:"+ pPerson.getTelefon()+"\n");
 			vCardbw.write("EMAIL:"+pPerson.getEmail()+"\n");
 			
@@ -597,10 +597,14 @@ public class IOController
 			switch(split[0]) 
 			{
 				case  	"N": 
-				
+					try{
 					String [] namesplit = split[1].split(";");
 					neu.setNachname(namesplit[0]);
-					neu.setVorname(namesplit[1]);
+					
+						neu.setVorname(namesplit[1]);
+					}catch(Exception e){
+						//TODO 
+					}
 					break; 
 					
 				case  	"EMAIL": 
