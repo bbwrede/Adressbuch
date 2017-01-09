@@ -28,6 +28,7 @@ import com.jtattoo.plaf.aero.AeroLookAndFeel;
 import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
+import com.sun.glass.events.WindowEvent;
 
 @SuppressWarnings("rawtypes")
 public class Controller extends MouseAdapter
@@ -663,6 +664,11 @@ public class Controller extends MouseAdapter
 			
 			gui.setPreviewVisible(false);
 		}
+	}
+	public void windowClosing(WindowEvent e)
+	{
+		System.out.println("close");
+		
 	}
 	
 	void saveList() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
