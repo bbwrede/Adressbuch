@@ -651,6 +651,12 @@ public class Controller extends MouseAdapter
 								    "Die Datei konnte nicht geladen werden!",
 								    "Fehler beim Laden der Datei",
 								    JOptionPane.ERROR_MESSAGE);
+						} catch (IndexOutOfBoundsException e2)
+						{
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Fehlerhafte VCard Datei!",
+								    "Fehler beim Laden der Datei",
+								    JOptionPane.ERROR_MESSAGE);
 						}
 				    }
 				}
