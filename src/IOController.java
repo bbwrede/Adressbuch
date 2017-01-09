@@ -538,23 +538,19 @@ public class IOController
 	}
 	
 	
-	void createVCard(Person pPerson) 
+	void createVCard(Person pPerson, String path) throws IOException 
 	{
-		BufferedWriter VCardbw = null;
-		FileWriter VCardfw = null;
+		BufferedWriter vCardbw = null;
+		FileWriter vCardfw = null;
 
-		try 
-		{
-
-			VCardfw = new FileWriter(System.getProperty("user.dir")+"\\VCard\\"+pPerson.getNachname()+" - "+pPerson.getVorname()+".vcf");
-			VCardbw = new BufferedWriter(VCardfw);
+			vCardfw = new FileWriter(path);
+			vCardbw = new BufferedWriter(vCardfw);
 			
-			VCardbw.write("BEGIN:VCARD\n");
-			VCardbw.write("VERSION:4.0\n");
-			VCardbw.write("N:"+pPerson.getNachname()+"\n");
-			VCardbw.write("FN:"+ pPerson.getVorname()+"\n");
-			VCardbw.write("TEL;TYPE=home:"+ pPerson.getTelefon()+"\n");
-			VCardbw.write("EMAIL:"+pPerson.getEmail()+"\n");
+			vCardbw.write("BEGIN:VCARD\n");
+			vCardbw.write("VERSION:4.0\n");
+			vCardbw.write("N:"+pPerson.getNachname()+", "+pPerson.getVorname()+"\n");
+			vCardbw.write("TEL;TYPE=home:"+ pPerson.getTelefon()+"\n");
+			vCardbw.write("EMAIL:"+pPerson.getEmail()+"\n");
 			
 			String month = Integer.toString(pPerson.getGeburtsmonat().ordinal() +1);
 			
@@ -563,37 +559,13 @@ public class IOController
 				month = "0" + month;
 			}
 			
-			VCardbw.write("BDAY:"+pPerson.getGeburtsjahr()+"-"+month+"-"+pPerson.getGeburtstag()+"\n");
-			VCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
-			VCardbw.write("END:VCARD\n");
+			vCardbw.write("BDAY:"+pPerson.getGeburtsjahr()+"-"+month+"-"+pPerson.getGeburtstag()+"\n");
+			vCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
+			vCardbw.write("END:VCARD\n");
 
 			System.out.println("Done");
-
-		} catch (IOException e) 
-		{
-
-			e.printStackTrace();
-
-		} finally 
-		{
-
-			try 
-			{
-
-				if (VCardbw != null)
-					VCardbw.close();
-
-				if (VCardfw != null)
-					VCardfw.close();
-
-			} catch (IOException ex) 
-			{
-
-				ex.printStackTrace();
-
-			}
-
-		}
+			
+			vCardbw.close();
 
 	}
 	
@@ -674,18 +646,9 @@ public class IOController
 	
 		}
 			
-		System.out.println(neu.getVorname());
-		System.out.println(neu.getNachname());
-		System.out.println(neu.getTelefon());
-		System.out.println(neu.getEmail());
-		System.out.println(neu.getGeschlecht());
-		System.out.println(neu.getGeburtsjahr());
-		System.out.println(neu.getGeburtsmonat());
-		System.out.println(neu.getGeburtstag());
-		
 		
 		reader.close();
-    		return neu;
+    	return neu;
 		
 		
 	}

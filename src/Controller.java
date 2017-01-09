@@ -19,7 +19,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -30,7 +29,7 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 import com.sun.glass.events.WindowEvent;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("static-access")
 public class Controller extends MouseAdapter
 {	
 	private GUI gui;
@@ -62,6 +61,7 @@ public class Controller extends MouseAdapter
 		font = Color.BLACK;
 		activeSetting = new Settings();
 		
+		boolean notLoaded = false;
 		
 		try
 		{
@@ -69,9 +69,7 @@ public class Controller extends MouseAdapter
 		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IOException e)
 		{
-			JOptionPane.showMessageDialog(gui.getFrame(),
-				    "Es konnten keine Einstellungen geladen werden. \n"
-				    + "Ist dies der erste Start des Programms?");
+			notLoaded = true;
 			e.printStackTrace();
 		}
 		
@@ -128,8 +126,12 @@ public class Controller extends MouseAdapter
 
 		gui = new GUI();
 		
+		if (notLoaded) JOptionPane.showMessageDialog(null,
+			    "Es konnten keine Einstellungen geladen werden. \n"
+			    + "Ist dies der erste Start des Programms?");
 		
-		if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) changeColors(activeSetting.getBgColor(), activeSetting.getFontColor());
+		
+		if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) changeColors(activeSetting.getBgColor(), activeSetting.getFontColor());
 		gui.setMouseListeners(this);
 		initLoginKeyListener();
 		initMenuActionListener();
@@ -229,7 +231,7 @@ public class Controller extends MouseAdapter
 				{
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
-					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 					im.setVisible(true);
 				}
 				
@@ -269,8 +271,13 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Löschen"))
 				{
+					try
+					{
 						if (!mc.isEmpty())
 						{
+							//Damit Error vor Dialog auftritt
+							mc.indexOf(gui.getSelectedUUID());
+							
 							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
 					       
 						 	if (reply == JOptionPane.YES_OPTION) 
@@ -278,7 +285,16 @@ public class Controller extends MouseAdapter
 						 		mc.removeObjectAt(mc.indexOf(gui.getSelectedUUID()));
 								updateList();
 					        }
+						 	gui.setPreviewVisible(false);;
 						}
+					}
+					catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Löschen nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 					
 				}
 				if (cmd.equals("Registrieren"))
@@ -301,8 +317,10 @@ public class Controller extends MouseAdapter
 						} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 								| IllegalBlockSizeException | BadPaddingException | IOException e1)
 						{
-							// TODO Automatisch generierter Erfassungsblock
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Die Benutzer konnten nicht gespeichert werden!",
+								    "Fehler beim Speichern der Datei",
+								    JOptionPane.ERROR_MESSAGE);
 						}
 						um.dispose();
 					}
@@ -367,8 +385,10 @@ public class Controller extends MouseAdapter
 				    		im.setImageButton(chooser.getSelectedFile().getName());
 						} catch (IOException e1)
 						{
-							// TODO Automatisch generierter Erfassungsblock
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Die Datei konnte nicht geladen werden!",
+								    "Fehler beim Laden der Datei",
+								    JOptionPane.ERROR_MESSAGE);
 						}
 				    }
 				}
@@ -384,11 +404,13 @@ public class Controller extends MouseAdapter
 						try
 						{
 							Person neu =  ioc.importVCard(chooser.getSelectedFile());
-							im.setInput(neu);
+							im.setData(neu);
 						} catch (FileNotFoundException e1)
 						{
-							// TODO Automatisch generierter Erfassungsblock
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Die Datei konnte nicht geladen werden!",
+								    "Fehler beim Laden der Datei",
+								    JOptionPane.ERROR_MESSAGE);
 						}
 				    }
 				}
@@ -399,7 +421,7 @@ public class Controller extends MouseAdapter
 					um.setUsernameEditable(false);
 					um.setFieldData(active.getUsername(), active.getPassword());
 					um.setActionListeners(al);
-					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) um.setPanelColor(um.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) um.setPanelColor(um.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
 					um.setLabelTitle("Benutzerdaten ändern");
 				}
 				
@@ -422,8 +444,15 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("saveSettings"))
 				{
-					activeSetting.setBgColor(background);
-					activeSetting.setFontColor(font);
+
+					activeSetting.setBgColor(sman.getThemes()[sm.getSelectedThemeIndex()].getBgColor());
+					activeSetting.setFontColor(sman.getThemes()[sm.getSelectedThemeIndex()].getFontColor());
+					
+					if (!sm.getTheme().equals("Standard")) 
+					{
+						activeSetting.setBgColor(background);
+						activeSetting.setFontColor(font);
+					}
 					activeSetting.setLaf(sm.getLaf());
 					
 					int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Damit die Änderungen Wirksam werden muss das Programm neugestartet werden.\n"
@@ -431,7 +460,7 @@ public class Controller extends MouseAdapter
 				       
 				 	
 					
-					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) changeColors(background,font);
+					if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) changeColors(background,font);
 
 					try
 					{
@@ -459,8 +488,10 @@ public class Controller extends MouseAdapter
 							} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 									| IllegalBlockSizeException | BadPaddingException | IOException e1)
 							{
-								// TODO Automatisch generierter Erfassungsblock
-								e1.printStackTrace();
+								JOptionPane.showMessageDialog(gui.getFrame(),
+									    "Die Datei konnte nicht gespeichert werden!",
+									    "Fehler beim Speichern der Datei",
+									    JOptionPane.ERROR_MESSAGE);
 							} catch (NullPointerException e2)
 							{
 								JOptionPane.showMessageDialog(gui.getFrame(),
@@ -468,10 +499,9 @@ public class Controller extends MouseAdapter
 									    + "Es sind keine Elemente zum Speichern vorhanden!",
 									    "Fehler beim Speichern der Datei",
 									    JOptionPane.ERROR_MESSAGE);
-								e2.printStackTrace();
 							}
-				 			new Controller();
 							gui.disposeGUI();
+							new Controller();
 						} catch (FileNotFoundException e1)
 						{
 							JOptionPane.showMessageDialog(gui.getFrame(),
@@ -484,17 +514,26 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Edit"))
 				{
-					im = new InputMask(gui.getFrame());
-					im.setActionListeners(al);
-					im.setMode("Bearbeiten", true);
-					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
-					im.setVisible(true);
-					activeIndex = mc.indexOf(gui.getSelectedUUID());
-					Person temp = (mc.getObjectAt(activeIndex));
-					im.setData(temp);
-					updateList();
-					
-					gui.setPreviewVisible(false);
+					try
+					{
+						im = new InputMask(gui.getFrame());
+						im.setActionListeners(al);
+						im.setMode("Bearbeiten", true);
+						if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
+						activeIndex = mc.indexOf(gui.getSelectedUUID());
+						Person temp = (mc.getObjectAt(activeIndex));
+						im.setData(temp);
+						updateList();
+						im.setVisible(true);
+						gui.setPreviewVisible(false);
+					}
+					catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Bearbeiten nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		};
@@ -521,8 +560,10 @@ public class Controller extends MouseAdapter
 					} catch (InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException
 							| IllegalBlockSizeException | BadPaddingException | IOException e1)
 					{
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Die Datei konnte nicht gespeichert werden!",
+							    "Fehler beim Speichern der Datei",
+							    JOptionPane.ERROR_MESSAGE);
 					} catch (NullPointerException e2)
 					{
 						JOptionPane.showMessageDialog(gui.getFrame(),
@@ -538,7 +579,7 @@ public class Controller extends MouseAdapter
 				{
 					im = new InputMask(gui.getFrame());
 					im.setActionListeners(al);
-					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 					im.setVisible(true);
 				}
 				
@@ -584,11 +625,122 @@ public class Controller extends MouseAdapter
 				if (cmd.equals("Einstellungen"))
 				{
 					sm = new SettingsMask(gui.getFrame());
-					if (!activeSetting.getLaf().contains("com.jtattoo.plaf")) sm.setPanelColor(sm.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
+					if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) sm.setPanelColor(sm.getFrame(), activeSetting.getBgColor(), activeSetting.getFontColor());
 					sm.setBgColorLabel(activeSetting.getBgColor());
 					sm.setFontColorLabel(activeSetting.getFontColor());
 					sm.setActionListeners(al);
 					sm.setSelected(activeSetting.getLaf());
+				}
+				
+				if (cmd.equals("Import"))
+				{
+					JFileChooser chooser = new JFileChooser();
+					FileNameExtensionFilter filter = new FileNameExtensionFilter("VCard File" ,"vcf");
+				    chooser.setFileFilter(filter);
+				    int returnVal = chooser.showOpenDialog(gui.getFrame());
+				    if(returnVal == JFileChooser.APPROVE_OPTION) 
+				    {
+						try
+						{
+							Person neu =  ioc.importVCard(chooser.getSelectedFile());
+							mc.sortIn(neu);
+							updateList();
+						} catch (FileNotFoundException e1)
+						{
+							JOptionPane.showMessageDialog(gui.getFrame(),
+								    "Die Datei konnte nicht geladen werden!",
+								    "Fehler beim Laden der Datei",
+								    JOptionPane.ERROR_MESSAGE);
+						}
+				    }
+				}
+				
+				if (cmd.equals("Export"))
+				{
+					
+					try
+					{
+						//Damit Error vor Dialog auftritt
+						mc.indexOf(gui.getSelectedUUID());
+						
+						JFileChooser chooser = new JFileChooser();
+					    chooser.setCurrentDirectory(new File("C:\\"));
+					    int retrival = chooser.showSaveDialog(gui.getFrame());
+					    if (retrival == JFileChooser.APPROVE_OPTION) 
+					    {
+					    	try
+							{
+								ioc.createVCard(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())), chooser.getSelectedFile()+".vcf");
+							} catch (IOException e1)
+							{
+								JOptionPane.showMessageDialog(gui.getFrame(),
+									    "Die Datei konnte nicht gespeichert werden!",
+									    "Fehler beim Speichern der Datei",
+									    JOptionPane.ERROR_MESSAGE);
+							}
+					    }
+					}
+				    catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Exportieren nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				
+				if (cmd.equals("Entfernen"))
+				{
+					try
+					{
+						if (!mc.isEmpty())
+						{
+							//Damit Error vor Dialog auftritt
+							mc.indexOf(gui.getSelectedUUID());
+							
+							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie den Kontakt wirklich löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+					       
+						 	if (reply == JOptionPane.YES_OPTION) 
+					        {
+						 		mc.removeObjectAt(mc.indexOf(gui.getSelectedUUID()));
+								updateList();
+					        }
+						 	gui.setPreviewVisible(false);;
+						}
+					}
+					catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Löschen nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				
+				if (cmd.equals("Alles entfernen"))
+				{
+					try
+					{
+						if (!mc.isEmpty())
+						{
+							
+							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie wirklich alle Kontakte löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+					       
+						 	if (reply == JOptionPane.YES_OPTION) 
+					        {
+						 		mc.removeListElements();
+					        }
+						 	updateList();
+						 	gui.setPreviewVisible(false);;
+						}
+					}
+					catch (IndexOutOfBoundsException e1)
+					{
+						JOptionPane.showMessageDialog(gui.getFrame(),
+							    "Kein Element ausgewählt!",
+							    "Löschen nicht möglich",
+							    JOptionPane.ERROR_MESSAGE);
+					}
 				}
 
 			}
@@ -625,17 +777,13 @@ public class Controller extends MouseAdapter
 				
 			}
 
-			@Override
 			public void keyReleased(KeyEvent e)
 			{
-				// TODO Automatisch generierter Methodenstub
 				
 			}
 
-			@Override
 			public void keyTyped(KeyEvent e)
 			{
-				// TODO Automatisch generierter Methodenstub
 				
 			}
 		};
@@ -645,9 +793,6 @@ public class Controller extends MouseAdapter
 	
 	public void mouseClicked(MouseEvent e)
 	{
-		JTable table = (JTable)e.getSource();
-		int index = 0;
-		
 		System.out.println(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())).getNachname());
 		gui.setPreview(mc.getObjectAt(mc.indexOf(gui.getSelectedUUID())));
 		
