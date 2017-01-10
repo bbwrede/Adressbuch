@@ -567,8 +567,8 @@ public class IOController
 			vCardbw.write("BDAY:"+pPerson.getGeburtsjahr()+"-"+month+"-"+pPerson.getGeburtstag()+"\n");
 			//vCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
 			if(pPerson.getGeschlecht() != Person.Geschlecht.Sonstiges||pPerson.getGeschlecht() !=Person.Geschlecht.unbekannt)   vCardbw.write("GENDER:");
-			if(pPerson.getGeschlecht() == Person.Geschlecht.Männlich) vCardbw.write(" M\n");
-			if(pPerson.getGeschlecht() == Person.Geschlecht.Weiblich) vCardbw.write(" F\n");
+			if(pPerson.getGeschlecht() == Person.Geschlecht.Männlich) vCardbw.write("M\n");
+			if(pPerson.getGeschlecht() == Person.Geschlecht.Weiblich) vCardbw.write("F\n");
 			vCardbw.write("END:VCARD\n");
 
 			System.out.println("Done");
@@ -598,7 +598,7 @@ public class IOController
 			
 			if(temp.contains("TEL"))
 			{
-				neu.setTelefon(split[1]);
+				neu.setTelefon(split[split.length-1]);
 				reader.nextLine();
 			}
 			
@@ -647,6 +647,7 @@ public class IOController
 							}
 				}catch(Exception e){
 					//Muss so TODO Warum?
+					System.out.println("fail");
 				}
 					
 					break;
