@@ -827,6 +827,7 @@ public class Controller extends MouseAdapter
 			im = new InputMask(gui.getFrame());
 			im.setActionListeners(al);
 			im.setMode("Bearbeiten", true);
+			if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) im.setPanelColor(im.getFrame(),activeSetting.getBgColor(), activeSetting.getFontColor());
 			im.setVisible(true);
 			activeIndex = mc.indexOf(gui.getSelectedUUID());
 			Person temp = (mc.getObjectAt(activeIndex));
