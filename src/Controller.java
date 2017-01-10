@@ -29,6 +29,17 @@ import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 
 @SuppressWarnings("static-access")
+
+/**
+ * Die Controller Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse verarbeitet sämtliche Nutzereingaben und Objekte
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
+
 public class Controller extends MouseAdapter
 {	
 	private GUI gui;
@@ -49,9 +60,14 @@ public class Controller extends MouseAdapter
 	private int activeIndex;
 
 	
+	/**
+	 * Konstruktor der Klasse Controller. 
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	
 	Controller() throws FileNotFoundException 
-	{
-		
+	{	
 		mc = new ModelController();
 		uman = new UserManager();
 		sman = new SettingManager();
@@ -157,6 +173,9 @@ public class Controller extends MouseAdapter
 		
 	}
 	
+	/**
+	 *  Methode Aktualisiert die Tabelle in der GUI
+	 */
 	
 	void updateList()
 	{
@@ -168,11 +187,22 @@ public class Controller extends MouseAdapter
 		
 	}
 	
+	/**
+	 *  main-Methode von JBook. Erstellt eine Controller Instanz
+	 * 
+	 * @param args Kommandozeilenparameter
+	 * @throws IOException
+	 */
+	
 	public static void main(String[] args) throws IOException
 	{
 		new Controller();
 	}
-
+	
+	/**
+	 *  Methode überprüft Passwort und Nutzername und sorgt ggf. für eine Warnung in der GUI
+	 */
+	
 	void authentification()
 	{
 		if (uman.userAuthentification(gui.getPassword(), gui.getUsername()))
@@ -185,6 +215,10 @@ public class Controller extends MouseAdapter
 			gui.showLoginWarning(Color.WHITE);
 		}
 	}
+	
+	/**
+	 * Methoder instanziert den ActionListener
+	 */
 
 	void initActionListener()
 	{
@@ -540,6 +574,10 @@ public class Controller extends MouseAdapter
 		gui.setActionListeners(al);
 	}
 	
+	/**
+	 * Methode instanziert die ActionListener für die Menüleiste
+	 */
+	
 	void initMenuActionListener()
 	{
 		menuAl = new ActionListener()
@@ -752,7 +790,7 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("Über"))
 				{
-					CreditsMask cm = new CreditsMask();
+					new CreditsMask();
 				}
 				
 				if (cmd.equals("Bearbeiten"))
@@ -773,6 +811,10 @@ public class Controller extends MouseAdapter
 		};
 		gui.setMenuListeners(menuAl);
 	}
+	
+	/**
+	 * Methode instanziert den KeyListener für das Login-Fenster
+	 */
 	
 	void initLoginKeyListener()
 	{
@@ -838,6 +880,17 @@ public class Controller extends MouseAdapter
 		}
 	}
 	
+	/**
+	 * Methode speichert alle Kontakte in eine Datei
+	 * 
+	 * @throws InvalidKeyException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws IOException
+	 */
+	
 	void saveList() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		ioc.setUserInfo(active.getUsername(), active.getPassword());
@@ -851,10 +904,20 @@ public class Controller extends MouseAdapter
 			temp.next();
 		}
 		
-		//ioc.createVCard(mc.getObjectAt(0));
 		
 		ioc.closeWriteStream();
 	}
+	
+	/**
+	 * Methode liest Kontakte aus Datei
+	 * 
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IOException
+	 */
 	
 	void loadList() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
@@ -878,6 +941,18 @@ public class Controller extends MouseAdapter
 		
 	}
 	
+	/**
+	 * Methode speicher Nutzer in Datei
+	 * 
+	 * @throws InvalidKeyException
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws IOException
+	 */
+	
 	void saveUser() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		ioc.initUserWriter();
@@ -893,6 +968,17 @@ public class Controller extends MouseAdapter
 		
 		ioc.closeUserWriteStream();
 	}
+	
+	/**
+	 * Methode liest Nutzer aus Datei
+	 * 
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IOException
+	 */
 	
 	void loadUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
@@ -911,17 +997,47 @@ public class Controller extends MouseAdapter
 
 	}
 	
+	/**
+	 * Methode speichert Einstellungen in Datei
+	 * 
+	 * @throws InvalidKeyException
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws IOException
+	 */
+	
 	void saveSetting() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		ioc.initSettingsWriter();
 		ioc.saveSettingsToFile(activeSetting);
 	}
 	
+	/**
+	 * Methode liest Einstellungen aus Datei
+	 * 
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IOException
+	 */
+	
 	void loadSetting() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		ioc.initSettingsReader();
 		activeSetting = ioc.readSettings();
 	}
+	
+	/**
+	 * Methode setzt benutzerdefinierte Farben für die Haupt-GUI Elemente
+	 * 
+	 * @param bg Hintergrundfarbe
+	 * @param font Textfarbe
+	 */
 	
 	void changeColors(Color bg, Color font)
 	{

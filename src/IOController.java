@@ -565,7 +565,6 @@ public class IOController
 			}
 			
 			vCardbw.write("BDAY:"+pPerson.getGeburtsjahr()+"-"+month+"-"+pPerson.getGeburtstag()+"\n");
-			//vCardbw.write("GENDER:"+pPerson.getGeschlecht()+"\n");
 			if(pPerson.getGeschlecht() != Person.Geschlecht.Sonstiges||pPerson.getGeschlecht() !=Person.Geschlecht.unbekannt)   vCardbw.write("GENDER:");
 			if(pPerson.getGeschlecht() == Person.Geschlecht.Männlich) vCardbw.write("M\n");
 			if(pPerson.getGeschlecht() == Person.Geschlecht.Weiblich) vCardbw.write("F\n");
