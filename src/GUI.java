@@ -55,7 +55,16 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Dimension;
 
-@SuppressWarnings({"rawtypes", "unchecked" , "unused"})
+/**
+ * Die GUIKlasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für die Darstellung der Hauptelemente verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
+@SuppressWarnings({"rawtypes", "unused"})
 public class GUI  
 {
 
@@ -138,12 +147,19 @@ public class GUI
 	private JMenuItem mntmber;
 	private JMenuItem mntmHilfe;
 	
+	/**
+	 * Konstruktor von GUI
+	 */
+	
 	public GUI() 
 	{
 		initialize();
 		frmAdressbuch.setVisible(true);
 	}
 
+	/**
+	 * Methode instanziert GUI Elemente
+	 */
 
 	private void initialize() {
 		frmAdressbuch = new JFrame();
@@ -767,6 +783,14 @@ public class GUI
 		
 		
 	}
+	
+	/**
+	 * Methode erstellt PopUp für die Menüleiste
+	 * 
+	 * @param component Die Quellkomponente
+	 * @param popup Das Popup-Element
+	 */
+	
 	private void addPopup(Component component, final JPopupMenu popup) 
 	{
 		component.addMouseListener(new MouseAdapter() {
@@ -785,6 +809,12 @@ public class GUI
 			}
 		});
 	}
+	
+	/**
+	 * Methode fügt ActionListener zu den GUI-Elementen hinzu
+	 * 
+	 * @param al ActionListener
+	 */
 	
 	void setActionListeners(ActionListener al)
 	{
@@ -846,6 +876,11 @@ public class GUI
 		
 	}
 	
+	/**
+	 * Methode stellt ein Objekt vom Typ Person in der Tabelle dar
+	 * 
+	 * @param pPerson Die darzustellene Person
+	 */
 	
 	void setTableData(Person pPerson)
 	{
@@ -869,6 +904,12 @@ public class GUI
 				pPerson.getTelefonMobil(),pPerson.getFirma(),pPerson.getReligion().toString(),pPerson.getUuid().toString()});	
 	}
 	
+	/**
+	 * Methode filtert Tabelle nach Text in einem JTextField
+	 * 
+	 * @param pTextField Suchfeld
+	 */
+	
 	void filter(JTextField pTextField) 
 	{
 		ArrayList<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel,Object>>();
@@ -886,10 +927,11 @@ public class GUI
 	    
 	}
 	
-	void killTable()
-	{
-		table = null;
-	}
+	/**
+	 * Methode fügt ActionListener zu den Menü-Elementen hinzu
+	 * 
+	 * @param al ActionListener
+	 */
 	
 	void setMenuListeners(ActionListener al)
 	{
@@ -906,6 +948,12 @@ public class GUI
 		mntmber.addActionListener(al);
 		mntmBearbeiten.addActionListener(al);
 		}
+	
+	/**
+	 * Methode zeigt Preview von der übergebenden Person an
+	 * 
+	 * @param pPerson anzuzeigende Person
+	 */
 	
 	void setPreview(Person pPerson)
 	{
@@ -994,10 +1042,22 @@ public class GUI
 		lblNewLabel_2.setVisible(false);
 	}
 	
+	/**
+	 * Fügt den Nutzernamen zum Menü hinzu
+	 * 
+	 * @param pUsername Nutzername
+	 */
+	
 	void setMenuUsername(String pUsername)
 	{
 		mnEingeloggt.setText("<html> Eingeloggt als <b>"+ pUsername +"</b>");
 	}
+	
+	/**
+	 * Fügt KeyListener zu GUI-Elementen hinzu
+	 * 
+	 * @param kl KeyListemer
+	 */
 	
 	void setKeyListeners(KeyListener kl)
 	{
@@ -1005,10 +1065,22 @@ public class GUI
 		passwordField.addKeyListener(kl);
 	}
 	
+	/**
+	 * Fügt MouseListener zu GUI-Elementen hinzu
+	 * 
+	 * @param ma MouseAdapter
+	 */
+	
 	void setMouseListeners(MouseAdapter ma)
 	{
 		table.addMouseListener(ma);
 	}
+	
+	/**
+	 * Getter für das Nutzerpasswort
+	 * 
+	 * @return Passwort
+	 */
 	
 	@SuppressWarnings("deprecation")
 	public String getPassword()
@@ -1016,15 +1088,29 @@ public class GUI
 		return passwordField.getText();
 	}
 	
+	/**
+	 * Getter für Nutzernamen
+	 * 
+	 * @return Nutzername
+	 */
+	
 	public String getUsername()
 	{
 		return usernameField.getText();
 	}
 	
+	/**
+	 * Zeigt Standard Nutzername bzw Passwort an
+	 */
+	
 	void showLoginInfo()
 	{
 		JOptionPane.showMessageDialog(frmAdressbuch, "Standard Benutzername:     admin \nStandard Passwort:                1111");
 	}
+	
+	/**
+	 * Zeigt Haupt-GUI an
+	 */
 	
 	void openMain()
 	{
@@ -1032,6 +1118,10 @@ public class GUI
 		mainPanel.setVisible(true);
 		menuBar.setVisible(true);
 	}
+	
+	/**
+	 * Zeigt Login-GUI an
+	 */
 	
 	void openLogin()
 	{
@@ -1044,10 +1134,9 @@ public class GUI
 		lblKontakt.setVisible(false);
 	}
 	
-	void removeListElements()
-	{
-		listmodel.removeAllElements();
-	}
+	/**
+	 * Entfernt Tabellendaten
+	 */
 	
 	void removeTableElements()
 	{
@@ -1058,15 +1147,22 @@ public class GUI
 		}
 	}
 	
-	void addElement(String anzeige)
-	{
-		listmodel.addElement(anzeige);
-	}
+	/**
+	 * Gibt UUID von aktuell selektierten Kontakt zurück
+	 * 
+	 * @return UUID
+	 */
 	
 	UUID getSelectedUUID()
 	{
 		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 17).toString());
 	}
+	
+	/**
+	 * Zeigt Nutzername/Passwort falsch Warnung an
+	 * 
+	 * @param pColor Anzeigefarbe
+	 */
 	
 	void showLoginWarning(Color pColor)
 	{
@@ -1085,34 +1181,35 @@ public class GUI
 		},  3000);
 	}
 	
+	/**
+	 * Getter für JFrame
+	 * 
+	 * @return JFrame
+	 */
+	
 	JFrame getFrame()
 	{
 		return frmAdressbuch;
 	}
+	
+	/**
+	 * Getter für Tabelle
+	 * 
+	 * @return Tabelle
+	 */
 	
 	public JTable getTable()
 	{
 		return table;
 	}
 	
-	void changeColor(Color bg, Color font)
-	{
-		mainPanel.setBackground(bg);
-		panel_1.setBackground(bg);
-		panel.setBackground(bg);
-		panel_2.setBackground(bg);
-		panel_3.setBackground(bg);
-		panel_4.setBackground(bg);
-		panel_5.setBackground(bg);
-		scrollPane.setBackground(bg);
-		table.setBackground(bg);
-		table.setGridColor(bg);
-		
-		btnDelete.setBackground(bg);
-		btnNeu.setBackground(bg);
-		logoutBtn.setBackground(bg);
-		
-	}
+	/**
+	 * Methode setzt Hintergrundfarbe bzw. Textfarbe der GUI
+	 * 
+	 * @param parent Elternkomponente
+	 * @param bg Hintergrundfarbe
+	 * @param font Textfarbe
+	 */
 	
 	public void setPanelColor(Container parent, Color bg, Color font)
 	{
@@ -1159,10 +1256,20 @@ public class GUI
 	    }
 	}
 	
+	/**
+	 * Getter für "Login Speichern" Checkbox boolean
+	 * 
+	 * @return true, false
+	 */
+	
 	public boolean getCheckBoxStatus()
 	{
 		return checkbox.isSelected();
 	}
+	
+	/**
+	 * Methode entfernt Inhalt der Textfelder bei der Login-Ansicht
+	 */
 	
 	public void removeLoginContent()
 	{
@@ -1170,12 +1277,22 @@ public class GUI
 		passwordField.setText("");
 	}
 	
+	/**
+	 * Setzt die Sichtbarkeit der Kontaktvorschau
+	 * 
+	 * @param pVisible Sichtbarkeit
+	 */
+	
 	public void setPreviewVisible(boolean pVisible)
 	{
 		panel_1.setVisible(pVisible);
 		lblKontakt.setVisible(pVisible);
 		lblNewLabel_2.setVisible(!pVisible);
 	}
+	
+	/**
+	 * Schließt die GUI
+	 */
 	
 	public void disposeGUI()
 	{
