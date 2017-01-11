@@ -6,15 +6,11 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.nio.ByteOrder;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -29,11 +25,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.IIOByteBuffer;
-import javax.imageio.stream.ImageInputStream;
 
-
-import javafx.scene.effect.ImageInput;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -940,8 +932,7 @@ public class IOController
 								neu.setGeschlecht(Person.Geschlecht.Weiblich);
 							}
 				}catch(Exception e){
-					//Muss so TODO Warum?
-					System.out.println("fail");
+					System.out.println("failed");
 				}
 					
 					break;

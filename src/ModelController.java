@@ -1,16 +1,35 @@
 import java.io.FileNotFoundException;
 import java.util.UUID;
 
+/**
+ * Die IOController Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für sämtliche Interaktion mit den Modellklassen verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 public class ModelController
 {
 	private static List<Person> liste;
-	private static List<Person> queue;
+	
+	/**
+	 * Konstruktor der Klasse Controller. 
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	
 	ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
 	}
 	
+	/**
+	 * Methode gibt die Länge der Liste zurück
+	 * 
+	 * @return Länge der Liste
+	 */
 	
 	public int length()
 	{
@@ -24,6 +43,11 @@ public class ModelController
 	    return i;
 	}
 	
+	/**
+	 * Fügt Kontakt alphabetisch nach Nachnamen in die Liste ein
+	 * 
+	 * @param neu Der einzusortierende Kontakt
+	 */
 	
 	void sortIn(Person neu)
 	{
@@ -46,6 +70,12 @@ public class ModelController
 		
 	}
 	
+	/**
+	 * Methode gibt Objekt an bestimmtem Index zurück
+	 * 
+	 * @param i Index
+	 * @return Objekt an dem Index
+	 */
 	
 	static Person getObjectAt(int i)
 	{
@@ -57,6 +87,12 @@ public class ModelController
 		return liste.getContent();	
 	}
 	
+	/**
+	 * Methode entfernt Objekt an bestimmtem Index
+	 * 
+	 * @param i Index
+	 */
+	
 	void removeObjectAt(int i)
 	{
 		liste.toFirst();
@@ -67,12 +103,20 @@ public class ModelController
 		liste.remove();
 	}
 	
+	/**
+	 * Getter für die Kontaktliste
+	 * 
+	 * @return Kontaktliste
+	 */
 	
 	List<Person> getList()
 	{
 		return liste;
 	}
 	
+	/**
+	 * Entfernt alle Objekte in der Kontaktliste
+	 */
 	
 	void removeListElements()
 	{
@@ -82,6 +126,12 @@ public class ModelController
 			liste.remove();
 		}
 	}
+	
+	/**
+	 * Methode überprüft, ob die Kontaktliste leer ist
+	 * 
+	 * @return true, wenn leer oder false, wenn nicht leer
+	 */
 	
 	boolean isEmpty()
 	{
@@ -95,6 +145,10 @@ public class ModelController
 		}
 	}
 	
+	/**
+	 * Methode gibt die Nachnamen aller Kontakte in Konsole aus
+	 */
+	
 	void ausgabe()
 	{
 		liste.toFirst();
@@ -105,10 +159,23 @@ public class ModelController
 		}
 	}
 	
+	/**
+	 * Setter für die Kontaktliste
+	 * 
+	 * @param pList Liste
+	 */
+	
 	void setList(List<Person> pList)
 	{
 		liste = pList;
 	}
+	
+	/**
+	 * Gibt Index eines Objekts mit einer bestimmten UUID zurück
+	 * 
+	 * @param pUUID UUID
+	 * @return index
+	 */
 	
 	int indexOf(UUID pUUID)
 	{

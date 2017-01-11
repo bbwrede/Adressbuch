@@ -1,4 +1,8 @@
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
@@ -10,15 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import javax.swing.border.LineBorder;
-import java.awt.Toolkit;
+import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class SettingsMask extends JFrame
 {
 
@@ -26,11 +26,13 @@ public class SettingsMask extends JFrame
 	private JPanel panel;
 	private JLabel lblSettings;
 	private JButton btnUserSettings;
+	@SuppressWarnings("rawtypes")
 	private JComboBox cbLaf;
 	private JSeparator separator;
 	private JSeparator separator_1;
 	private JLabel lblLookAndFeel;
 	private JLabel lblNutzerdaten;
+	@SuppressWarnings("rawtypes")
 	private JComboBox comboBox_1;
 	private JLabel lblAnpassen;
 	private JButton btnBgColor;
@@ -43,6 +45,7 @@ public class SettingsMask extends JFrame
 	private JLabel lblFarbtheme;
 
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public SettingsMask(JFrame pFrame)
 	{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(SettingsMask.class.getResource("/resources/settings.png")));
@@ -254,7 +257,6 @@ public class SettingsMask extends JFrame
 	
 	public void setSelected(String pSelectedLaf, String pThemeName)
 	{
-		System.out.println(pSelectedLaf);
 		switch (pSelectedLaf)
 		{
 		case "com.jtattoo.plaf.aluminium.AluminiumLookAndFeel": 

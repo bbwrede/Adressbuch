@@ -1,34 +1,24 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import javax.swing.JTextField;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JSeparator;
 import javax.swing.JSlider;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import java.awt.Toolkit;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class UserMask extends JFrame
 {
 
@@ -145,6 +135,7 @@ public class UserMask extends JFrame
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	User getNewUser()
 	{
 		User neu = new User();
@@ -155,6 +146,7 @@ public class UserMask extends JFrame
 		return neu;
 	}
 	
+	@SuppressWarnings("deprecation")
 	boolean isPasswordCorrect()
 	{
 		if (password.getText().equals(confirmPassword.getText()))
