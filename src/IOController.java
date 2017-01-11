@@ -37,8 +37,14 @@ import javafx.scene.effect.ImageInput;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-
-
+/**
+ * Die IOController Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für sämtliche Dateischreibprozesse verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
 
 public class IOController 
 {
@@ -63,12 +69,24 @@ public class IOController
 	private String username;
 	private String password;
 	
+	/**
+	 * setzt die globalen Variablen für den Username und dem Passwort eines Nutzers
+	 * 
+	 * @param pUsername Nutzername eines Nutzers
+	 * @param pPassword Passwort eines Nutzers
+	 */
 	
 	void setUserInfo(String pUsername, String pPassword)
 	{
 		username = pUsername;
 		password = pPassword;
 	}
+	
+	/**
+	 * Instanziert die Writer, welche für das Schreiben der Kontakte verantwortlich sind
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	
 	void initWriter() throws FileNotFoundException
 	{
@@ -88,11 +106,23 @@ public class IOController
 		
 	}
 	
+	/**
+	 * Instanziert die Reader, die für das Lesen der Kontakte verantwortlich sind
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	
 	void initReader() throws FileNotFoundException
 	{
 		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
 		reader = new Scanner(fr);
 	}
+	
+	/**
+	 * Instanziert die Writer, welche für das Schreiben der Nutzerdaten verantwortlich sind
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	
 	void initUserWriter() throws FileNotFoundException
 	{
@@ -110,11 +140,23 @@ public class IOController
 		ubw = new BufferedWriter(ufw);
 	}
 	
+	/**
+	 * Instanziert die Reader, welche für das Lesen der Nutzerdaten verantwortlich sind
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	
 	void initUserReader() throws FileNotFoundException
 	{
 		ufr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
 		ureader = new Scanner(ufr);
 	}
+	
+	/**
+	 * Instanziert die Writer, welche für das Schreiben der Einstellungen verantwortlich sind
+	 * 
+	 * @throws FileNotFoundException
+	 */
 	
 	void initSettingsWriter() throws FileNotFoundException
 	{
@@ -134,12 +176,26 @@ public class IOController
 		
 	}
 	
+	/**
+	 * Instanziert die Reader, welche für das Lesen der Einstellungen verantwortlich sind
+	 * 
+	 * @throws FileNotFoundException
+	 */
+	
 	void initSettingsReader() throws FileNotFoundException
 	{
 		sfr = new FileReader(System.getProperty("user.dir")+"\\saves\\settings.jsettings");
 		sreader = new Scanner(sfr);
 	}
 	
+	/**
+	 * Die Methode generiert einen SecretKey, welcher aus Nutzername und Passwort besteht und für die Verschlüsslung der Kontakt
+	 * Datei genutzt wird.
+	 * 
+	 * @return secretkey AES 128 Bit Key, bestehend aus Nutzername und Passwort
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 */
 	
 	private SecretKeySpec initEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
@@ -152,7 +208,18 @@ public class IOController
 		return secretkey;
 	}
 	
-	
+	/**
+	 * Methode verschlüsselt einen String nach AES 128 Bit auf Basis des SecretKeys.
+	 * 
+	 * @param pText Der unverschlüsselte String
+	 * @return Der verschlüsselte String
+	 * @throws InvalidKeyException
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 */
 	
 	private String encryptString(String pText) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
@@ -165,6 +232,19 @@ public class IOController
 		
 		return verschluesselt;
 	}
+	
+	/**
+	 * Methode entschlüsselt einen String nach AES 128 Bit auf Basis des SecretKeys
+	 * 
+	 * @param pText Der verschlüsselte Text
+	 * @return Der unverschlüsselte Text
+	 * @throws IOException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws InvalidKeyException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 */
 	
 	private String decryptString(String pText) throws IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
 	{
@@ -180,6 +260,13 @@ public class IOController
 
 	}
 	
+	/**
+	 * Methode erstellt einen Master SecretKey, der zur Verschlüsselung der Nutzerdaten dient
+	 * 
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 */
 	
 	private SecretKeySpec initMasterEncrypt() throws UnsupportedEncodingException, NoSuchAlgorithmException
 	{
@@ -191,7 +278,18 @@ public class IOController
 		return secretkey;
 	}
 	
-	
+	/**
+	 * Methode verschlüsselt einen String nach AES 128 Bit auf Basis des Master SecretKeys.
+	 * 
+	 * @param pText Der unverschlüsselte String
+	 * @return Der unverschlüsselte Text
+	 * @throws InvalidKeyException
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 */
 	
 	private String encryptMasterString(String pText) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
@@ -204,6 +302,19 @@ public class IOController
 		
 		return verschluesselt;
 	}
+	
+	/**
+	 * Methode entschlüsselt einen String nach AES 128 Bit auf Basis des Master SecretKeys
+	 * 
+	 * @param pText Der verschlüsselte Text
+	 * @return Der unverschlüsselte Text
+	 * @throws IOException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws InvalidKeyException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 */
 	
 	private String decryptMasterString(String pText) throws IOException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
 	{
@@ -218,6 +329,13 @@ public class IOController
 		return text;
 
 	}
+	
+	/**
+	 * Methode zählt Zeilenanzahl der Kontakt Datei des angemeldeten Nutzers
+	 * 
+	 * @return Anzahl der Zeilen
+	 * @throws FileNotFoundException
+	 */
 	
 	int getLines() throws FileNotFoundException
 	{
@@ -237,6 +355,13 @@ public class IOController
 		
 	}
 	
+	/**
+	 * Methode zählt Zeilenanzahl der Nutzer Datei
+	 * 
+	 * @return Anzahl der Zeilen
+	 * @throws FileNotFoundException
+	 */
+	
 	int getUserLines() throws FileNotFoundException
 	{
 		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
@@ -253,6 +378,18 @@ public class IOController
 		return lines;
 		
 	}
+	
+	/**
+	 * Methode schreibt einen Nutzer in eine Datei
+	 * 
+	 * @param pPerson Die zu speichernde Person
+	 * @throws IOException
+	 * @throws InvalidKeyException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 */
 	
 	void saveToFile(Person pPerson) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
@@ -315,16 +452,39 @@ public class IOController
 		
 	}
 	
+	/**
+	 * Schließt den Writer Stream
+	 * 
+	 * @throws IOException
+	 */
+	
 	void closeWriteStream() throws IOException
 	{
 		bw.close();
 	}
+	
+	/**
+	 * Schließt den Writer Stream für die Nutzerdatei
+	 * 
+	 * @throws IOException
+	 */
 	
 	void closeUserWriteStream() throws IOException
 	{
 		ubw.close();
 	}
 	
+	/**
+	 * Methode liest eine Person aus der Kontaktdatei
+	 * 
+	 * @return Die gelesene Person
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IOException
+	 */
 	
 	Person readPerson() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
@@ -393,10 +553,28 @@ public class IOController
 		
 	}
 	
+	/**
+	 *  Methode schließt den Reader Stream
+	 * 
+	 */
+	
 	void closeReader()
 	{
 		reader.close();
 	}
+	
+	/**
+	 * Methode schreibt einen Nutzer in eine Datei
+	 * 
+	 * @param pUser Der zu speichernde Nutzer
+	 * @throws InvalidKeyException
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws IOException
+	 */
 	
 	void saveUserToFile(User pUser) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
@@ -408,6 +586,18 @@ public class IOController
 		ubw.newLine();
 		ubw.flush();
 	}
+	
+	/**
+	 * Methode liest Nutzer aus Datei
+	 * 
+	 * @return Der gelesene Nutzer
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IOException
+	 */
 	
 	User readUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
@@ -422,6 +612,19 @@ public class IOController
 		
 		return neu;
 	}
+	
+	/**
+	 * Methode schreibt Einstellungen in Datei
+	 * 
+	 * @param pSettings Die zu speichernden Einstellung
+	 * @throws InvalidKeyException
+	 * @throws UnsupportedEncodingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws IOException
+	 */
 	
 	void saveSettingsToFile(Settings pSettings) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
@@ -452,6 +655,18 @@ public class IOController
 		sbw.flush();
 	}
 	
+	/**
+	 * Methode liest Einstellung aus Datei
+	 * 
+	 * @return Die gelesene Einstellung
+	 * @throws InvalidKeyException
+	 * @throws IllegalBlockSizeException
+	 * @throws BadPaddingException
+	 * @throws NoSuchAlgorithmException
+	 * @throws NoSuchPaddingException
+	 * @throws IOException
+	 */
+	
 	Settings readSettings() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		Settings neu = new Settings();
@@ -470,6 +685,15 @@ public class IOController
 		return neu;
 	}
 	
+	/**
+	 * Methode konvertiert ein BufferedImage in ein byte-Array 
+	 * 
+	 * @param image Das zu konvertierende Bild
+	 * @param pFormat Das Bildformat als welches das Bild konvertiert werden soll
+	 * @return Das byte-Array
+	 * @throws IOException
+	 */
+	
 	private static byte[] imageToByte (BufferedImage image, String pFormat) throws IOException 
 	{
 		BufferedImage bufferedImage = image;
@@ -483,11 +707,26 @@ public class IOController
 	}
 	
 	
+	/**
+	 * Methode konvertier ein byte-Array zu einem Base64 String
+	 * 
+	 * @param pBytes Das zu konvertierende byte-Array
+	 * @return Der aus dem byte-Array konvertierte Base64 String
+	 */
+	
 	private static String byteToBase64(byte[] pBytes)		
 	{	
 		String encoded = Base64.getEncoder().encodeToString(pBytes);
 		return encoded;
 	}
+	
+	/**
+	 * Methode konvertiert einen Base64 String zu einbem byte-Array
+	 * 
+	 * @param pText Der zu konvertierende Base64 String
+	 * @return Das aus dem Base64 String konvertierte byte-Array
+	 * @throws IOException
+	 */
 	
 	private static byte[] base64toByte(String pText) throws IOException
 	{
@@ -495,6 +734,15 @@ public class IOController
 		byte[] bytes = decoder.decodeBuffer(pText);
 		return bytes;
 	}
+	
+	/**
+	 * Methode konvertiert ein byte-Array zu einem BufferedImage
+	 * 
+	 * @param pBytes Das zu konvertierende byte-Array
+	 * @param pFormat Das Bildformat aus welchem das BufferedImage konvertiert werden soll
+	 * @return Das konvertierte BufferedImage
+	 * @throws IOException
+	 */
 	
 	private static BufferedImage bytesToImage(byte[] pBytes, String pFormat) throws IOException
 	{
@@ -505,19 +753,42 @@ public class IOController
 	}
 	
 	
-	
+	/**
+	 * Methode konvertiert ein BufferedImage zu einem Base64 String
+	 * 
+	 * @param image Das zu konvertierende BufferdImage
+	 * @param pFormat Das Bildformat
+	 * @return Der konvertierte Base64 String
+	 * @throws IOException
+	 */
 	
 	static String imageToBase64(BufferedImage image, String pFormat) throws IOException
 	{
 		return byteToBase64(imageToByte(image,pFormat));	
 	}
 	
-	
+	/**
+	 * Methode konvertiert Base64 String zu BufferedImage
+	 * 
+	 * @param pBase Der zu konvertierende Base64 String
+	 * @param pFormat Das Bildformat
+	 * @return Das konvertierte BufferedImage
+	 * @throws IOException
+	 */
 	
 	static BufferedImage base64ToImage(String pBase, String pFormat) throws IOException
 	{
 		return bytesToImage(base64toByte(pBase),pFormat);
 	}
+	
+	/**
+	 * Methode konvertiert und skaliert Bild zu 100x100 BufferedImage 
+	 * 
+	 * @param pFile Das zu konvertierende Bild
+	 * @param pFormat Das Bildformat des Bildes
+	 * @return Das konvertierte BufferedImage
+	 * @throws IOException
+	 */
 	
 	BufferedImage readImage(File pFile, String pFormat) throws IOException
 	{
@@ -534,6 +805,15 @@ public class IOController
 		return bufferedImage;
 	}
 	
+	/**
+	 * Methode konvertiert BufferdImage zu einem Image
+	 * 
+	 * @param bi Das zu konvertierende BufferedImage
+	 * @param pFormat Das Bildformat des Zielbildes
+	 * @return Das konvertierte Image
+	 * @throws IOException
+	 */
+	
 	static Image createImage(BufferedImage bi, String pFormat) throws IOException
 	{
 		
@@ -542,6 +822,13 @@ public class IOController
 		return image;
 	}
 	
+	/**
+	 * Methode erstellt für eine Person eine VCard (.vcf) Datei
+	 * 
+	 * @param pPerson Die zu speichernde PErson
+	 * @param path der Pfad, an der die Datei gespeichert werden muss
+	 * @throws IOException
+	 */
 	
 	void createVCard(Person pPerson, String path) throws IOException 
 	{
@@ -575,6 +862,14 @@ public class IOController
 			vCardbw.close();
 
 	}
+	
+	/**
+	 * Import VCard (.vcf) Datei
+	 * 
+	 * @param pFile
+	 * @return Die gelesene Person
+	 * @throws FileNotFoundException
+	 */
 	
 	Person importVCard(File pFile) throws FileNotFoundException
 	{
