@@ -11,7 +11,7 @@ public class Settings
 	
 	public Settings()
 	{
-		laf = "com.jtattoo.plaf.aluminium.AluminiumLookAndFeel";
+		laf = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
 	}
 	public String getLaf()
 	{

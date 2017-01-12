@@ -60,6 +60,7 @@ public class Controller extends MouseAdapter
 		font = Color.BLACK;
 		activeSetting = new Settings();
 		
+		boolean notLoaded = true;
 		
 		try
 		{
@@ -67,9 +68,7 @@ public class Controller extends MouseAdapter
 		} catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IOException e)
 		{
-			JOptionPane.showMessageDialog(gui.getFrame(),
-				    "Es konnten keine Einstellungen geladen werden. \n"
-				    + "Ist dies der erste Start des Programms?");
+			notLoaded = true;
 			e.printStackTrace();
 		}
 		
@@ -125,6 +124,10 @@ public class Controller extends MouseAdapter
 		}
 
 		gui = new GUI();
+		
+		if (notLoaded) JOptionPane.showMessageDialog(null,
+			    "Es konnten keine Einstellungen geladen werden. \n"
+			    + "Ist dies der erste Start des Programms?");
 		
 		
 		if (!(activeSetting.getLaf().contains("com.jtattoo.plaf")||activeSetting.getLaf().contains("com.seaglasslookandfeel"))) changeColors(activeSetting.getBgColor(), activeSetting.getFontColor());
