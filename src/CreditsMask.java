@@ -10,6 +10,15 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Die CreditsMask Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für die Darstellung der Mitwirkenden verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 @SuppressWarnings("serial")
 public class CreditsMask extends JFrame
 {

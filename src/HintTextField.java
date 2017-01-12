@@ -4,6 +4,15 @@ import java.awt.event.FocusListener;
 
 import javax.swing.JTextField;
 
+/**
+ * Die HintTextField Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse dient als GUI-Element. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 @SuppressWarnings("serial")
 class HintTextField extends JTextField implements FocusListener 
 {

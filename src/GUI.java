@@ -56,7 +56,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Dimension;
 
 /**
- * Die GUIKlasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Die GUI Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
  * Diese Klasse ist für die Darstellung der Hauptelemente verantwortlich. 
  * 
  * @author Fynn Lohse, Bastian Wrede

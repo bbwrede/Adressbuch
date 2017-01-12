@@ -769,7 +769,7 @@ public class Controller extends MouseAdapter
 						if (!mc.isEmpty())
 						{
 							
-							int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Möchten Sie wirklich alle Kontakte löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
+							int reply = JOptionPane.showConfirmDialog(gui.getFrame(),"Möchten Sie wirklich alle Kontakte löschen?", "Löschen", JOptionPane.YES_NO_OPTION);
 					       
 						 	if (reply == JOptionPane.YES_OPTION) 
 					        {

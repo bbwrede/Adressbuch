@@ -1,12 +1,32 @@
+/**
+ * Die UserManager Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für das Verwalten der Nutzer verantwortlich 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 public class UserManager
 {
 	private List<User> user;
 	
-
+	/**
+	 * Konstruktor der Klasse UserManager
+	 */
+	
 	public UserManager()
 	{
 		user = new List<User>();
 	}
+	
+	/**
+	 * Authentifiziert einen Benutzer. Es wird Nutzername und Passwort auf Korrektheit überprüft
+	 * 
+	 * @param pPassword Passwort
+	 * @param pUsername Username
+	 * @return true, wenn korrekt - false, wenn falsch
+	 */
 	
 	boolean userAuthentification(String pPassword, String pUsername) 
 	{
@@ -30,6 +50,12 @@ public class UserManager
 		return false;
 	}
 	
+	/**
+	 * Gibt die Länge der Nutzerliste zurück
+	 * 
+	 * @return Länge der Liste
+	 */
+	
 	public int length()
 	{
 		user.toFirst();
@@ -42,6 +68,10 @@ public class UserManager
 	    return i;
 	}
 	
+	/**
+	 * Erstellt den Standardbenutzer "admin"
+	 */
+	
 	void initAdmin()
 	{
 		User admin = new User();
@@ -50,10 +80,23 @@ public class UserManager
 		sortIn(admin);
 	}
 	
+	/**
+	 * Entfernt Nutzer mit übergebenen Nutzernamen
+	 * 
+	 * @param pUsername der zu entfernene Nutzer
+	 */
+	
 	void removeUser(String pUsername)
 	{
 		removeObjectAt(indexOf(pUsername));
 	}
+	
+	/**
+	 * Überprüft ob Nutzer mit bestimmten Nutzernamen vorhanden ist
+	 * 
+	 * @param pUsername Nutzername
+	 * @return true,false
+	 */
 	
 	boolean isInList(String pUsername)
 	{
@@ -68,6 +111,13 @@ public class UserManager
 		}
 		return false;
 	}
+	
+	/**
+	 * Gibt den Index von einem Nutzer zurück
+	 * 
+	 * @param pUsername Nutzername
+	 * @return Index
+	 */
 	
 	int indexOf(String pUsername)
 	{
@@ -85,6 +135,12 @@ public class UserManager
 		}
 		return 0;
 	}
+	
+	/**
+	 * Sortiert einen Nutzer alphabetisch in die Liste ein
+	 * 
+	 * @param neu Der neue Benutzer
+	 */
 	
 	void sortIn(User neu)
 	{
@@ -107,6 +163,13 @@ public class UserManager
 		
 	}
 	
+	/**
+	 * Gibt das Objekt an einem bestimmtem Index zurück
+	 * 
+	 * @param i Index
+	 * @return Objekt an dem Index
+	 */
+	
 	User getObjectAt(int i)
 	{
 		user.toFirst();
@@ -116,6 +179,12 @@ public class UserManager
 		}
 		return user.getContent();	
 	}
+	
+	/**
+	 * Entfernt Objekt an bestimmten Index
+	 * 
+	 * @param i Index
+	 */
 	
 	void removeObjectAt(int i)
 	{
@@ -127,6 +196,10 @@ public class UserManager
 		user.remove();
 	}
 	
+	/**
+	 * Entfernt alle Nutzer aus der Liste
+	 */
+	
 	void removeListElements()
 	{
 		user.toFirst();
@@ -136,10 +209,22 @@ public class UserManager
 		}
 	}
 	
+	/**
+	 * Gibt die Liste zurück
+	 * 
+	 * @return Liste
+	 */
+	
 	List<User> getList()
 	{
 		return user;
 	}
+	
+	/**
+	 * Setzt die Liste
+	 * 
+	 * @param pUser Liste von Benutzern
+	 */
 	
 	void setList(List<User> pUser)
 	{

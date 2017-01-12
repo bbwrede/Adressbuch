@@ -1,5 +1,14 @@
 import java.awt.Color;
 
+/**
+ * Die Settings Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist dient als Modell für die Einstellungen. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 public class Settings
 {
 	private Color bgColor;

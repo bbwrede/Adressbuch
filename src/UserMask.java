@@ -18,6 +18,15 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+/**
+ * Die UserMask Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für die Darstellung der Nutzererstellung Verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 @SuppressWarnings("serial")
 public class UserMask extends JFrame
 {
@@ -39,8 +48,11 @@ public class UserMask extends JFrame
 	private JLabel pw2;
 
 	/**
-	 * Create the frame.
+	 * Konstruktor von der Klasse UserMask
+	 * 
+	 * @param pFrame
 	 */
+	
 	public UserMask(JFrame pFrame)
 	{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UserMask.class.getResource("/resources/user.png")));
@@ -134,6 +146,11 @@ public class UserMask extends JFrame
 		setLocationRelativeTo(pFrame);
 	}
 	
+	/**
+	 * Erstellt Nutzer aus der UserMask
+	 * 
+	 * @return Neuer Benutzer
+	 */
 	
 	@SuppressWarnings("deprecation")
 	User getNewUser()
@@ -145,6 +162,12 @@ public class UserMask extends JFrame
 		
 		return neu;
 	}
+	
+	/**
+	 * Überprüft ob das Passwort in dem Bestätigungsfeld richtig ist
+	 * 
+	 * @return true, false
+	 */
 	
 	@SuppressWarnings("deprecation")
 	boolean isPasswordCorrect()
@@ -159,7 +182,13 @@ public class UserMask extends JFrame
 		}
 	}
 	
-	boolean isUserName3()
+	/**
+	 * Überprüft ob das Passwort mindestens 3 Zeichen lang ist
+	 * 
+	 * @return true,false
+	 */
+	
+	boolean isUserName3() 
 	{
 		if (username.getText().length() < 3)
 		{
@@ -171,12 +200,21 @@ public class UserMask extends JFrame
 		}
 	}
 	
+	/**
+	 *  Zeight Fehler bei den Passwortfeldern an
+	 */
+	
 	void showPasswordWrong()
 	{
 		passwordIcon(true);
 		pwCheckIcon(true);
 	}
 	
+	/**
+	 * Fügt ActionListener zu den GUI-Elemeten hinzu
+	 * 
+	 * @param al ActionListener
+	 */
 	
 	void setActionListeners(ActionListener al)
 	{
@@ -186,27 +224,57 @@ public class UserMask extends JFrame
 		save.setActionCommand("save");
 	}
 	
+	/**
+	 * Zeigt Fehlerzeichen bei dem Passwortfeld an
+	 * 
+	 * @param visible Sichtbarkeit
+	 */
 	
 	void passwordIcon(boolean visible)
 	{
 		pw.setVisible(visible);
 	}
 	
+	/**
+	 * Zeigt Fehlerzeichen bei dem Kontrollpasswortfeld an
+	 * 
+	 * @param visible Sichtbarkeit
+	 */
+	
 	void pwCheckIcon(boolean visible)
 	{
 		pw2.setVisible(visible);
 	}
+	
+	/**
+	 * Zeigt Fehlerzeichen bei dem Usernamefeld an
+	 * 
+	 * @param visible Sichtbarkeit
+	 */
 	
 	void usernameIcon(boolean visible)
 	{
 		un.setVisible(visible);
 	}
 	
+	/**
+	 * Setzt Titel der GUI
+	 * 
+	 * @param pTitle
+	 */
+	
 	void setLabelTitle(String pTitle)
 	{
 		lblNewLabel.setText(pTitle);
 		setTitle(pTitle);
 	}
+	
+	/**
+	 * Füllt die Felder aus
+	 * 
+	 * @param pUsername Nutzername
+	 * @param pPassword Passwort
+	 */
 	
 	void setFieldData(String pUsername, String pPassword)
 	{
@@ -215,16 +283,36 @@ public class UserMask extends JFrame
 		confirmPassword.setText(pPassword);
 	}
 	
+	/**
+	 * De-/Aktiviert das Username Fenster
+	 * 
+	 * @param pEditable Aktiviert, Deaktiviert
+	 */
+	
 	void setUsernameEditable(boolean pEditable)
 	{
 		username.setEditable(pEditable);
 		username.setEnabled(pEditable);
 	}
 	
+	/**
+	 * Gibt des GUI-Titel zurück
+	 * 
+	 * @return Titel
+	 */
+	
 	String getLabelTitle()
 	{
 		return lblNewLabel.getText();
 	}
+	
+	/**
+	 * Methode setzt Hintergrundfarbe bzw. Textfarbe der GUI
+	 * 
+	 * @param parent Elternkomponente
+	 * @param bg Hintergrundfarbe
+	 * @param font Textfarbe
+	 */
 	
 	public void setPanelColor(Container parent, Color bg, Color font)
 	{
@@ -258,6 +346,12 @@ public class UserMask extends JFrame
 	        }
 	    }
 	}
+	
+	/**
+	 * Gibt JFrame zurück
+	 * 
+	 * @return JFrame
+	 */
 	
 	public JFrame getFrame()
 	{

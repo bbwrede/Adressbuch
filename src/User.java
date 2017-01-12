@@ -1,3 +1,13 @@
+
+/**
+ * Die User Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist dient als Modell für die Benutzer. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 public class User 
 {
 	private String username = "";

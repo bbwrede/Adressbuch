@@ -18,6 +18,16 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+/**
+ * Die SettingsMask Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für die Darstellung der Einstellungen Verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
+
 @SuppressWarnings("serial")
 public class SettingsMask extends JFrame
 {
@@ -44,7 +54,13 @@ public class SettingsMask extends JFrame
 	private JLabel lblFarbeinstellungenWerdenNur;
 	private JLabel lblFarbtheme;
 
-
+	/**
+	 * Konstruktor der Klasse SettingsMask.
+	 * 
+	 * @param pFrame Elternframe
+	 */
+	
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public SettingsMask(JFrame pFrame)
 	{
@@ -166,6 +182,12 @@ public class SettingsMask extends JFrame
 		setVisible(true);
 	}
 	
+	/**
+	 * Methode fügt ActionListener zu den GUI-Elementen hinzu
+	 * 
+	 * @param al ActionListener
+	 */
+	
 	void setActionListeners(ActionListener al)
 	{
 		btnUserSettings.addActionListener(al);
@@ -180,15 +202,35 @@ public class SettingsMask extends JFrame
 		btnX.setActionCommand("closeSettings");
 	}
 	
+	/**
+	 * Setzt die Hintergrundfarbe für die Farbvorschau
+	 * 
+	 * @param pColor Farbe
+	 */
+	
 	void setBgColorLabel(Color pColor)
 	{
 		bgColor.setBackground(pColor);
 	}
 	
+	/**
+	 * Setzt die Textfarbe für die Vorschau
+	 * 
+	 * @param pColor Farbe
+	 */
+	
 	void setFontColorLabel(Color pColor)
 	{
 		fontColor.setBackground(pColor);
 	}
+	
+	/**
+	 * Methode setzt Hintergrundfarbe bzw. Textfarbe der GUI
+	 * 
+	 * @param parent Elternkomponente
+	 * @param bg Hintergrundfarbe
+	 * @param font Textfarbe
+	 */
 	
 	public void setPanelColor(Container parent, Color bg, Color font)
 	{
@@ -223,6 +265,12 @@ public class SettingsMask extends JFrame
 	    }
 	}
 	
+	/**
+	 * Gibt das Ausgewählte Look and Feel zurück
+	 * 
+	 * @return Name von Look and Feel
+	 */
+	
 	public String getLaf()
 	{
 		switch (cbLaf.getSelectedItem().toString())
@@ -240,20 +288,45 @@ public class SettingsMask extends JFrame
 			
 	}
 	
+	/**
+	 * Gibt das Ausgewählte Theme zurück
+	 * 
+	 * @return Name von Theme 
+	 */
+	
 	public String getTheme()
 	{
 		return comboBox_1.getSelectedItem().toString();
 	}
+	
+	/**
+	 * Gibt den ausgewählten Index der Theme-ComboBox zurück
+	 * 
+	 * @return Index
+	 */
 	
 	public int getSelectedThemeIndex()
 	{
 		return comboBox_1.getSelectedIndex();
 	}
 	
+	/**
+	 * Getter für JFrame
+	 * 
+	 * @return Frame
+	 */
+	
 	public JFrame getFrame()
 	{
 		return this;
 	}
+	
+	/**
+	 * Setzt das Look and Feel in die ComboBox 
+	 * 
+	 * @param pSelectedLaf das aktuelle Look and Feel
+	 * @param pThemeName Name der Farb-theme
+	 */
 	
 	public void setSelected(String pSelectedLaf, String pThemeName)
 	{

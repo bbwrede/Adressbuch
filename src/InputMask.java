@@ -23,11 +23,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.Toolkit;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "rawtypes", "serial" })
 public class InputMask extends JFrame
 {
 
-	private static final long serialVersionUID = 8760893234879572236L;
 	private JPanel contentPane;
 	private JPanel main;
 	private JLabel label;

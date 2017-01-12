@@ -1,8 +1,21 @@
 import java.awt.Color;
 
+/**
+ * Die SettingsManager Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für das Erstellen von Voreinstellungen Verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
+
 public class SettingManager
 {
 	private Settings[] themes;
+	
+	/**
+	 * Konstruktor der Klasse SettingManager
+	 */
 	
 	public SettingManager()
 	{
@@ -28,10 +41,13 @@ public class SettingManager
 		themes[4].setBgColor(Color.WHITE);
 		themes[4].setFontColor(Color.BLACK);
 		
-		
-		
 	}
 	
+	/**
+	 * Gibt das Array mit dem Themes zurück
+	 * 
+	 * @return Array aus Settings
+	 */
 	
 	public Settings[] getThemes()
 	{
