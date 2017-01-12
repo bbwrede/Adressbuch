@@ -1,3 +1,4 @@
+
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -22,6 +23,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.Toolkit;
+
+/**
+ * Die InputMask Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
+ * Diese Klasse ist für die Darstellung der Eingabe-Maske verantwortlich. 
+ * 
+ * @author Fynn Lohse, Bastian Wrede
+ * @version 1.0 R
+ *
+ */
 
 @SuppressWarnings({ "rawtypes", "serial" })
 public class InputMask extends JFrame
@@ -83,7 +93,9 @@ public class InputMask extends JFrame
 	private boolean removeOnClose = false;
 
 	/**
-	 * Launch the application.
+	 * Konstruktor der Klasse InputMask
+	 * 
+	 * @param pFrame
 	 */
 
 	@SuppressWarnings("unchecked")
@@ -472,7 +484,11 @@ public class InputMask extends JFrame
 		
 	}
 	
-	
+	/**
+	 * Methode fügt ActionListener zu den GUI-Elementen hinzu
+	 * 
+	 * @param al ActionListener
+	 */
 	
 	void setActionListeners(ActionListener al)
 	{
@@ -487,6 +503,12 @@ public class InputMask extends JFrame
 		btnImport.addActionListener(al);
 		btnImport2.addActionListener(al);
 	}
+	
+	/**
+	 * Methode gibt neuen Kontakt aus Basis der eingegebenen Attributen zurück
+	 * 
+	 * @return neue Person
+	 */
 	
 	Person getNewPerson()
 	{
@@ -590,6 +612,13 @@ public class InputMask extends JFrame
 		return neu;
 	}
 	
+	/**
+	 * Setzt das Bild für einen neuen Kontakt
+	 * 
+	 * @param pImage Bild
+	 * @param pFormat Bildformat
+	 */
+	
 	void setImage(BufferedImage pImage, String pFormat)
 	{
 		
@@ -597,11 +626,19 @@ public class InputMask extends JFrame
 		format = pFormat;
 	}
 	
+	/**
+	 * Öffnet den erweiterten Bereich der GUI
+	 */
+	
 	void openAdvanced()
 	{
 		main.setVisible(false);
 		advanced.setVisible(true);
 	}
+	
+	/**
+	 * Öffnet den Hauptbereich der GUI
+	 */
 	
 	void openMain()
 	{
@@ -609,15 +646,35 @@ public class InputMask extends JFrame
 		advanced.setVisible(false);
 	}
 	
+	/**
+	 * Bennennt den Bild-Button auf den Namen des ausgeählten Bildes um
+	 * 
+	 * @param pText Bildname
+	 */
+	
 	void setImageButton(String pText)
 	{
 		btnBild.setText(pText);
 	}
 	
+	/**
+	 * Gibt den JFrame zurück
+	 * 
+	 * @return JFrame
+	 */
+	
 	JFrame getFrame()
 	{
 		return this;
 	}
+	
+	/**
+	 * Methode setzt Hintergrundfarbe bzw. Textfarbe der GUI
+	 * 
+	 * @param parent Elternkomponente
+	 * @param bg Hintergrundfarbe
+	 * @param font Textfarbe
+	 */
 	
 	public void setPanelColor(Container parent, Color bg, Color font)
 	{
@@ -651,6 +708,12 @@ public class InputMask extends JFrame
 	        }
 	    }
 	}
+	
+	/**
+	 * Methode füllt GUI mit Attributen von einer Person aus
+	 * 
+	 * @param pPerson Person
+	 */
 	
 	void setData(Person pPerson)
 	{
@@ -692,12 +755,25 @@ public class InputMask extends JFrame
 		
 	}
 	
+	/**
+	 * Setzt den Modus der Eingabe-Maske (Bearbeiten, oder Erstellen)
+	 * 
+	 * @param pTitle Titel der Maske
+	 * @param pRemoveOnClose Boolean, ob der Kontakt gelöscht werden soll (zum bearbeiten)
+	 */
+	
 	void setMode(String pTitle, boolean pRemoveOnClose)
 	{
 		label.setText(pTitle);
 		setTitle(pTitle);
 		removeOnClose = pRemoveOnClose ;
 	}
+	
+	/**
+	 * Gibt den boolean removeOnClose zurück
+	 * 
+	 * @return
+	 */
 	
 	boolean getRemoveOnClose()
 	{

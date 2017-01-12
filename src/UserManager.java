@@ -1,3 +1,4 @@
+
 /**
  * Die UserManager Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
  * Diese Klasse ist für das Verwalten der Nutzer verantwortlich 

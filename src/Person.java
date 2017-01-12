@@ -1,3 +1,4 @@
+
 import java.util.UUID;
 
 /**
@@ -400,5 +401,4 @@ public class Person
 		this.uuid = uuid;
 	}
 
-  // Ende Methoden
-} // end of Person
+}

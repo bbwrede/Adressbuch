@@ -1,4 +1,5 @@
 
+
 /**
  * Die User Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
  * Diese Klasse ist dient als Modell für die Benutzer. 

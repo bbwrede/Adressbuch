@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -50,7 +51,7 @@ public class UserMask extends JFrame
 	/**
 	 * Konstruktor von der Klasse UserMask
 	 * 
-	 * @param pFrame
+	 * @param pFrame JFrame
 	 */
 	
 	public UserMask(JFrame pFrame)
