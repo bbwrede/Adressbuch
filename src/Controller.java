@@ -60,7 +60,7 @@ public class Controller extends MouseAdapter
 		font = Color.BLACK;
 		activeSetting = new Settings();
 		
-		boolean notLoaded = true;
+		boolean notLoaded = false;
 		
 		try
 		{
@@ -443,8 +443,15 @@ public class Controller extends MouseAdapter
 				
 				if (cmd.equals("saveSettings"))
 				{
-					activeSetting.setBgColor(background);
-					activeSetting.setFontColor(font);
+
+					activeSetting.setBgColor(sman.getThemes()[sm.getSelectedThemeIndex()].getBgColor());
+					activeSetting.setFontColor(sman.getThemes()[sm.getSelectedThemeIndex()].getFontColor());
+					
+					if (!sm.getTheme().equals("Standard")) 
+					{
+						activeSetting.setBgColor(background);
+						activeSetting.setFontColor(font);
+					}
 					activeSetting.setLaf(sm.getLaf());
 					
 					int reply = JOptionPane.showConfirmDialog(gui.getFrame(), "Damit die Änderungen Wirksam werden muss das Programm neugestartet werden.\n"

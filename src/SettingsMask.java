@@ -141,6 +141,13 @@ public class SettingsMask extends JFrame
 			cbLaf.addItem(laf[i]);
 		}
 		
+		String[] themes = {"Standard", "LM-Theme", "Royal Blue", "Dark Sense", "Polar White"};
+		
+		for (int i = 0; i < themes.length; i++)
+		{
+			 comboBox_1.addItem(themes[i]);
+		}
+		
 		
 		
 		setLocationRelativeTo(pFrame);
@@ -220,6 +227,16 @@ public class SettingsMask extends JFrame
 		
 		return null;
 			
+	}
+	
+	public String getTheme()
+	{
+		return comboBox_1.getSelectedItem().toString();
+	}
+	
+	public int getSelectedThemeIndex()
+	{
+		return comboBox_1.getSelectedIndex();
 	}
 	
 	public JFrame getFrame()
