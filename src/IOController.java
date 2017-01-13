@@ -69,7 +69,7 @@ public class IOController
 	 * @param pPassword Passwort eines Nutzers
 	 */
 	
-	void setUserInfo(String pUsername, String pPassword)
+	public void setUserInfo(String pUsername, String pPassword)
 	{
 		username = pUsername;
 		password = pPassword;
@@ -81,7 +81,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	void initWriter() throws FileNotFoundException
+	public void initWriter() throws FileNotFoundException
 	{
 		//saves
 		File dir = new File("saves");
@@ -105,7 +105,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	void initReader() throws FileNotFoundException
+	public void initReader() throws FileNotFoundException
 	{
 		fr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
 		reader = new Scanner(fr);
@@ -117,7 +117,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	void initUserWriter() throws FileNotFoundException
+	public void initUserWriter() throws FileNotFoundException
 	{
 		File dir = new File("saves");
 		dir.mkdir();
@@ -139,7 +139,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	void initUserReader() throws FileNotFoundException
+	public void initUserReader() throws FileNotFoundException
 	{
 		ufr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
 		ureader = new Scanner(ufr);
@@ -151,7 +151,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	void initSettingsWriter() throws FileNotFoundException
+	public void initSettingsWriter() throws FileNotFoundException
 	{
 		//saves
 		File dir = new File("saves");
@@ -175,7 +175,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	void initSettingsReader() throws FileNotFoundException
+	public void initSettingsReader() throws FileNotFoundException
 	{
 		sfr = new FileReader(System.getProperty("user.dir")+"\\saves\\settings.jsettings");
 		sreader = new Scanner(sfr);
@@ -330,7 +330,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	int getLines() throws FileNotFoundException
+	public int getLines() throws FileNotFoundException
 	{
 		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\"+username+".jbook");
 		Scanner tempreader = new Scanner(tempfr);
@@ -355,7 +355,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	int getUserLines() throws FileNotFoundException
+	public int getUserLines() throws FileNotFoundException
 	{
 		FileReader tempfr = new FileReader(System.getProperty("user.dir")+"\\saves\\user.juser");
 		Scanner tempreader = new Scanner(tempfr);
@@ -384,7 +384,7 @@ public class IOController
 	 * @throws BadPaddingException
 	 */
 	
-	void saveToFile(Person pPerson) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+	public void saveToFile(Person pPerson) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
 
 		bw.write(pPerson.getUuid().toString());
@@ -451,7 +451,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	void closeWriteStream() throws IOException
+	public void closeWriteStream() throws IOException
 	{
 		bw.close();
 	}
@@ -462,7 +462,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	void closeUserWriteStream() throws IOException
+	public void closeUserWriteStream() throws IOException
 	{
 		ubw.close();
 	}
@@ -479,7 +479,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	Person readPerson() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	public Person readPerson() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		Person neu = new Person();
 		UUID uuid = UUID.fromString(reader.next());
@@ -551,7 +551,7 @@ public class IOController
 	 * 
 	 */
 	
-	void closeReader()
+	public void closeReader()
 	{
 		reader.close();
 	}
@@ -569,7 +569,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	void saveUserToFile(User pUser) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void saveUserToFile(User pUser) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		ubw.write(encryptMasterString(pUser.getUsername()));
 		ubw.newLine();
@@ -592,7 +592,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	User readUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	public User readUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		User neu = new User();
 		
@@ -619,7 +619,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	void saveSettingsToFile(Settings pSettings) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void saveSettingsToFile(Settings pSettings) throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		sbw.write(pSettings.getLaf());
 		sbw.newLine();
@@ -660,7 +660,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	Settings readSettings() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	public Settings readSettings() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		Settings neu = new Settings();
 		
@@ -755,7 +755,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	static String imageToBase64(BufferedImage image, String pFormat) throws IOException
+	public static String imageToBase64(BufferedImage image, String pFormat) throws IOException
 	{
 		return byteToBase64(imageToByte(image,pFormat));	
 	}
@@ -769,7 +769,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	static BufferedImage base64ToImage(String pBase, String pFormat) throws IOException
+	public static BufferedImage base64ToImage(String pBase, String pFormat) throws IOException
 	{
 		return bytesToImage(base64toByte(pBase),pFormat);
 	}
@@ -783,7 +783,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	BufferedImage readImage(File pFile, String pFormat) throws IOException
+	public BufferedImage readImage(File pFile, String pFormat) throws IOException
 	{
 		Image temp = ImageIO.read(pFile);
 		temp = temp.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -807,7 +807,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	static Image createImage(BufferedImage bi, String pFormat) throws IOException
+	public static Image createImage(BufferedImage bi, String pFormat) throws IOException
 	{
 		
 		Image image = bi;
@@ -823,7 +823,7 @@ public class IOController
 	 * @throws IOException
 	 */
 	
-	void createVCard(Person pPerson, String path) throws IOException 
+	public void createVCard(Person pPerson, String path) throws IOException 
 	{
 		BufferedWriter vCardbw = null;
 		FileWriter vCardfw = null;
@@ -864,7 +864,7 @@ public class IOController
 	 * @throws FileNotFoundException
 	 */
 	
-	Person importVCard(File pFile) throws FileNotFoundException
+	public Person importVCard(File pFile) throws FileNotFoundException
 	{
 		
 		

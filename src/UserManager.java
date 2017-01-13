@@ -29,7 +29,7 @@ public class UserManager
 	 * @return true, wenn korrekt - false, wenn falsch
 	 */
 	
-	boolean userAuthentification(String pPassword, String pUsername) 
+	public boolean userAuthentification(String pPassword, String pUsername) 
 	{
 
 		if (isInList(pUsername))
@@ -73,7 +73,7 @@ public class UserManager
 	 * Erstellt den Standardbenutzer "admin"
 	 */
 	
-	void initAdmin()
+	public void initAdmin()
 	{
 		User admin = new User();
 		admin.setUsername("admin");
@@ -87,7 +87,7 @@ public class UserManager
 	 * @param pUsername der zu entfernene Nutzer
 	 */
 	
-	void removeUser(String pUsername)
+	public void removeUser(String pUsername)
 	{
 		removeObjectAt(indexOf(pUsername));
 	}
@@ -99,7 +99,7 @@ public class UserManager
 	 * @return true,false
 	 */
 	
-	boolean isInList(String pUsername)
+	public boolean isInList(String pUsername)
 	{
 		user.toFirst();
 		while (user.hasAccess())
@@ -120,7 +120,7 @@ public class UserManager
 	 * @return Index
 	 */
 	
-	int indexOf(String pUsername)
+	public int indexOf(String pUsername)
 	{
 		user.toFirst();
 		int i = 0;
@@ -143,7 +143,7 @@ public class UserManager
 	 * @param neu Der neue Benutzer
 	 */
 	
-	void sortIn(User neu)
+	public void sortIn(User neu)
 	{
 		user.toFirst();
 		
@@ -171,7 +171,7 @@ public class UserManager
 	 * @return Objekt an dem Index
 	 */
 	
-	User getObjectAt(int i)
+	public User getObjectAt(int i)
 	{
 		user.toFirst();
 		for (int c = 0; c<i; c++)
@@ -187,7 +187,7 @@ public class UserManager
 	 * @param i Index
 	 */
 	
-	void removeObjectAt(int i)
+	public void removeObjectAt(int i)
 	{
 		user.toFirst();
 		for (int c =0; c<i; c++)
@@ -201,7 +201,7 @@ public class UserManager
 	 * Entfernt alle Nutzer aus der Liste
 	 */
 	
-	void removeListElements()
+	public void removeListElements()
 	{
 		user.toFirst();
 		while (user.hasAccess())
@@ -216,7 +216,7 @@ public class UserManager
 	 * @return Liste
 	 */
 	
-	List<User> getList()
+	public List<User> getList()
 	{
 		return user;
 	}
@@ -227,7 +227,7 @@ public class UserManager
 	 * @param pUser Liste von Benutzern
 	 */
 	
-	void setList(List<User> pUser)
+	public void setList(List<User> pUser)
 	{
 		user = pUser;
 	}

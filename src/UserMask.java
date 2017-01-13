@@ -154,7 +154,7 @@ public class UserMask extends JFrame
 	 */
 	
 	@SuppressWarnings("deprecation")
-	User getNewUser()
+	public User getNewUser()
 	{
 		User neu = new User();
 		
@@ -171,7 +171,7 @@ public class UserMask extends JFrame
 	 */
 	
 	@SuppressWarnings("deprecation")
-	boolean isPasswordCorrect()
+	public boolean isPasswordCorrect()
 	{
 		if (password.getText().equals(confirmPassword.getText()))
 		{
@@ -189,7 +189,7 @@ public class UserMask extends JFrame
 	 * @return true,false
 	 */
 	
-	boolean isUserName3() 
+	public boolean isUserName3() 
 	{
 		if (username.getText().length() < 3)
 		{
@@ -205,7 +205,7 @@ public class UserMask extends JFrame
 	 *  Zeight Fehler bei den Passwortfeldern an
 	 */
 	
-	void showPasswordWrong()
+	public void showPasswordWrong()
 	{
 		passwordIcon(true);
 		pwCheckIcon(true);
@@ -217,7 +217,7 @@ public class UserMask extends JFrame
 	 * @param al ActionListener
 	 */
 	
-	void setActionListeners(ActionListener al)
+	public void setActionListeners(ActionListener al)
 	{
 		x.addActionListener(al);
 		x.setActionCommand("quit");
@@ -231,7 +231,7 @@ public class UserMask extends JFrame
 	 * @param visible Sichtbarkeit
 	 */
 	
-	void passwordIcon(boolean visible)
+	public void passwordIcon(boolean visible)
 	{
 		pw.setVisible(visible);
 	}
@@ -242,7 +242,7 @@ public class UserMask extends JFrame
 	 * @param visible Sichtbarkeit
 	 */
 	
-	void pwCheckIcon(boolean visible)
+	public void pwCheckIcon(boolean visible)
 	{
 		pw2.setVisible(visible);
 	}
@@ -253,7 +253,7 @@ public class UserMask extends JFrame
 	 * @param visible Sichtbarkeit
 	 */
 	
-	void usernameIcon(boolean visible)
+	public void usernameIcon(boolean visible)
 	{
 		un.setVisible(visible);
 	}
@@ -264,7 +264,7 @@ public class UserMask extends JFrame
 	 * @param pTitle
 	 */
 	
-	void setLabelTitle(String pTitle)
+	public void setLabelTitle(String pTitle)
 	{
 		lblNewLabel.setText(pTitle);
 		setTitle(pTitle);
@@ -277,7 +277,7 @@ public class UserMask extends JFrame
 	 * @param pPassword Passwort
 	 */
 	
-	void setFieldData(String pUsername, String pPassword)
+	public void setFieldData(String pUsername, String pPassword)
 	{
 		username.setText(pUsername);
 		password.setText(pPassword);
@@ -290,7 +290,7 @@ public class UserMask extends JFrame
 	 * @param pEditable Aktiviert, Deaktiviert
 	 */
 	
-	void setUsernameEditable(boolean pEditable)
+	public void setUsernameEditable(boolean pEditable)
 	{
 		username.setEditable(pEditable);
 		username.setEnabled(pEditable);
@@ -302,7 +302,7 @@ public class UserMask extends JFrame
 	 * @return Titel
 	 */
 	
-	String getLabelTitle()
+	public String getLabelTitle()
 	{
 		return lblNewLabel.getText();
 	}

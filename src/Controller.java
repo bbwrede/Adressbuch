@@ -29,7 +29,6 @@ import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
 import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
 import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
 
-@SuppressWarnings("static-access")
 
 /**
  * Die Controller Klasse von JBook, ein Adressverwaltungsprogramm entwickelt in Java.
@@ -67,7 +66,7 @@ public class Controller extends MouseAdapter
 	 * @throws FileNotFoundException
 	 */
 	
-	Controller() throws FileNotFoundException 
+	public Controller() throws FileNotFoundException 
 	{	
 		mc = new ModelController();
 		uman = new UserManager();
@@ -178,7 +177,7 @@ public class Controller extends MouseAdapter
 	 *  Methode Aktualisiert die Tabelle in der GUI
 	 */
 	
-	void updateList()
+	public void updateList()
 	{
 		gui.removeTableElements();
 		for (int i = 0; i <mc.length(); i++)
@@ -204,7 +203,7 @@ public class Controller extends MouseAdapter
 	 *  Methode überprüft Passwort und Nutzername und sorgt ggf. für eine Warnung in der GUI
 	 */
 	
-	void authentification()
+	public void authentification()
 	{
 		if (uman.userAuthentification(gui.getPassword(), gui.getUsername()))
 		{
@@ -221,7 +220,7 @@ public class Controller extends MouseAdapter
 	 * Methoder instanziert den ActionListener
 	 */
 
-	void initActionListener()
+	public void initActionListener()
 	{
 		al = new ActionListener()
 		{
@@ -579,7 +578,7 @@ public class Controller extends MouseAdapter
 	 * Methode instanziert die ActionListener für die Menüleiste
 	 */
 	
-	void initMenuActionListener()
+	public void initMenuActionListener()
 	{
 		menuAl = new ActionListener()
 		{
@@ -817,7 +816,7 @@ public class Controller extends MouseAdapter
 	 * Methode instanziert den KeyListener für das Login-Fenster
 	 */
 	
-	void initLoginKeyListener()
+	public void initLoginKeyListener()
 	{
 		loginKl = new KeyListener()
 		{
@@ -892,7 +891,7 @@ public class Controller extends MouseAdapter
 	 * @throws IOException
 	 */
 	
-	void saveList() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void saveList() throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		ioc.setUserInfo(active.getUsername(), active.getPassword());
 		ioc.initWriter();
@@ -920,7 +919,7 @@ public class Controller extends MouseAdapter
 	 * @throws IOException
 	 */
 	
-	void loadList() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	public void loadList() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		ioc.setUserInfo(active.getUsername(), active.getPassword());
 		mc.removeListElements();
@@ -954,7 +953,7 @@ public class Controller extends MouseAdapter
 	 * @throws IOException
 	 */
 	
-	void saveUser() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void saveUser() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		ioc.initUserWriter();
 		List<User> temp = uman.getList();
@@ -981,7 +980,7 @@ public class Controller extends MouseAdapter
 	 * @throws IOException
 	 */
 	
-	void loadUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	public void loadUser() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		
 		ioc.initUserReader();
@@ -1010,7 +1009,7 @@ public class Controller extends MouseAdapter
 	 * @throws IOException
 	 */
 	
-	void saveSetting() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void saveSetting() throws InvalidKeyException, UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		ioc.initSettingsWriter();
 		ioc.saveSettingsToFile(activeSetting);
@@ -1027,7 +1026,7 @@ public class Controller extends MouseAdapter
 	 * @throws IOException
 	 */
 	
-	void loadSetting() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
+	public void loadSetting() throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException, NoSuchAlgorithmException, NoSuchPaddingException, IOException
 	{
 		ioc.initSettingsReader();
 		activeSetting = ioc.readSettings();
@@ -1040,7 +1039,7 @@ public class Controller extends MouseAdapter
 	 * @param font Textfarbe
 	 */
 	
-	void changeColors(Color bg, Color font)
+	public void changeColors(Color bg, Color font)
 	{
 		gui.setPanelColor(gui.getFrame(),bg, font);
 	}

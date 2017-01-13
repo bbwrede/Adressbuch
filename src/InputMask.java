@@ -95,7 +95,7 @@ public class InputMask extends JFrame
 	/**
 	 * Konstruktor der Klasse InputMask
 	 * 
-	 * @param pFrame
+	 * @param pFrame Elternframe
 	 */
 
 	@SuppressWarnings("unchecked")
@@ -490,7 +490,7 @@ public class InputMask extends JFrame
 	 * @param al ActionListener
 	 */
 	
-	void setActionListeners(ActionListener al)
+	public void setActionListeners(ActionListener al)
 	{
 		btnErweitert.addActionListener(al);
 		btnSpeichern.addActionListener(al);
@@ -510,7 +510,7 @@ public class InputMask extends JFrame
 	 * @return neue Person
 	 */
 	
-	Person getNewPerson()
+	public Person getNewPerson()
 	{
 		Person neu = new Person();
 		
@@ -619,7 +619,7 @@ public class InputMask extends JFrame
 	 * @param pFormat Bildformat
 	 */
 	
-	void setImage(BufferedImage pImage, String pFormat)
+	public void setImage(BufferedImage pImage, String pFormat)
 	{
 		
 		image = pImage;
@@ -630,7 +630,7 @@ public class InputMask extends JFrame
 	 * Öffnet den erweiterten Bereich der GUI
 	 */
 	
-	void openAdvanced()
+	public void openAdvanced()
 	{
 		main.setVisible(false);
 		advanced.setVisible(true);
@@ -640,7 +640,7 @@ public class InputMask extends JFrame
 	 * Öffnet den Hauptbereich der GUI
 	 */
 	
-	void openMain()
+	public void openMain()
 	{
 		main.setVisible(true);
 		advanced.setVisible(false);
@@ -652,7 +652,7 @@ public class InputMask extends JFrame
 	 * @param pText Bildname
 	 */
 	
-	void setImageButton(String pText)
+	public void setImageButton(String pText)
 	{
 		btnBild.setText(pText);
 	}
@@ -663,7 +663,7 @@ public class InputMask extends JFrame
 	 * @return JFrame
 	 */
 	
-	JFrame getFrame()
+	public JFrame getFrame()
 	{
 		return this;
 	}
@@ -715,7 +715,7 @@ public class InputMask extends JFrame
 	 * @param pPerson Person
 	 */
 	
-	void setData(Person pPerson)
+	public void setData(Person pPerson)
 	{
 		vorname.setText(pPerson.getVorname());
 		nachname.setText(pPerson.getNachname());
@@ -762,7 +762,7 @@ public class InputMask extends JFrame
 	 * @param pRemoveOnClose Boolean, ob der Kontakt gelöscht werden soll (zum bearbeiten)
 	 */
 	
-	void setMode(String pTitle, boolean pRemoveOnClose)
+	public void setMode(String pTitle, boolean pRemoveOnClose)
 	{
 		label.setText(pTitle);
 		setTitle(pTitle);
@@ -775,7 +775,7 @@ public class InputMask extends JFrame
 	 * @return
 	 */
 	
-	boolean getRemoveOnClose()
+	public boolean getRemoveOnClose()
 	{
 		return removeOnClose;
 	}

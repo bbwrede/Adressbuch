@@ -817,7 +817,7 @@ public class GUI
 	 * @param al ActionListener
 	 */
 	
-	void setActionListeners(ActionListener al)
+	public void setActionListeners(ActionListener al)
 	{
 		loginBtn.addActionListener(al);
 		hilfeBtn.addActionListener(al);
@@ -883,7 +883,7 @@ public class GUI
 	 * @param pPerson Die darzustellene Person
 	 */
 	
-	void setTableData(Person pPerson)
+	public void setTableData(Person pPerson)
 	{
 		String monat = Integer.toString((Person.Monat.valueOf(pPerson.getGeburtsmonat().toString()).ordinal()+1));
 		String tag = Integer.toString(pPerson.getGeburtstag())+". ";
@@ -911,7 +911,7 @@ public class GUI
 	 * @param pTextField Suchfeld
 	 */
 	
-	void filter(JTextField pTextField) 
+	public void filter(JTextField pTextField) 
 	{
 		ArrayList<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel,Object>>();
 	    try 
@@ -934,7 +934,7 @@ public class GUI
 	 * @param al ActionListener
 	 */
 	
-	void setMenuListeners(ActionListener al)
+	public void setMenuListeners(ActionListener al)
 	{
 		mntmNeu.addActionListener(al);
 		mntmSpeichern.addActionListener(al);
@@ -956,7 +956,7 @@ public class GUI
 	 * @param pPerson anzuzeigende Person
 	 */
 	
-	void setPreview(Person pPerson)
+	public void setPreview(Person pPerson)
 	{
 		Image image = null;
 		try
@@ -1049,7 +1049,7 @@ public class GUI
 	 * @param pUsername Nutzername
 	 */
 	
-	void setMenuUsername(String pUsername)
+	public void setMenuUsername(String pUsername)
 	{
 		mnEingeloggt.setText("<html> Eingeloggt als <b>"+ pUsername +"</b>");
 	}
@@ -1060,7 +1060,7 @@ public class GUI
 	 * @param kl KeyListemer
 	 */
 	
-	void setKeyListeners(KeyListener kl)
+	public void setKeyListeners(KeyListener kl)
 	{
 		usernameField.addKeyListener(kl);
 		passwordField.addKeyListener(kl);
@@ -1072,7 +1072,7 @@ public class GUI
 	 * @param ma MouseAdapter
 	 */
 	
-	void setMouseListeners(MouseAdapter ma)
+	public void setMouseListeners(MouseAdapter ma)
 	{
 		table.addMouseListener(ma);
 	}
@@ -1104,7 +1104,7 @@ public class GUI
 	 * Zeigt Standard Nutzername bzw Passwort an
 	 */
 	
-	void showLoginInfo()
+	public void showLoginInfo()
 	{
 		JOptionPane.showMessageDialog(frmAdressbuch, "Standard Benutzername:     admin \nStandard Passwort:                1111");
 	}
@@ -1113,7 +1113,7 @@ public class GUI
 	 * Zeigt Haupt-GUI an
 	 */
 	
-	void openMain()
+	public void openMain()
 	{
 		loginPanel.setVisible(false);
 		mainPanel.setVisible(true);
@@ -1124,7 +1124,7 @@ public class GUI
 	 * Zeigt Login-GUI an
 	 */
 	
-	void openLogin()
+	public void openLogin()
 	{
 		mainPanel.setVisible(false);
 		menuBar.setVisible(false);
@@ -1139,7 +1139,7 @@ public class GUI
 	 * Entfernt Tabellendaten
 	 */
 	
-	void removeTableElements()
+	public void removeTableElements()
 	{
 		int rowCount = tablemodel.getRowCount();
 		for (int i = rowCount - 1; i >= 0; i--) 
@@ -1154,7 +1154,7 @@ public class GUI
 	 * @return UUID
 	 */
 	
-	UUID getSelectedUUID()
+	public UUID getSelectedUUID()
 	{
 		return UUID.fromString(table.getValueAt(table.getSelectedRow(), 17).toString());
 	}
@@ -1165,7 +1165,7 @@ public class GUI
 	 * @param pColor Anzeigefarbe
 	 */
 	
-	void showLoginWarning(Color pColor)
+	public void showLoginWarning(Color pColor)
 	{
 		loginMessage.setVisible(true);
 		usernameField.setBackground(Color.RED);
@@ -1188,7 +1188,7 @@ public class GUI
 	 * @return JFrame
 	 */
 	
-	JFrame getFrame()
+	public JFrame getFrame()
 	{
 		return frmAdressbuch;
 	}

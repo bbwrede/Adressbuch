@@ -189,7 +189,7 @@ public class SettingsMask extends JFrame
 	 * @param al ActionListener
 	 */
 	
-	void setActionListeners(ActionListener al)
+	public void setActionListeners(ActionListener al)
 	{
 		btnUserSettings.addActionListener(al);
 		btnUserSettings.setActionCommand("UserSettings");
@@ -209,7 +209,7 @@ public class SettingsMask extends JFrame
 	 * @param pColor Farbe
 	 */
 	
-	void setBgColorLabel(Color pColor)
+	public void setBgColorLabel(Color pColor)
 	{
 		bgColor.setBackground(pColor);
 	}
@@ -220,7 +220,7 @@ public class SettingsMask extends JFrame
 	 * @param pColor Farbe
 	 */
 	
-	void setFontColorLabel(Color pColor)
+	public void setFontColorLabel(Color pColor)
 	{
 		fontColor.setBackground(pColor);
 	}
@@ -354,6 +354,6 @@ public class SettingsMask extends JFrame
 			break;
 		}
 		
-		comboBox_1.setSelectedItem(pThemeName);
+		if (pThemeName != null) comboBox_1.setSelectedItem(pThemeName);
 	}
 }

@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class ModelController
 {
-	private static List<Person> liste;
+	private List<Person> liste;
 	
 	/**
 	 * Konstruktor der Klasse Controller. 
@@ -21,7 +21,7 @@ public class ModelController
 	 * @throws FileNotFoundException
 	 */
 	
-	ModelController() throws FileNotFoundException
+	public ModelController() throws FileNotFoundException
 	{
 		liste = new List<Person>();
 	}
@@ -50,7 +50,7 @@ public class ModelController
 	 * @param neu Der einzusortierende Kontakt
 	 */
 	
-	void sortIn(Person neu)
+	public void sortIn(Person neu)
 	{
 		liste.toFirst();
 		
@@ -78,7 +78,7 @@ public class ModelController
 	 * @return Objekt an dem Index
 	 */
 	
-	static Person getObjectAt(int i)
+	public Person getObjectAt(int i)
 	{
 		liste.toFirst();
 		for (int c = 0; c<i; c++)
@@ -94,7 +94,7 @@ public class ModelController
 	 * @param i Index
 	 */
 	
-	void removeObjectAt(int i)
+	public void removeObjectAt(int i)
 	{
 		liste.toFirst();
 		for (int c =0; c<i; c++)
@@ -110,7 +110,7 @@ public class ModelController
 	 * @return Kontaktliste
 	 */
 	
-	List<Person> getList()
+	public List<Person> getList()
 	{
 		return liste;
 	}
@@ -119,7 +119,7 @@ public class ModelController
 	 * Entfernt alle Objekte in der Kontaktliste
 	 */
 	
-	void removeListElements()
+	public void removeListElements()
 	{
 		liste.toFirst();
 		while (liste.hasAccess())
@@ -134,7 +134,7 @@ public class ModelController
 	 * @return true, wenn leer oder false, wenn nicht leer
 	 */
 	
-	boolean isEmpty()
+	public boolean isEmpty()
 	{
 		if (liste.isEmpty())
 		{
@@ -150,7 +150,7 @@ public class ModelController
 	 * Methode gibt die Nachnamen aller Kontakte in Konsole aus
 	 */
 	
-	void ausgabe()
+	public void ausgabe()
 	{
 		liste.toFirst();
 		while (liste.hasAccess())
@@ -166,7 +166,7 @@ public class ModelController
 	 * @param pList Liste
 	 */
 	
-	void setList(List<Person> pList)
+	public void setList(List<Person> pList)
 	{
 		liste = pList;
 	}
@@ -178,7 +178,7 @@ public class ModelController
 	 * @return index
 	 */
 	
-	int indexOf(UUID pUUID)
+	public int indexOf(UUID pUUID)
 	{
 		liste.toFirst();
 		int i = 0;
